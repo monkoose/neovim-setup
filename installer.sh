@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 # Helper functions
+msg() {
+    printf '\033[1m%b\033[0m\n' "$1" >&2
+}
+
 error() {
     msg "\33[31m[✘]\33[0m ${1}${2}"
     exit 1
@@ -33,33 +37,27 @@ variable_set() {
     fi
 }
 
-copy() {
-    if [ -e "$1" ]; then
-        cp -avr "$1" "$2"
-    fi
-}
-
 # Setup
 INSTALL_DIR="$HOME/.local/share/nvim"
 DEIN_DIR="$INSTALL_DIR/site/dein/repos/github.com/Shougo/dein.vim"
-echo "Checking..."
+msg "Checking..."
 variable_set "$HOME"
 program_must_exist "git"
 echo ""
-echo "Creating directories..."
-mkdir -p "$INSTALL_DIR/site/dein"
-mkdir -p "$INSTALL_DIR/session"
-mkdir -p "$INSTALL_DIR/undo-files"
-mkdir -p "$INSTALL_DIR/view"
+msg "Creating directories..."
+mkdir -pv "$INSTALL_DIR/site/dein"
+mkdir -pv "$INSTALL_DIR/session"
+mkdir -pv "$INSTALL_DIR/undo-files"
+mkdir -pv "$INSTALL_DIR/view"
 echo ""
-echo "Copying files..."
-copy "/nvim" "$HOME/.config"
-copy "/autoload" "$INSTALL_DIR/site"
-copy "/ftplugin" "$INSTALL_DIR/site"
-copy "/mysnippets" "$INSTALL_DIR/site"
+msg "Copying files..."
+cp -avrn "nvim/" "$HOME/.config/"
+cp -avrn "autoload/" "$INSTALL_DIR/site/"
+cp -avrn "ftplugin/" "$INSTALL_DIR/site/"
+cp -avrn "mysnippets/" "$INSTALL_DIR/site/"
 echo ""
-echo "Begin fetching dein..."
+msg "Begin fetching dein..."
 git clone https://github.com/Shougo/dein.vim "$DEIN_DIR"
-echo "Done."
 echo ""
-echo "Launch nvim and run the command :call dein#update()"
+msg "Done. Launch nvim and run the command :call dein#install()"
+echo ""
