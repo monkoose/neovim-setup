@@ -20,6 +20,7 @@ let g:gist_post_private = 1
 
 " JavaScript libraries syntax
 let g:user_javascript_libs = 'jquery'
+let g:javascript_plugin_jsdoc = 1
 
 " Jedi-vim
 let g:jedi#auto_initialization         = 1
