@@ -37,6 +37,13 @@ variable_set() {
     fi
 }
 
+copy_dir() {
+    if [ ! -e "$1" ]; then
+        error "'$1' is missing."
+    fi
+    cp -avrn "$1" "$2"
+}
+
 # Setup
 INSTALL_DIR="$HOME/.local/share/nvim"
 DEIN_DIR="$INSTALL_DIR/site/dein/repos/github.com/Shougo/dein.vim"
@@ -51,10 +58,10 @@ mkdir -pv "$INSTALL_DIR/undo-files"
 mkdir -pv "$INSTALL_DIR/view"
 echo ""
 msg "Copying files..."
-cp -avrn "nvim/" "$HOME/.config/"
-cp -avrn "autoload/" "$INSTALL_DIR/site/"
-cp -avrn "ftplugin/" "$INSTALL_DIR/site/"
-cp -avrn "mysnippets/" "$INSTALL_DIR/site/"
+copy_dir "nvim/" "$HOME/.config/"
+copy_dir "autoload/" "$INSTALL_DIR/site/"
+copy_dir "ftplugin/" "$INSTALL_DIR/site/"
+copy_dir "mysnippets/" "$INSTALL_DIR/site/"
 echo ""
 msg "Begin fetching dein..."
 git clone https://github.com/Shougo/dein.vim "$DEIN_DIR"
