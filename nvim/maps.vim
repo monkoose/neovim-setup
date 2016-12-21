@@ -109,7 +109,7 @@ function! ToggleLocationList()
       silent file LocationList
     endif
   catch /E776/
-      echohl ErrorMsg
+      echohl WarningMsg
       echo "Location List is Empty."
       echohl None
       return

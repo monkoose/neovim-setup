@@ -99,6 +99,8 @@ let g:UltiSnipsJumpForwardTrigger    ="<tab>"
 let g:UltiSnipsJumpBackwardTrigger   ="<s-tab>"
 let g:UltiSnipsSnippetsDir           = $HOME . "/.local/share/nvim/site/mysnippets"
 let g:UltiSnipsSnippetDirectories    = ["UltiSnips", "mysnippets"]
+" let g:ultisnips_python_style         = 'google'
+let g:ultisnips_python_style         = 'sphinx'
 
 " UndoTree
 let g:undotree_SetFocusWhenToggle            = 1
