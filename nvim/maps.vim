@@ -27,7 +27,7 @@ cnoremap <C-@> <C-c>
 inoremap <C-@> <C-[>
 vnoremap <C-@> <C-[>
 snoremap <C-@> <C-[>
-nmap <expr><C-@> expand('%:t') == 'ControlP' ? "\<C-c>" : "\<C-p>"
+nmap <expr><C-@> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
 
 " Yank and Paste clipboard
 nnoremap <space>y "+y

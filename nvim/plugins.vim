@@ -1,7 +1,10 @@
 " CtrlP
 let g:ctrlp_by_filename         = 1
-let g:ctrlp_match_window        = 'bottom,order:btt,min:1,max:10,results:30'
+let g:ctrlp_match_window        = 'bottom,order:btt,min:10,max:10,results:30'
 let g:ctrlp_working_path_mode   = 'a'
+set grepprg=ag\ --nogroup\ --nocolor
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_use_caching = 0
 
 " DelimitMate
 let delimitMate_expand_cr                = 2
@@ -100,8 +103,8 @@ let g:UltiSnipsJumpForwardTrigger    ="<tab>"
 let g:UltiSnipsJumpBackwardTrigger   ="<s-tab>"
 let g:UltiSnipsSnippetsDir           = $HOME . "/.local/share/nvim/site/mysnippets"
 let g:UltiSnipsSnippetDirectories    = ["UltiSnips", "mysnippets"]
-" let g:ultisnips_python_style         = 'google'
-let g:ultisnips_python_style         = 'sphinx'
+let g:ultisnips_python_style         = 'google'
+" let g:ultisnips_python_style         = 'sphinx'
 
 " UndoTree
 let g:undotree_SetFocusWhenToggle            = 1
