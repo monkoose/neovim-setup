@@ -7,7 +7,7 @@
 "   --- colorpallete ---
 let s:foreground         = [ '#d5c4a1', 250 ]
 let s:white              = [ '#fbf1c7', 252 ]
-let s:black              = [ '#171202', 234 ]
+let s:black              = [ '#0F0A01', 234 ]
 let s:gray               = [ '#665c54', 240 ]
 let s:red                = [ '#8f3f3f', 52  ]
 let s:purple             = [ '#8f3f71', 54  ]
