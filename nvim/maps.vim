@@ -23,11 +23,11 @@ nmap H H5k
 nmap L L5j
 
 " CTRL-SPACE monster key(expand/close CtrlP in normal mode, else return to normal mode)
-cnoremap <C-@> <C-c>
-inoremap <C-@> <C-[>
-vnoremap <C-@> <C-[>
-snoremap <C-@> <C-[>
-nmap <expr><C-@> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
+cnoremap <C-space> <C-c>
+inoremap <C-space> <C-[>
+vnoremap <C-space> <C-[>
+snoremap <C-space> <C-[>
+nmap <expr><C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
 
 " Yank and Paste clipboard
 nnoremap <space>y "+y
