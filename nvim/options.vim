@@ -24,7 +24,7 @@ set scrolljump=1
 set scrolloff=5
 " set sidescrolloff=5
 set list
-set listchars=tab:⇥\ ,trail:·,extends:…,precedes:…,nbsp:~
+set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:~
 set fillchars=vert:\ ,fold:-
 set tabpagemax=20
 set smartindent
