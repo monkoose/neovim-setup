@@ -38,11 +38,16 @@ vnoremap <space>p "+p
 nnoremap <space>f <C-]>
 nmap <space><space> <Plug>(easymotion-s)
 
+nnoremap <C-j> <C-d>
+nnoremap <C-k> <C-u>
+nnoremap <C-l> <space>
+vnoremap <C-j> <C-d>
+vnoremap <C-k> <C-u>
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
 "Move cursor with Alt-hjkl
 inoremap <expr><M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
 inoremap <M-l> <Right>
-inoremap <silent><expr><M-j> pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <silent><expr><M-k> pumvisible() ? "\<C-p>" : "\<Up>"
 nnoremap <M-h> <Left>
 nnoremap <M-l> <Right>
 nnoremap <M-j> <Down>
