@@ -3,15 +3,14 @@ set termguicolors
 set background=dark
 colorscheme boa
 set title
-set number
 set synmaxcol=1000
 set hidden
 set spelllang=en,ru
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
+set nowrap
 set ignorecase
 set smartcase
-set cursorline
 set noshowmode
 set history=500
 set undolevels=200
@@ -24,7 +23,7 @@ set scrolljump=1
 set scrolloff=5
 " set sidescrolloff=5
 set list
-set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:~
+set listchars=tab:→\ ,trail:·,extends:▷,precedes:◁,nbsp:~
 set fillchars=vert:\ ,fold:-
 set tabpagemax=20
 set smartindent

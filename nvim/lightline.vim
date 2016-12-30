@@ -1,7 +1,7 @@
 let g:lightline = {
         \ 'colorscheme': 'boa',
         \ 'active': {
-                \ 'left':  [ [ 'column', 'mode', 'paste', 'spell' ], [ 'fugitive', 'filename' ] ],
+                \ 'left':  [ [ 'lineinfo', 'mode', 'paste', 'spell' ], [ 'fugitive', 'filename' ] ],
                 \ 'right': [ [ 'syntastic', 'percent' ], [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ] ]
         \ },
         \ 'inactive': {
@@ -11,7 +11,7 @@ let g:lightline = {
         \ 'component_function': {
                 \ 'cwd':           'LightLineCWD',
                 \ 'paste':         'LightLinePaste',
-                \ 'column':        'LightLineColumn',
+                \ 'lineinfo':        'LightLineLineinfo',
                 \ 'spell':         'LightLineSpell',
                 \ 'fugitive':      'LightLineFugitive',
                 \ 'filename':      'LightLineFilename',
@@ -33,8 +33,8 @@ let g:lightline = {
         \ 'subseparator': { 'left': '', 'right': '' }
 \ }
 
-let g:lightline.leftseparator  = '  ●'
-let g:lightline.rightseparator = '●  '
+let g:lightline.leftseparator  = '  '
+let g:lightline.rightseparator = '  '
 
 function! LightLinePaste()
     return &paste ? 'P' . g:lightline.leftseparator : ''
@@ -45,33 +45,35 @@ function! LightLineSpell()
 endfunction
 
 function! LightLineCWD()
-    return winwidth(0) > 60 && expand('%:t') == 'ControlP' ? getcwd() : ''
+    return expand('%:t') == 'ControlP' && winwidth(0) > 60 ? getcwd() : ''
 endfunction
 
 function! LightLineVenv()
     return &ft =~# 'python'
-                \ &&winwidth(0) > 70
+                \ && winwidth(0) > 70
                 \ && $VIRTUAL_ENV != '' ? printf('(%s)', fnamemodify($VIRTUAL_ENV, ':t')) : ''
 endfunction
 
-function! LightLineColumn()
+function! LightLineLineinfo()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? '' :
-                \ fname == 'ControlP' ? '' :
+    return fname == 'ControlP' ? '' :
+                \ fname =~ 'NERD_tree' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ '__Tagbar__' ? '' :
+                \ fname == 'Startify' ? '' :
                 \ &ft   == 'qf' ? '' :
-                \ printf('%2d', col('.')) . g:lightline.leftseparator
+                \ printf('%3d : %-2d', line('.'), col('.')) . g:lightline.leftseparator
 endfunction
 
 function! LightLinePercent()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? '' :
-                \ fname == 'ControlP' ? '' :
+    return fname == 'ControlP' ? '' :
+                \ fname =~ 'NERD_tree' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ '__Tagbar__' ? '' :
+                \ fname == 'Startify' ? '' :
                 \ &ft   == 'qf' ? line('$') :
                 \ g:lightline.rightseparator . LightLinePercentHelper()
 endfunction
@@ -83,21 +85,27 @@ function! LightLinePercentHelper()
 endfunction
 
 function! LightLineModified()
-    return &ft =~ 'help' ? '' : &modified ? '¦ +' : &modifiable ? '' : '-'
+    return &ft =~ 'help' ? '' : &modified ? '[+]' : &modifiable ? '' : '[-]'
 endfunction
 
 function! LightLineReadonly()
-    return &ft !~? 'help' && &readonly ? 'RO ¦' : ''
+    return &ft !~? 'help' && &readonly ? '[RO]' : ''
 endfunction
 
 function! LightLineFilename()
     let fname = expand('%:t')
     if fname =~ 'ControlP'
         call lightline#link('iR'[g:lightline.ctrlp_regex])
+        return g:lightline.ctrlp_item
     endif
-    return fname == 'ControlP' ? g:lightline.ctrlp_item :
-                \ fname =~ '__Tagbar__' ? g:lightline.rightseparator . g:lightline.fname :
-                \ fname =~ 'undotree_2\|diffpanel_3\|NERD_tree' ? '' :
+    if fname =~ '__Tagbar__'
+        if g:lightline.fname == ''
+            return g:lightline.rightseparator . '[No Name]'
+        endif
+        return g:lightline.rightseparator . g:lightline.fname
+    endif
+    return fname =~ 'NERD_tree\|undotree_2\|diffpanel_3' ? '' :
+                \ fname == 'Startify' ? '' :
                 \ &ft == 'qf' ? '' :
                 \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
                 \ ('' != fname ? fname : '[No Name]') .
@@ -106,19 +114,21 @@ endfunction
 
 function! LightLineMode()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? 'Tagbar' :
-                \ fname == 'ControlP' ? 'CtrlP' . g:lightline.leftseparator :
-                \ fname == 'undotree_2' ? 'UndoTree' :
-                \ fname == 'diffpanel_3' ? 'diff' :
-                \ fname =~ 'NERD_tree' ? 'NERDTree' :
-                \ fname == 'LocationList' ? 'LocationList' :
-                \ &ft == 'qf' ? 'QuickFix' :
-                \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
+    return fname == 'ControlP' ? ' CtrlP' . g:lightline.leftseparator :
+                \ fname =~ 'NERD_tree' ? ' NERDTree' :
+                \ fname == 'undotree_2' ? ' UndoTree' :
+                \ fname == 'diffpanel_3' ? ' diff' :
+                \ fname =~ '__Tagbar__' ? ' Tagbar' :
+                \ fname == 'Startify' ? ' Startify' :
+                \ fname == 'LocationList' ? ' Location List' :
+                \ &ft == 'qf' ? ' QuickFix' : ''
+                " \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
 endfunction
 
 function! LightLineFugitive()
     try
-        if expand('%:t') !~? 'Tagbar\|undotree_2\|diffpanel_3\|NERD_tree' && exists('*fugitive#head')
+        if expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__\|Startify'
+                    \ && exists('*fugitive#head')
             let mark = ' '
             let _ = fugitive#head()
             return strlen(_) ? mark._ . g:lightline.leftseparator : ''
@@ -134,38 +144,40 @@ endfunction
 
 function! LightLineFiletype()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? '' :
-                \ fname == 'ControlP' ? '' :
+    return fname == 'ControlP' ? '' :
+                \ fname =~ 'NERD_tree' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ '__Tagbar__' ? '' :
+                \ fname == 'Startify' ? '' :
                 \ &ft   == 'qf' ? '' :
                 \ winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
 function! LightLineFileencoding()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? '' :
-                \ fname == 'ControlP' ? '' :
+    return fname == 'ControlP' ? '' :
+                \ fname =~ 'NERD_tree' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ '__Tagbar__' ? '' :
+                \ fname == 'Startify' ? '' :
                 \ &ft   == 'qf' ? '' :
                 \ &fenc == 'utf-8' ? '' :
                 \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
                 \ &enc . g:lightline.leftseparator) : ''
 endfunction
 
-
 function! LightLineInactiveMode()
     let fname = expand('%:t')
-    return fname =~ '__Tagbar__' ? 'Tagbar' :
-                \ fname == 'ControlP' ? 'CtrlP' :
-                \ fname == 'undotree_2' ? 'UndoTree' :
-                \ fname == 'diffpanel_3' ? 'diff' :
-                \ fname =~ 'NERD_tree' ? 'NERDTree' :
-                \ fname == 'LocationList' ? 'LocationList' :
-                \ &ft == 'qf' ? 'QuickFix' : ''
+    return fname == 'ControlP' ? ' CtrlP' :
+                \ fname =~ 'NERD_tree' ? ' NERDTree' :
+                \ fname == 'undotree_2' ? ' UndoTree' :
+                \ fname == 'diffpanel_3' ? ' diff' :
+                \ fname =~ '__Tagbar__' ? ' Tagbar' :
+                \ fname == 'Startify' ? 'Startify' :
+                \ fname == 'LocationList' ? ' LocationList' :
+                \ &ft == 'qf' ? ' QuickFix' : ''
 endfunction
 
 " CtrlP

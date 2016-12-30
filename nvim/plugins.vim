@@ -96,6 +96,45 @@ let g:tagbar_autofocus               = 1
 let g:tagbar_sort                    = 0
 nmap <silent> <M-8> :TagbarToggle<CR>
 nmap <silent> <leader>tt :TagbarCurrentTag('fs')<CR>
+"css
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
+"markdown
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
+"rust
+ let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits,traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
+"ultisnips
+let g:tagbar_type_snippets = {
+    \ 'ctagstype' : 'snippets',
+    \ 'kinds' : [
+        \ 's:snippets',
+    \ ]
+\ }
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger         ="<tab>"
