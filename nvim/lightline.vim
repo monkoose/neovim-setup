@@ -100,7 +100,7 @@ endfunction
 
 function! LightLineFilename()
     let fname = expand('%:t')
-    let relpath = strlen(expand('%:.')) > 50 ? '.../' . expand('%:t') : expand('%:.')
+    let relpath = strlen(expand('%:.')) > 50 ? '../' . expand('%:t') : expand('%:.')
     if fname =~ 'ControlP'
         call lightline#link('iR'[g:lightline.ctrlp_regex])
         return g:lightline.ctrlp_item
@@ -150,21 +150,15 @@ function! LightLineGit()
                     \ expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__'
             let mark = ''
             let _ = fugitive#head()
-            let symbols = [
-                \ g:gitgutter_sign_added,
-                \ g:gitgutter_sign_modified,
-                \ g:gitgutter_sign_removed
-                \ ]
+            let symbols = ['+', '~', '-']
             let hunks = GitGutterGetHunkSummary()
             let ret = []
             for i in [0, 1, 2]
                 if hunks[i] > 0
                     call add(ret, symbols[i] . hunks[i])
                 endif
-                let gutter = join(ret, ' ')
             endfor
-            let gitter = mark._ . (strlen(gutter) ? ' (' . gutter . ')' : '')
-                                \ . g:lightline.leftseparator
+            let gitter = mark._ . ' ' . join(ret, ' ') . ' ' . g:lightline.leftseparator
             return strlen(_) &&  winwidth(0) > 80 ? gitter : ''
         endif
     catch

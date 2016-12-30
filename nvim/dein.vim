@@ -23,13 +23,11 @@ call dein#add('tpope/vim-unimpaired')
 call dein#add('tpope/vim-commentary')
 call dein#add('Raimondi/delimitMate')
 call dein#add('itchyny/lightline.vim')
-" call dein#add('vim-airline/vim-airline')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('easymotion/vim-easymotion')
 call dein#add('monkoose/vim-fish', {'on_ft': 'fish'})
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 call dein#add('mbbill/undotree', {'on_cmd': ':UndotreeToggle'})
-" call dein#add('scrooloose/nerdtree', {'on_cmd': ':NERDTreeToggle'})
 call dein#add('plasticboy/vim-markdown',
             \ {'on_ft': ['markdown', 'mdown', 'mkdn', 'mdwn', 'mkd', 'md']})
 " python
