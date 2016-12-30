@@ -63,6 +63,7 @@ cnoremap <C-p> <Up>
 nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o
 nnoremap <M-w> <C-w>w
+nnoremap <M-d> :bd<CR>
 
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort

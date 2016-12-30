@@ -1,8 +1,14 @@
 let g:lightline = {
         \ 'colorscheme': 'boa',
         \ 'active': {
-                \ 'left':  [ [ 'lineinfo', 'mode', 'paste', 'spell' ], [ 'fugitive', 'filename' ] ],
-                \ 'right': [ [ 'syntastic', 'percent' ], [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ] ]
+                \ 'left':  [
+                               \ [ 'lineinfo', 'mode', 'paste', 'spell' ],
+                               \ [ 'git', 'filename' ]
+                \ ],
+                \ 'right': [
+                               \ [ 'syntastic', 'percent' ],
+                               \ [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
+                \ ]
         \ },
         \ 'inactive': {
                 \ 'left':  [ [ 'inactivemode' ] ],
@@ -11,9 +17,9 @@ let g:lightline = {
         \ 'component_function': {
                 \ 'cwd':           'LightLineCWD',
                 \ 'paste':         'LightLinePaste',
-                \ 'lineinfo':        'LightLineLineinfo',
+                \ 'lineinfo':      'LightLineLineinfo',
                 \ 'spell':         'LightLineSpell',
-                \ 'fugitive':      'LightLineFugitive',
+                \ 'git':           'LightLineGit',
                 \ 'filename':      'LightLineFilename',
                 \ 'fileformat':    'LightLineFileformat',
                 \ 'filetype':      'LightLineFiletype',
@@ -94,6 +100,7 @@ endfunction
 
 function! LightLineFilename()
     let fname = expand('%:t')
+    let relpath = strlen(expand('%:.')) > 50 ? '.../' . expand('%:t') : expand('%:.')
     if fname =~ 'ControlP'
         call lightline#link('iR'[g:lightline.ctrlp_regex])
         return g:lightline.ctrlp_item
@@ -108,7 +115,7 @@ function! LightLineFilename()
                 \ fname == 'Startify' ? '' :
                 \ &ft == 'qf' ? '' :
                 \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-                \ ('' != fname ? fname : '[No Name]') .
+                \ ('' != fname ? relpath : '[No Name]') .
                 \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
@@ -119,19 +126,46 @@ function! LightLineMode()
                 \ fname == 'undotree_2' ? ' UndoTree' :
                 \ fname == 'diffpanel_3' ? ' diff' :
                 \ fname =~ '__Tagbar__' ? ' Tagbar' :
-                \ fname == 'Startify' ? ' Startify' :
+                \ fname == 'Startify' ? ' Startify  ' :
                 \ fname == 'LocationList' ? ' Location List' :
                 \ &ft == 'qf' ? ' QuickFix' : ''
                 " \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
 endfunction
 
-function! LightLineFugitive()
+function! LightLineInactiveMode()
+    let fname = expand('%:t')
+    return fname == 'ControlP' ? ' CtrlP' :
+                \ fname =~ 'NERD_tree' ? ' NERDTree' :
+                \ fname == 'undotree_2' ? ' UndoTree' :
+                \ fname == 'diffpanel_3' ? ' diff' :
+                \ fname =~ '__Tagbar__' ? ' Tagbar' :
+                \ fname == 'Startify' ? 'Startify  ' :
+                \ fname == 'LocationList' ? ' Location List' :
+                \ &ft == 'qf' ? ' QuickFix' : ''
+endfunction
+
+function! LightLineGit()
     try
-        if expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__\|Startify'
-                    \ && exists('*fugitive#head')
-            let mark = ' '
+        if exists('*fugitive#head') &&
+                    \ expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__'
+            let mark = ''
             let _ = fugitive#head()
-            return strlen(_) ? mark._ . g:lightline.leftseparator : ''
+            let symbols = [
+                \ g:gitgutter_sign_added,
+                \ g:gitgutter_sign_modified,
+                \ g:gitgutter_sign_removed
+                \ ]
+            let hunks = GitGutterGetHunkSummary()
+            let ret = []
+            for i in [0, 1, 2]
+                if hunks[i] > 0
+                    call add(ret, symbols[i] . hunks[i])
+                endif
+                let gutter = join(ret, ' ')
+            endfor
+            let gitter = mark._ . (strlen(gutter) ? ' (' . gutter . ')' : '')
+                                \ . g:lightline.leftseparator
+            return strlen(_) &&  winwidth(0) > 80 ? gitter : ''
         endif
     catch
     endtry
@@ -166,18 +200,6 @@ function! LightLineFileencoding()
                 \ &fenc == 'utf-8' ? '' :
                 \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
                 \ &enc . g:lightline.leftseparator) : ''
-endfunction
-
-function! LightLineInactiveMode()
-    let fname = expand('%:t')
-    return fname == 'ControlP' ? ' CtrlP' :
-                \ fname =~ 'NERD_tree' ? ' NERDTree' :
-                \ fname == 'undotree_2' ? ' UndoTree' :
-                \ fname == 'diffpanel_3' ? ' diff' :
-                \ fname =~ '__Tagbar__' ? ' Tagbar' :
-                \ fname == 'Startify' ? 'Startify' :
-                \ fname == 'LocationList' ? ' LocationList' :
-                \ &ft == 'qf' ? ' QuickFix' : ''
 endfunction
 
 " CtrlP
