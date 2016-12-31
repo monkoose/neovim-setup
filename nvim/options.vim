@@ -8,6 +8,7 @@ set hidden
 set spelllang=en,ru
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
+set relativenumber
 set nowrap
 set ignorecase
 set smartcase
@@ -21,10 +22,9 @@ set undodir=~/.local/share/nvim/undo-files/
 set viewoptions=cursor,folds
 set scrolljump=1
 set scrolloff=5
-" set sidescrolloff=5
 set list
 set listchars=tab:→\ ,trail:·,extends:▷,precedes:◁,nbsp:~
-set fillchars=vert:\ ,fold:-
+set fillchars=vert:\ ,fold:_,
 set tabpagemax=20
 set smartindent
 set shiftround
@@ -51,3 +51,16 @@ augroup whitespace
     autocmd!
     autocmd BufWrite * :call DeleteTrailingWS()
 augroup END
+
+" Folds prettifier
+function! NeatFoldText()
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 13)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
