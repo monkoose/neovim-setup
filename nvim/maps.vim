@@ -45,6 +45,7 @@ vnoremap <C-j> <C-d>
 vnoremap <C-k> <C-u>
 inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
+inoremap <C-S-k> <C-k>
 "Move cursor with Alt-hjkl
 inoremap <expr><M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
 inoremap <M-l> <Right>

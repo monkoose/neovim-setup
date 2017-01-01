@@ -37,19 +37,20 @@ set shada=!,'100,<50,:50,s10,h
 set textwidth=99
 set colorcolumn=100
 set completeopt=menuone,longest
+set grepprg=ag\ --nogroup\ --nocolor
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c
 
 " Delete trailing whitespaces on save
 func! DeleteTrailingWS()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
 endfunc
 augroup whitespace
-    autocmd!
-    autocmd BufWrite * :call DeleteTrailingWS()
+  autocmd!
+  autocmd BufWrite * :call DeleteTrailingWS()
 augroup END
 
 " Folds prettifier

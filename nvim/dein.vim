@@ -18,6 +18,7 @@ call dein#add('mhinz/vim-startify')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('honza/vim-snippets')
+call dein#add('rhysd/vim-grammarous')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('tpope/vim-unimpaired')
 call dein#add('tpope/vim-commentary')
@@ -29,7 +30,7 @@ call dein#add('monkoose/vim-fish', {'on_ft': 'fish'})
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 call dein#add('mbbill/undotree', {'on_cmd': ':UndotreeToggle'})
 call dein#add('plasticboy/vim-markdown',
-            \ {'on_ft': ['markdown', 'mdown', 'mkdn', 'mdwn', 'mkd', 'md']})
+      \ {'on_ft': ['markdown', 'mdown', 'mkdn', 'mdwn', 'mkd', 'md']})
 " python
 call dein#add('tweekmonster/django-plus.vim')
 call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
@@ -44,8 +45,8 @@ call dein#add('pangloss/vim-javascript', {'on_ft': ['javascript', 'html', 'htmld
 call dein#add('carlitux/deoplete-ternjs', {'on_ft': ['javascript', 'html', 'htmldjango']})
 call dein#add('othree/html5.vim', {'on_ft': ['html', 'xhtml', 'css', 'htmldjango']})
 call dein#add('othree/javascript-libraries-syntax.vim',
-            \ {'on_ft': ['javascript', 'html', 'htmldjango']})
+      \ {'on_ft': ['javascript', 'html', 'htmldjango']})
 call dein#add('vim-syntastic/syntastic',
-            \ {'on_ft': ['html', 'xhtml', 'css', 'htmldjango', 'less', 'javascript', 'python']})
+      \ {'on_ft': ['html', 'xhtml', 'css', 'htmldjango', 'less', 'javascript', 'python']})
 
 call dein#end()
