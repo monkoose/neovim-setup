@@ -44,8 +44,8 @@ call dein#add('ternjs/tern_for_vim', {'on_ft': ['javascript', 'html', 'htmldjang
 call dein#add('pangloss/vim-javascript', {'on_ft': ['javascript', 'html', 'htmldjango']})
 call dein#add('carlitux/deoplete-ternjs', {'on_ft': ['javascript', 'html', 'htmldjango']})
 call dein#add('othree/html5.vim', {'on_ft': ['html', 'xhtml', 'css', 'htmldjango']})
-call dein#add('othree/javascript-libraries-syntax.vim',
-      \ {'on_ft': ['javascript', 'html', 'htmldjango']})
+" call dein#add('othree/javascript-libraries-syntax.vim',
+"       \ {'on_ft': ['javascript', 'html', 'htmldjango']})
 call dein#add('vim-syntastic/syntastic',
       \ {'on_ft': ['html', 'xhtml', 'css', 'htmldjango', 'less', 'javascript', 'python']})
 
