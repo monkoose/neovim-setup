@@ -4,6 +4,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:30'
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
+let g:ctrlp_open_new_file = 'r'
 
 " DelimitMate
 let delimitMate_expand_cr = 2
@@ -140,7 +141,7 @@ let g:tagbar_type_snippets = {
 \ }
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger ="<tab>"
+let g:UltiSnipsExpandTrigger ="<M-f>"
 let g:UltiSnipsJumpForwardTrigger ="<tab>"
 let g:UltiSnipsJumpBackwardTrigger ="<s-tab>"
 let g:UltiSnipsSnippetsDir = $HOME . "/.local/share/nvim/site/mysnippets"
@@ -152,3 +153,18 @@ let g:ultisnips_python_style = 'sphinx'
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout = 2
 nmap <silent> <M-4> :UndotreeToggle<CR>
+
+" vim-gnupg
+let g:GPGPreferArmor=1
+let g:GPGPreferSign=1
+
+augroup GnuPGExtra
+    autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
+    autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+augroup END
+
+function SetGPGOptions()
+    set updatetime=60000
+    set foldmethod=marker
+    set foldclose=all
+endfunction

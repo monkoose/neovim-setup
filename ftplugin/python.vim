@@ -1,4 +1,3 @@
-UltiSnipsAddFiletypes python.django
 setlocal nowrap
 setlocal complete+=t
 setlocal formatoptions-=t
