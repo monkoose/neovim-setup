@@ -51,7 +51,6 @@ let g:jedi#completions_command = ""
 " Python syntax
 let python_highlight_all = 1
 let g:python_highlight_space_errors = 0
-let g:python_highlight_docparameters = 1
 
 " Startify
 let g:startify_custom_header = ['    -== NEOVIM ==-']
