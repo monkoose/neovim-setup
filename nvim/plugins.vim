@@ -167,3 +167,6 @@ function SetGPGOptions()
     set foldmethod=marker
     set foldclose=all
 endfunction
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
