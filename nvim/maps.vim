@@ -37,6 +37,7 @@ vnoremap <space>p "+p
 
 nnoremap <space>f <C-]>
 nmap <space><space> <Plug>(easymotion-s)
+nmap <leader>tw :TW<CR>
 
 nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
