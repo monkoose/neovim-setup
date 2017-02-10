@@ -29,13 +29,13 @@ set tabpagemax=20
 set smartindent
 set shiftround
 set expandtab
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=-1
 set nojoinspaces
 set sessionoptions-=blank
 set shada=!,'100,<50,:50,s10,h
-set textwidth=99
-set colorcolumn=100
+set textwidth=79
+set colorcolumn=80
 set completeopt=menuone,longest
 set grepprg=ag\ --nogroup\ --nocolor
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
