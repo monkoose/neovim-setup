@@ -1,3 +1,4 @@
+filetype plugin indent on
 syntax enable
 set termguicolors
 set background=dark
@@ -8,7 +9,6 @@ set hidden
 set spelllang=en,ru
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
-set relativenumber
 set nowrap
 set ignorecase
 set smartcase

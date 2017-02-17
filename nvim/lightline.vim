@@ -12,7 +12,7 @@ let g:lightline = {
         \ },
         \ 'inactive': {
                 \ 'left':  [ [ 'inactivemode' ] ],
-                \ 'right': [ [ 'percent' ], [ 'filename' ] ]
+                \ 'right': [ [ 'percent' ], [ 'lineinfo', 'filename' ] ]
         \ },
         \ 'component_function': {
                 \ 'cwd':           'LightLineCWD',

@@ -20,13 +20,13 @@ let g:deoplete#max_abbr_width = 40
 " Gist-vim
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
-
 " Grammarous
 let g:grammarous#languagetool_cmd = 'languagetool'
 let g:grammarous#disabled_rules = {
         \ 'vim' : ['EN_QUOTES', 'EN_UNPAIRED_BRACKETS'],
         \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
         \ }
+map <silent> <F5> :GrammarousCheck<CR>
 
 " JavaScript libraries syntax
 let g:used_javascript_libs = 'jquery'
@@ -158,15 +158,16 @@ let g:GPGPreferArmor=1
 let g:GPGPreferSign=1
 
 augroup GnuPGExtra
-    autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
-    autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+  autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
+  autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
 augroup END
 
 function SetGPGOptions()
-    set updatetime=60000
-    set foldmethod=marker
-    set foldclose=all
+  set updatetime=60000
+  set foldmethod=marker
+  set foldclose=all
 endfunction
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
+nmap <leader>ww :VimwikiIndex<CR>
