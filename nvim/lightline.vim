@@ -147,7 +147,8 @@ endfunction
 function! LightLineGit()
     try
         if exists('*fugitive#head') &&
-                    \ expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__'
+                    \ expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__' &&
+                    \ &ft != 'qf'
             let mark = ''
             let _ = fugitive#head()
             let symbols = ['+', '~', '-']

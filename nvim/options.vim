@@ -6,7 +6,10 @@ colorscheme boa
 set title
 set synmaxcol=1000
 set hidden
-set spelllang=en,ru
+set spelllang=en_us,ru_yo
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
 set nowrap
@@ -20,10 +23,12 @@ set undofile
 set showcmd
 set undodir=~/.local/share/nvim/undo-files/
 set viewoptions=cursor,folds
-set scrolljump=1
-set scrolloff=5
+set scrolljump=12
+" set scrolloff=5
+set linebreak
+set showbreak=└
 set list
-set listchars=tab:→\ ,trail:·,extends:▷,precedes:◁,nbsp:~
+set listchars=tab:→·,trail:·,extends:▐,precedes:▌,nbsp:~
 set fillchars=vert:\ ,fold:_,
 set tabpagemax=20
 set smartindent

@@ -7,7 +7,7 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " let Ctrl-l to delete forward char
 inoremap <C-l> <Del>
 " switch between two buffers
-nnoremap <space>j <C-^>
+nnoremap <space>a <C-^>
 
 " Paste and Spell toggle
 set pastetoggle=<F2>
@@ -19,14 +19,27 @@ nnoremap <leader>u mQviwu`Q
 
 " Fix H and L maps doesn't jump correctly because of 'scrolloff'
 " where 5 is scrolloff size
-nmap H H5k
-nmap L L5j
+" nmap H H5k
+" nmap L L5j
 
-" CTRL-SPACE monster key(expand/close CtrlP in normal mode, else return to normal mode)
-cnoremap <C-space> <C-c>
-inoremap <C-space> <C-[>
-vnoremap <C-space> <C-[>
-snoremap <C-space> <C-[>
+" CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
+function! KeymapChange()
+  if &iminsert == 0
+    set iminsert=1
+    set imsearch=1
+    echohl ModeMsg
+    echo "Russian"
+    echohl None
+  else
+    set iminsert=0
+    set imsearch=0
+    echohl ModeMsg
+    echo "English"
+    echohl None
+  endif
+endfunction
+cnoremap <C-space> <C-^>
+inoremap <C-space> <C-o>:call KeymapChange()<CR>
 nmap <expr><C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
 
 " Yank and Paste clipboard
@@ -37,7 +50,6 @@ vnoremap <space>p "+p
 
 nnoremap <space>f <C-]>
 nmap <space><space> <Plug>(easymotion-s)
-nmap <leader>tw :TW<CR>
 
 nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
