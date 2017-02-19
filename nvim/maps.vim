@@ -73,6 +73,12 @@ cnoremap <M-k> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 
+" Exit to normal mode in Terminal
+tnoremap <C-]> <C-\><C-n>
+
+" Fugitive Gstatus
+noremap <leader>g :Gstatus<Cr>
+
 " Windows manipulations
 nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o

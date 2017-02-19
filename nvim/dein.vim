@@ -35,7 +35,7 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('vim-syntastic/syntastic', {'on_cmd': ':call LightLineSyntasticCheck()'})
   " python
   call dein#add('tweekmonster/django-plus.vim')
-  call dein#add('hdima/python-syntax', {'on_ft': 'python'})
+  call dein#add('vim-python/python-syntax', {'on_ft': 'python'})
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
   call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
   call dein#add('hynek/vim-python-pep8-indent', {'on_ft': 'python'})

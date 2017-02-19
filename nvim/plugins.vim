@@ -49,7 +49,7 @@ let g:jedi#documentation_command = "K"
 let g:jedi#completions_command = ""
 
 " Python syntax
-let python_highlight_all = 1
+let g:python_highlight_all = 1
 let g:python_highlight_space_errors = 0
 
 " Startify
