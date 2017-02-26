@@ -140,7 +140,7 @@ let g:tagbar_type_snippets = {
 \ }
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger ="<M-f>"
+let g:UltiSnipsExpandTrigger ="<M-e>"
 let g:UltiSnipsJumpForwardTrigger ="<tab>"
 let g:UltiSnipsJumpBackwardTrigger ="<s-tab>"
 let g:UltiSnipsSnippetsDir = $HOME . "/.local/share/nvim/site/mysnippets"
