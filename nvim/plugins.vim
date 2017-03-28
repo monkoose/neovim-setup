@@ -1,3 +1,17 @@
+" ALE
+let g:ale_linters = {
+      \ 'javascript': ['jshint'],
+      \ 'python': ['flake8'],
+      \ 'css': ['csslint'],
+      \ 'html': ['HTMLHint'],
+      \ }
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 0
+let g:ale_statusline_format = ['E: %d', 'W: %d', '']
+
 " CtrlP
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:30'
@@ -45,7 +59,7 @@ let g:jedi#goto_command = "<space>g"
 let g:jedi#rename_command = "<space>r"
 let g:jedi#goto_assignments_command = "<space>d"
 let g:jedi#usages_command = "<space>u"
-let g:jedi#documentation_command = "K"
+" let g:jedi#documentation_command = "K"
 let g:jedi#completions_command = ""
 
 " Python syntax
@@ -69,30 +83,6 @@ let g:startify_list_order = [
       \ ['    -== BOOKMARKS ==-'],
       \ 'bookmarks',
       \ ]
-
-" Syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_mode_map = {"mode": "passive"}
-let g:syntastic_check_on_wq = 0
-let g:syntastic_auto_jump = 0
-let g:syntastic_error_symbol = "E"
-let g:syntastic_warning_symbol = "W"
-let g:syntastic_style_error_symbol = "S"
-let g:syntastic_style_warning_symbol = "S"
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E501'
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_html_checkers = ['jshint']
-let g:syntastic_xhtml_checkers = ['jshint']
-let g:syntastic_css_checkers = ['csslint']
-" Save buffer and check for errors and update lightline
-function! LightLineSyntasticCheck()
-  write
-  SyntasticCheck
-  call lightline#update()
-endfunction
-nmap <silent><F4> :call LightLineSyntasticCheck()<CR>
 
 " Tagbar
 let g:tagbar_autofocus = 1

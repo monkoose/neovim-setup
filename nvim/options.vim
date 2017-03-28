@@ -48,17 +48,6 @@ set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c
 set diffopt=filler,vertical
 
-" Delete trailing whitespaces on save
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-augroup whitespace
-  autocmd!
-  autocmd BufWrite * :call DeleteTrailingWS()
-augroup END
-
 " Folds prettifier
 function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '

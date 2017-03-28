@@ -6,7 +6,7 @@ let g:lightline = {
                                \ [ 'git', 'filename' ]
                 \ ],
                 \ 'right': [
-                               \ [ 'syntastic', 'percent' ],
+                               \ [ 'ale', 'percent' ],
                                \ [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
                 \ ]
         \ },
@@ -30,10 +30,10 @@ let g:lightline = {
                 \ 'virtualenv':    'LightLineVenv',
         \ },
         \ 'component_expand': {
-                \ 'syntastic': 'SyntasticStatuslineFlag',
+                \ 'ale': 'ALEGetStatusLine',
         \ },
         \ 'component_type': {
-                \ 'syntastic': 'error',
+                \ 'ale': 'error',
         \ },
         \ 'separator':    { 'left': '', 'right': '' },
         \ 'subseparator': { 'left': '', 'right': '' }
@@ -214,12 +214,8 @@ function! TagbarStatusFunc(current, sort, fname, ...) abort
     return lightline#statusline(0)
 endfunction
 
-" Syntastic
-" augroup AutoSyntastic
-"     autocmd!
-"     autocmd BufWritePost * call s:syntastic()
-" augroup END
-" function! s:syntastic()
-"     SyntasticCheck
-"     call lightline#update()
-" endfunction
+" ALE
+augroup AutoALE
+    autocmd!
+    autocmd User ALELint call lightline#update()
+augroup END
