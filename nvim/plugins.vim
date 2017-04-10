@@ -5,12 +5,14 @@ let g:ale_linters = {
       \ 'css': ['csslint'],
       \ 'html': ['HTMLHint'],
       \ }
+let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 0
-let g:ale_statusline_format = ['E: %d', 'W: %d', '']
+let g:ale_statusline_format = ['E:%d', 'W:%d', '']
+let g:ale_set_highlights = 0
 
 " CtrlP
 let g:ctrlp_by_filename = 1
@@ -28,6 +30,7 @@ let delimitMate_expand_space = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#statement_length = 40
 let g:python3_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
 let g:deoplete#max_list = 40
 let g:deoplete#max_abbr_width = 40
 
@@ -55,12 +58,12 @@ let g:jedi#show_call_signatures = 2
 let g:jedi#show_call_signatures_delay = 0
 let g:jedi#completions_enabled = 1
 let g:jedi#smart_auto_mappings = 0
-let g:jedi#goto_command = "<space>g"
-let g:jedi#rename_command = "<space>r"
-let g:jedi#goto_assignments_command = "<space>d"
-let g:jedi#usages_command = "<space>u"
-" let g:jedi#documentation_command = "K"
-let g:jedi#completions_command = ""
+let g:jedi#goto_command = '<space>g'
+let g:jedi#rename_command = '<space>r'
+let g:jedi#goto_assignments_command = '<space>d'
+let g:jedi#usages_command = '<space>u'
+let g:jedi#documentation_command = 'K'
+let g:jedi#completions_command = ''
 
 " Python syntax
 let g:python_highlight_all = 1
@@ -107,20 +110,6 @@ let g:tagbar_type_markdown = {
         \ 'k:Heading_L3'
     \ ]
 \ }
-"rust
- let g:tagbar_type_rust = {
-    \ 'ctagstype' : 'rust',
-    \ 'kinds' : [
-        \'T:types,type definitions',
-        \'f:functions,function definitions',
-        \'g:enum,enumeration names',
-        \'s:structure names',
-        \'m:modules,module names',
-        \'c:consts,static constants',
-        \'t:traits,traits',
-        \'i:impls,trait implementations',
-    \]
-    \}
 "ultisnips
 let g:tagbar_type_snippets = {
     \ 'ctagstype' : 'snippets',
@@ -130,11 +119,11 @@ let g:tagbar_type_snippets = {
 \ }
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger ="<M-e>"
-let g:UltiSnipsJumpForwardTrigger ="<tab>"
-let g:UltiSnipsJumpBackwardTrigger ="<s-tab>"
-let g:UltiSnipsSnippetsDir = $HOME . "/.local/share/nvim/site/mysnippets"
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "mysnippets"]
+let g:UltiSnipsExpandTrigger = '<M-e>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsSnippetsDir = $HOME . '/.local/share/nvim/site/mysnippets'
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'mysnippets']
 " let g:ultisnips_python_style = 'google'
 let g:ultisnips_python_style = 'sphinx'
 
@@ -144,19 +133,33 @@ let g:undotree_WindowLayout = 2
 nmap <silent> <M-4> :UndotreeToggle<CR>
 
 " vim-gnupg
-let g:GPGPreferArmor=1
-let g:GPGPreferSign=1
-
-augroup GnuPGExtra
-  autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
-  autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
-augroup END
+let g:GPGPreferArmor = 1
+let g:GPGPreferSign = 1
 
 function SetGPGOptions()
   set updatetime=60000
   set foldmethod=marker
   set foldclose=all
 endfunction
+
+augroup GnuPGExtra
+  autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
+  autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+augroup END
+
+"vim-lua-ftplugin
+let g:lua_check_syntax = 0
+let g:lua_complete_omni = 1
+let g:lua_complete_dynamic = 0
+let g:lua_define_completion_mappings = 0
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+let g:deoplete#omni#input_patterns.lua = '\w+|[^. *\t][.:]\w*'
+if !exists('g:deoplete#omni#functions')
+  let g:deoplete#omni#functions = {}
+endif
+let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/'}]

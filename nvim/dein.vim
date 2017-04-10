@@ -33,6 +33,10 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('mbbill/undotree', {'on_cmd': ':UndotreeToggle'})
   call dein#add('rhysd/vim-grammarous', {'on_map': '<Plug>'})
   call dein#add('w0rp/ale', {'on_ft': ['python', 'javascript', 'html', 'css']})
+  call dein#add('xolox/vim-misc')
+  call dein#add('monkoose/luarefvim')
+  call dein#add('xolox/vim-lua-ftplugin', {'on_ft': 'lua',
+                                         \ 'depends': ['vim-misc', 'luarefvim']})
   " python
   call dein#add('tweekmonster/django-plus.vim')
   call dein#add('vim-python/python-syntax', {'on_ft': 'python'})
