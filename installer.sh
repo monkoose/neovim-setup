@@ -2,7 +2,7 @@
 
 # Helper functions
 msg() {
-    printf '\033[1m%b\033[0m\n' "$1" >&2
+    printf "\033[1m%b\033[0m\n" "$1" >&2
 }
 
 error() {

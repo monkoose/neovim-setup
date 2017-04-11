@@ -30,7 +30,6 @@ let delimitMate_expand_space = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#statement_length = 40
 let g:python3_host_prog = '/usr/bin/python'
-let g:python_host_prog = '/usr/bin/python2'
 let g:deoplete#max_list = 40
 let g:deoplete#max_abbr_width = 40
 

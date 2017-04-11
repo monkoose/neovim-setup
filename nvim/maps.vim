@@ -17,11 +17,6 @@ nmap <silent> <F3> :setlocal spell!<CR>
 nnoremap <leader>U mQviwU`Q
 nnoremap <leader>u mQviwu`Q
 
-" Fix H and L maps doesn't jump correctly because of 'scrolloff'
-" where 5 is scrolloff size
-" nmap H H5k
-" nmap L L5j
-
 " CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
 function! KeymapChange()
   if &iminsert == 0
