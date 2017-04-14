@@ -51,8 +51,9 @@ nnoremap <C-k> <C-u>
 nnoremap <C-l> <space>
 vnoremap <C-j> <C-d>
 vnoremap <C-k> <C-u>
-inoremap <C-j> <C-n>
+" Insert digraph
 inoremap <C-p> <C-k>
+inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
 "Move cursor with Alt-hjkl
 inoremap <expr><M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
