@@ -32,6 +32,14 @@ let g:deoplete#sources#jedi#statement_length = 40
 let g:python3_host_prog = '/usr/bin/python'
 let g:deoplete#max_list = 40
 let g:deoplete#max_abbr_width = 40
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+let g:deoplete#omni#input_patterns.lua = '\w+|[^. *\t][.:]\w*'
+if !exists('g:deoplete#omni#functions')
+  let g:deoplete#omni#functions = {}
+endif
+let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
 " Gist-vim
 let g:gist_show_privates = 1
@@ -151,14 +159,6 @@ let g:lua_check_syntax = 0
 let g:lua_complete_omni = 1
 let g:lua_complete_dynamic = 0
 let g:lua_define_completion_mappings = 0
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.lua = '\w+|[^. *\t][.:]\w*'
-if !exists('g:deoplete#omni#functions')
-  let g:deoplete#omni#functions = {}
-endif
-let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
