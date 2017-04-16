@@ -63,7 +63,7 @@ endfunction
 function! LightLineLineinfo()
     let fname = expand('%:t')
     return fname == 'ControlP' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ 'NERD_tree_' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
                 \ fname =~ '__Tagbar__' ? '' :
@@ -75,7 +75,7 @@ endfunction
 function! LightLinePercent()
     let fname = expand('%:t')
     return fname == 'ControlP' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ 'NERD_tree_' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
                 \ fname =~ '__Tagbar__' ? '' :
@@ -111,7 +111,7 @@ function! LightLineFilename()
         endif
         return g:lightline.rightseparator . g:lightline.fname
     endif
-    return fname =~ 'NERD_tree\|undotree_2\|diffpanel_3' ? '' :
+    return fname =~ 'NERD_tree_\|undotree_2\|diffpanel_3' ? '' :
                 \ fname == 'Startify' ? '' :
                 \ &ft == 'qf' ? '' :
                 \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
@@ -122,7 +122,7 @@ endfunction
 function! LightLineMode()
     let fname = expand('%:t')
     return fname == 'ControlP' ? ' CtrlP' . g:lightline.leftseparator :
-                \ fname =~ 'NERD_tree' ? ' NERDTree' :
+                \ fname =~ 'NERD_tree_' ? ' NERDTree' :
                 \ fname == 'undotree_2' ? ' UndoTree' :
                 \ fname == 'diffpanel_3' ? ' diff' :
                 \ fname =~ '__Tagbar__' ? ' Tagbar' :
@@ -135,7 +135,7 @@ endfunction
 function! LightLineInactiveMode()
     let fname = expand('%:t')
     return fname == 'ControlP' ? ' CtrlP' :
-                \ fname =~ 'NERD_tree' ? ' NERDTree' :
+                \ fname =~ 'NERD_tree_' ? ' NERDTree' :
                 \ fname == 'undotree_2' ? ' UndoTree' :
                 \ fname == 'diffpanel_3' ? ' diff' :
                 \ fname =~ '__Tagbar__' ? ' Tagbar' :
@@ -147,7 +147,7 @@ endfunction
 function! LightLineGit()
     try
         if exists('*fugitive#head') &&
-                    \ expand('%:t') !~? 'NERD_tree\|undotree_2\|diffpanel_3\|__Tagbar__' &&
+                    \ expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3\|__Tagbar__' &&
                     \ &ft != 'qf'
             let mark = ''
             let _ = fugitive#head()
@@ -174,7 +174,7 @@ endfunction
 function! LightLineFiletype()
     let fname = expand('%:t')
     return fname == 'ControlP' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ 'NERD_tree_' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
                 \ fname =~ '__Tagbar__' ? '' :
@@ -186,7 +186,7 @@ endfunction
 function! LightLineFileencoding()
     let fname = expand('%:t')
     return fname == 'ControlP' ? '' :
-                \ fname =~ 'NERD_tree' ? '' :
+                \ fname =~ 'NERD_tree_' ? '' :
                 \ fname == 'undotree_2' ? '' :
                 \ fname == 'diffpanel_3' ? '' :
                 \ fname =~ '__Tagbar__' ? '' :
