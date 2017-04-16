@@ -72,6 +72,13 @@ let g:jedi#usages_command = '<space>u'
 let g:jedi#documentation_command = 'K'
 let g:jedi#completions_command = ''
 
+" NERDTree
+nmap <silent> <M-1> :NERDTreeToggle<CR>
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeQuitOnOpen = 1
+let NERDTreeRespectWildIgnore = 1
+
 " Python syntax
 let g:python_highlight_all = 1
 let g:python_highlight_space_errors = 0
