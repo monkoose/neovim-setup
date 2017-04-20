@@ -41,6 +41,10 @@ if !exists('g:deoplete#omni#functions')
 endif
 let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
+" Echodoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#highlight_identifier = "Function"
+
 " Gist-vim
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
