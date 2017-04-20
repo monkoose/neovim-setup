@@ -7,7 +7,7 @@ let g:lightline = {
                 \ ],
                 \ 'right': [
                                \ [ 'ale', 'percent' ],
-                               \ [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
+                               \ [ 'kmap', 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
                 \ ]
         \ },
         \ 'inactive': {
@@ -28,6 +28,7 @@ let g:lightline = {
                 \ 'inactivemode':  'LightLineInactiveMode',
                 \ 'percent':       'LightLinePercent',
                 \ 'virtualenv':    'LightLineVenv',
+                \ 'kmap':          'LightLineKeymap',
         \ },
         \ 'component_expand': {
                 \ 'ale': 'ALEGetStatusLine',
@@ -48,6 +49,10 @@ endfunction
 
 function! LightLineSpell()
     return &spell ? 'S' . g:lightline.leftseparator : ''
+endfunction
+
+function! LightLineKeymap()
+    return &iminsert == 1 ? '[ru]' : ''
 endfunction
 
 function! LightLineCWD()

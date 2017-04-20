@@ -82,5 +82,5 @@ function! SetTermColors()
 endfunction
 augroup terminalcolors
   autocmd!
-  autocmd TermOpen * :call SetTermColors()
+  autocmd TermOpen * call SetTermColors()
 augroup END
