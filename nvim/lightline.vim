@@ -2,12 +2,12 @@ let g:lightline = {
         \ 'colorscheme': 'boa',
         \ 'active': {
                 \ 'left':  [
-                               \ [ 'lineinfo', 'mode', 'paste', 'spell' ],
+                               \ [ 'lineinfo', 'mode', 'kmap', 'paste', 'spell' ],
                                \ [ 'git', 'filename' ]
                 \ ],
                 \ 'right': [
                                \ [ 'ale', 'percent' ],
-                               \ [ 'kmap', 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
+                               \ [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype', 'cwd' ]
                 \ ]
         \ },
         \ 'inactive': {
