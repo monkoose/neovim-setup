@@ -1,10 +1,10 @@
 " ALE
 let g:ale_linters = {
-      \ 'javascript': ['jshint'],
-      \ 'python': ['flake8'],
-      \ 'css': ['csslint'],
-      \ 'html': ['HTMLHint'],
-      \ }
+    \ 'javascript': ['jshint'],
+    \ 'python': ['flake8'],
+    \ 'css': ['csslint'],
+    \ 'html': ['HTMLHint'],
+    \ }
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
@@ -51,9 +51,9 @@ let g:gist_post_private = 1
 " Grammarous
 let g:grammarous#languagetool_cmd = 'languagetool'
 let g:grammarous#disabled_rules = {
-        \ 'vim' : ['EN_QUOTES', 'EN_UNPAIRED_BRACKETS'],
-        \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-        \ }
+    \ 'vim' : ['EN_QUOTES', 'EN_UNPAIRED_BRACKETS'],
+    \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+    \ }
 map <silent> <F5> :GrammarousCheck<CR>
 
 " JavaScript libraries syntax
@@ -97,13 +97,13 @@ let g:startify_change_to_dir = 0
 let g:startify_enable_special = 0
 
 let g:startify_list_order = [
-      \ ['    -== SESSIONS ==-'],
-      \ 'sessions',
-      \ ['    -== MRU ==-          ' . getcwd()],
-      \ 'dir',
-      \ ['    -== BOOKMARKS ==-'],
-      \ 'bookmarks',
-      \ ]
+    \ ['    -== SESSIONS ==-'],
+    \ 'sessions',
+    \ ['    -== MRU ==-          ' . getcwd()],
+    \ 'dir',
+    \ ['    -== BOOKMARKS ==-'],
+    \ 'bookmarks',
+    \ ]
 
 " Tagbar
 let g:tagbar_autofocus = 1
@@ -112,12 +112,12 @@ nmap <silent> <M-8> :TagbarToggle<CR>
 nmap <silent> <leader>tt :TagbarCurrentTag('fs')<CR>
 "css
 let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
+    \ 'ctagstype' : 'Css',
+        \ 'kinds'     : [
+            \ 'c:classes',
+            \ 's:selectors',
+            \ 'i:identities'
+        \ ]
 \ }
 "markdown
 let g:tagbar_type_markdown = {
@@ -131,9 +131,7 @@ let g:tagbar_type_markdown = {
 "ultisnips
 let g:tagbar_type_snippets = {
     \ 'ctagstype' : 'snippets',
-    \ 'kinds' : [
-        \ 's:snippets',
-    \ ]
+    \ 'kinds' : ['s:snippets',]
 \ }
 
 " UltiSnips

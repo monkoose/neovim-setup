@@ -102,7 +102,8 @@ function! ToggleLocationList()
   let winnr = winnr()
   let prevwinnr = winnr("#")
   let curbufnr = winbufnr(0)
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Location List"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Location List"'),
+        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
     if curbufnr == bufnum
       exec prevwinnr . "wincmd w"
       lclose
@@ -125,7 +126,8 @@ endfunction
 function! ToggleQuickfixList()
   let winnr = winnr()
   let prevwinnr = winnr("#")
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'),
+        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
     if bufwinnr(bufnum) != -1
       exec prevwinnr . "wincmd w"
       cclose
@@ -139,11 +141,12 @@ nmap <script> <silent> <M-2> :call ToggleQuickfixList()<CR>
 
 " Remove all scratch buffers
 function! RemoveScratch()
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Scratch"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Scratch"'),
+        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
     execute 'bwipeout' bufnum
   endfor
   echohl MoreMsg
   echo "Scratch buffers were removed."
   echohl None
 endfunction
-nmap <script> <silent> <F5> :call RemoveScratch()<CR>
+nmap <script> <silent> <F4> :call RemoveScratch()<CR>
