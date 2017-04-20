@@ -18,17 +18,7 @@ nnoremap <leader>U mQviwU`Q
 nnoremap <leader>u mQviwu`Q
 
 " CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
-function! KeymapChange()
-  if &iminsert == 0
-    set iminsert=1
-    set imsearch=1
-  else
-    set iminsert=0
-    set imsearch=0
-  endif
-endfunction
-cnoremap <C-space> <C-^>
-inoremap <silent> <C-space> <C-o>:call KeymapChange()<CR>
+map! <C-space> <C-^>
 nmap <expr><C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
 
 " Yank and Paste clipboard
