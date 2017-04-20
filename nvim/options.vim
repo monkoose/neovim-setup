@@ -12,6 +12,8 @@ set iminsert=0
 set imsearch=0
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
+set number
+set relativenumber
 set nowrap
 set ignorecase
 set smartcase
@@ -24,7 +26,6 @@ set showcmd
 set undodir=~/.local/share/nvim/undo-files/
 set viewoptions=cursor,folds
 set scrolljump=12
-" set scrolloff=5
 set linebreak
 set showbreak=└
 set list
