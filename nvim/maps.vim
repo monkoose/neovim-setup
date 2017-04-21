@@ -55,6 +55,17 @@ cnoremap <C-p> <Up>
 
 " Exit to normal mode in Terminal
 tnoremap <C-]> <C-\><C-n>
+" NeoTerm
+let g:neoterm_automap_keys = ',tt'
+nnoremap <silent> <f10> :TREPLSendFile<cr>
+nnoremap <silent> <f9> :TREPLSendLine<cr>
+vnoremap <silent> <f9> :TREPLSendSelection<cr>
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<cr>
 
 " Fugitive Gstatus
 noremap <leader>g :Gstatus<Cr>

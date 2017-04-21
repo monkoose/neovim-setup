@@ -109,7 +109,7 @@ let g:startify_list_order = [
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 nmap <silent> <M-8> :TagbarToggle<CR>
-nmap <silent> <leader>tt :TagbarCurrentTag('fs')<CR>
+nmap <silent> <M-9> :TagbarCurrentTag('fs')<CR>
 "css
 let g:tagbar_type_css = {
     \ 'ctagstype' : 'Css',

@@ -11,8 +11,8 @@ let g:lightline = {
         \ ]
     \ },
     \ 'inactive': {
-        \ 'left':  [ [ 'inactivemode' ] ],
-        \ 'right': [ [ 'percent' ], [ 'lineinfo', 'filename' ] ]
+        \ 'left':  [ [ 'lineinfo', 'inactivemode', 'filename' ] ],
+        \ 'right': [ [ 'percent' ] ]
     \ },
     \ 'component_function': {
         \ 'cwd':           'LightLineCWD',
@@ -74,6 +74,7 @@ function! LightLineLineinfo()
        \ fname =~ '__Tagbar__' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
+       \ expand('%:p') =~ 'term://' ? '' :
        \ printf('%2d', col('.')) . g:lightline.leftseparator
 endfunction
     " \ printf('%3d : %-2d', line('.'), col('.')) . g:lightline.leftseparator
@@ -120,8 +121,9 @@ function! LightLineFilename()
   return fname =~ 'NERD_tree_\|undotree_2\|diffpanel_3' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft == 'qf' ? '' :
-       \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+       \ expand('%:p') =~ 'term://' ? '' :
        \ ('' != fname ? relpath : '[No Name]') .
+       \ ('' != LightLineReadonly() ? ' ' . LightLineReadonly() : '') .
        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
@@ -134,7 +136,9 @@ function! LightLineMode()
        \ fname =~ '__Tagbar__' ? ' Tagbar' :
        \ fname == 'Startify' ? ' Startify  ' :
        \ fname == 'LocationList' ? ' Location List' :
-       \ &ft == 'qf' ? ' QuickFix' : ''
+       \ &ft == 'qf' ? ' QuickFix' :
+       \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
+       \ expand('%:p') =~ 'term://' ? 'terminal' : ''
        " \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
 endfunction
 
@@ -147,7 +151,9 @@ function! LightLineInactiveMode()
        \ fname =~ '__Tagbar__' ? ' Tagbar' :
        \ fname == 'Startify' ? 'Startify  ' :
        \ fname == 'LocationList' ? ' Location List' :
-       \ &ft == 'qf' ? ' QuickFix' : ''
+       \ &ft == 'qf' ? ' QuickFix' :
+       \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
+       \ expand('%:p') =~ 'term://' ? 'terminal' : ''
 endfunction
 
 function! LightLineGit()
@@ -186,6 +192,7 @@ function! LightLineFiletype()
        \ fname =~ '__Tagbar__' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
+       \ expand('%:p') =~ 'term://' ? '' :
        \ winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
@@ -199,6 +206,7 @@ function! LightLineFileencoding()
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
        \ &fenc == 'utf-8' ? '' :
+       \ expand('%:p') =~ 'term://' ? '' :
        \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
        \ &enc . g:lightline.leftseparator) : ''
 endfunction
