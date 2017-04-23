@@ -41,9 +41,15 @@ if !exists('g:deoplete#omni#functions')
 endif
 let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
+" Easymotion
+nmap <space><space> <Plug>(easymotion-s)
+
 " Echodoc
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#highlight_identifier = "Function"
+
+" Fugitive Gstatus
+noremap <leader>g :Gstatus<Cr>
 
 " Gist-vim
 let g:gist_show_privates = 1
@@ -75,6 +81,18 @@ let g:jedi#goto_assignments_command = '<space>d'
 let g:jedi#usages_command = '<space>u'
 let g:jedi#documentation_command = 'K'
 let g:jedi#completions_command = ''
+
+" NeoTerm
+let g:neoterm_automap_keys = ',tt'
+nnoremap <silent> <f10> :TREPLSendFile<cr>
+nnoremap <silent> <f9> :TREPLSendLine<cr>
+vnoremap <silent> <f9> :TREPLSendSelection<cr>
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<cr>
 
 " NERDTree
 nmap <silent> <M-1> :NERDTreeToggle<CR>

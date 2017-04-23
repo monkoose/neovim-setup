@@ -1,6 +1,4 @@
-" map leader to ,
 let mapleader = ','
-" backward search
 nnoremap \ ,
 " disable search highlighting
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -8,28 +6,23 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 inoremap <C-l> <Del>
 " switch between two buffers
 nnoremap <space>a <C-^>
-
 " Paste and Spell toggle
 set pastetoggle=<F2>
 nmap <silent> <F3> :setlocal spell!<CR>
-
 " UPPER/lower entire word
 nnoremap <leader>U mQviwU`Q
 nnoremap <leader>u mQviwu`Q
-
 " CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
 map! <C-space> <C-^>
 nmap <expr><C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
-
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
 nnoremap <space>p "+p
 vnoremap <space>p "+p
-
+" Jump to keyword definition
 nnoremap <space>f <C-]>
-nmap <space><space> <Plug>(easymotion-s)
-
+" Remap C-j and C-k to scroll halfpage
 nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
 nnoremap <C-l> <space>
@@ -37,6 +30,7 @@ vnoremap <C-j> <C-d>
 vnoremap <C-k> <C-u>
 " Insert digraph
 inoremap <C-p> <C-k>
+" Autocompletion scroll
 inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
 "Move cursor with Alt-hjkl
@@ -52,29 +46,15 @@ cnoremap <M-j> <Down>
 cnoremap <M-k> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
-
 " Exit to normal mode in Terminal
 tnoremap <C-]> <C-\><C-n>
-" NeoTerm
-let g:neoterm_automap_keys = ',tt'
-nnoremap <silent> <f10> :TREPLSendFile<cr>
-nnoremap <silent> <f9> :TREPLSendLine<cr>
-vnoremap <silent> <f9> :TREPLSendSelection<cr>
-" hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
-
-" Fugitive Gstatus
-noremap <leader>g :Gstatus<Cr>
-
 " Windows manipulations
 nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o
 nnoremap <M-w> <C-w>w
 nnoremap <M-d> :bd<CR>
+" Toggle foldcolumn
+nnoremap cof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
 
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort
