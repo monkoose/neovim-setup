@@ -1,3 +1,8 @@
+" Ag
+nnoremap <space>ss :AgBuffer!<space>
+nnoremap <space>sa :Ag!<space>
+let g:ag_mapping_message = 0
+
 " ALE
 let g:ale_linters = {
     \ 'javascript': ['jshint'],
