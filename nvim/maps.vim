@@ -1,7 +1,7 @@
 let mapleader = ','
 nnoremap \ ,
 " disable search highlighting
-nmap <silent> <leader>/ :nohlsearch<CR>
+nmap <silent> <space>/ :nohlsearch<CR>
 " let Ctrl-l to delete forward char
 inoremap <C-l> <Del>
 " switch between two buffers
@@ -10,11 +10,11 @@ nnoremap <space>a <C-^>
 set pastetoggle=<F2>
 nmap <silent> <F3> :setlocal spell!<CR>
 " UPPER/lower entire word
-nnoremap <leader>U mQviwU`Q
-nnoremap <leader>u mQviwu`Q
+nnoremap <space>U mQviwU`Q
+nnoremap <space>u mQviwu`Q
 " CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
 map! <C-space> <C-^>
-nmap <expr><C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
+nmap <expr> <C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
@@ -34,7 +34,7 @@ inoremap <C-p> <C-k>
 inoremap <C-j> <C-n>
 inoremap <C-k> <C-p>
 "Move cursor with Alt-hjkl
-inoremap <expr><M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
+inoremap <expr> <M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
 inoremap <M-l> <Right>
 nnoremap <M-h> <Left>
 nnoremap <M-l> <Right>

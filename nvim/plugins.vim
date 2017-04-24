@@ -58,6 +58,13 @@ nmap <space><space> <Plug>(easymotion-s)
 " let g:echodoc#enable_at_startup = 1
 " let g:echodoc#highlight_identifier = 'Function'
 
+" Fugitive
+nnoremap <space>gg :Gstatus<CR>
+nnoremap <space>gb :Gblame<CR>
+nnoremap <space>gc :Gcommit<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>gp :Gpush<CR>
+
 " Gist-vim
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
@@ -75,24 +82,25 @@ let g:jedi#show_call_signatures = 0
 let g:jedi#show_call_signatures_delay = 0
 let g:jedi#completions_enabled = 1
 let g:jedi#smart_auto_mappings = 0
-let g:jedi#goto_command = '<space>g'
-let g:jedi#rename_command = '<space>r'
-let g:jedi#goto_assignments_command = '<space>d'
-let g:jedi#usages_command = '<space>u'
+let g:jedi#use_tag_stack = 0
+let g:jedi#goto_command = '<space>jg'
+let g:jedi#rename_command = '<space>jr'
+let g:jedi#goto_assignments_command = '<space>jd'
+let g:jedi#usages_command = '<space>ju'
 let g:jedi#documentation_command = 'K'
 let g:jedi#completions_command = ''
 
 " NeoTerm
-let g:neoterm_automap_keys = ',tt'
+let g:neoterm_automap_keys = '<space>tt'
 nnoremap <silent> <f10> :TREPLSendFile<cr>
 nnoremap <silent> <f9> :TREPLSendLine<cr>
 vnoremap <silent> <f9> :TREPLSendSelection<cr>
 " hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
+nnoremap <silent> <space>th :call neoterm#close()<cr>
 " clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
+nnoremap <silent> <space>tl :call neoterm#clear()<cr>
 " kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
+nnoremap <silent> <space>tc :call neoterm#kill()<cr>
 
 " NERDTree
 nmap <silent> <M-1> :NERDTreeToggle<CR>

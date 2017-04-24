@@ -149,7 +149,7 @@ function! LightLineInactiveMode()
        \ fname == 'undotree_2' ? ' UndoTree' :
        \ fname == 'diffpanel_3' ? ' diff' :
        \ fname =~ '__Tagbar__' ? ' Tagbar' :
-       \ fname == 'Startify' ? 'Startify  ' :
+       \ fname == 'Startify' ? ' Startify  ' :
        \ fname == 'LocationList' ? ' Location List' :
        \ &ft == 'qf' ? ' QuickFix' :
        \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
@@ -157,27 +157,30 @@ function! LightLineInactiveMode()
 endfunction
 
 function! LightLineGit()
-  if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3\|__Tagbar__' &&
-        \ expand('%:p') !~? 'term:\/\/' &&
-        \ &ft != 'qf' && gina#component#repo#branch() != ''
-    let mark = ''
-    let branchname = gina#component#repo#branch()
-    let symbols = ['+', '~', '-']
-    let hunks = GitGutterGetHunkSummary()
-    let ret = []
-    for i in [0, 1, 2]
-      if hunks[i] > 0
-        call add(ret, symbols[i] . hunks[i])
+  try
+    if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3\|__Tagbar__' &&
+          \ expand('%:p') !~? 'term:\/\/' &&
+          \ &ft != 'qf' && exists('*fugitive#head')
+      let mark = ''
+      let branchname = fugitive#head()
+      let symbols = ['+', '~', '-']
+      let hunks = GitGutterGetHunkSummary()
+      let ret = []
+      for i in [0, 1, 2]
+        if hunks[i] > 0
+          call add(ret, symbols[i] . hunks[i])
+        endif
+      endfor
+      if ret != []
+        let gitgutter = ' ' . join(ret, ' ')
+      else
+        let gitgutter = ''
       endif
-    endfor
-    if ret != []
-      let gitgutter = ' ' . join(ret, ' ')
-    else
-      let gitgutter = ''
+      let gitinfo = mark.branchname . gitgutter . '  '
+      return strlen(branchname) && winwidth(0) > 80 ? gitinfo : ''
     endif
-    let gitinfo = mark.branchname . gitgutter . '  '
-    return winwidth(0) > 80 ? gitinfo : ''
-  endif
+  catch
+  endtry
   return ''
 endfunction
 
