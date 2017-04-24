@@ -43,7 +43,6 @@ set shada=!,'100,<50,:50,s10,h
 set textwidth=79
 set colorcolumn=80
 set completeopt=menuone,longest
-set grepprg=ag\ --nogroup\ --nocolor
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c

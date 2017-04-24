@@ -52,7 +52,7 @@ function! LightLineSpell()
 endfunction
 
 function! LightLineKeymap()
-  return &iminsert == 1 ? '[ru]' : ''
+  return &iminsert == 1 ? '[ru] ' : ''
 endfunction
 
 function! LightLineCWD()
@@ -74,7 +74,7 @@ function! LightLineLineinfo()
        \ fname =~ '__Tagbar__' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
-       \ expand('%:p') =~ 'term://' ? '' :
+       \ expand('%:p') =~ 'term:\/\/' ? '' :
        \ printf('%2d', col('.')) . g:lightline.leftseparator
 endfunction
     " \ printf('%3d : %-2d', line('.'), col('.')) . g:lightline.leftseparator
@@ -121,7 +121,7 @@ function! LightLineFilename()
   return fname =~ 'NERD_tree_\|undotree_2\|diffpanel_3' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft == 'qf' ? '' :
-       \ expand('%:p') =~ 'term://' ? '' :
+       \ expand('%:p') =~ 'term:\/\/' ? '' :
        \ ('' != fname ? relpath : '[No Name]') .
        \ ('' != LightLineReadonly() ? ' ' . LightLineReadonly() : '') .
        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
@@ -138,7 +138,7 @@ function! LightLineMode()
        \ fname == 'LocationList' ? ' Location List' :
        \ &ft == 'qf' ? ' QuickFix' :
        \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
-       \ expand('%:p') =~ 'term://' ? 'terminal' : ''
+       \ expand('%:p') =~ 'term:\/\/' ? 'terminal' : ''
        " \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
 endfunction
 
@@ -153,29 +153,31 @@ function! LightLineInactiveMode()
        \ fname == 'LocationList' ? ' Location List' :
        \ &ft == 'qf' ? ' QuickFix' :
        \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
-       \ expand('%:p') =~ 'term://' ? 'terminal' : ''
+       \ expand('%:p') =~ 'term:\/\/' ? 'terminal' : ''
 endfunction
 
 function! LightLineGit()
-  try
-    if exists('*fugitive#head') &&
-        \ expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3\|__Tagbar__' &&
-        \ &ft != 'qf'
-      let mark = ''
-      let _ = fugitive#head()
-      let symbols = ['+', '~', '-']
-      let hunks = GitGutterGetHunkSummary()
-      let ret = []
-      for i in [0, 1, 2]
-        if hunks[i] > 0
-          call add(ret, symbols[i] . hunks[i])
-        endif
-      endfor
-      let gitter = mark._ . ' ' . join(ret, ' ') . ' ' . g:lightline.leftseparator
-      return strlen(_) &&  winwidth(0) > 80 ? gitter : ''
+  if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3\|__Tagbar__' &&
+        \ expand('%:p') !~? 'term:\/\/' &&
+        \ &ft != 'qf' && gina#component#repo#branch() != ''
+    let mark = ''
+    let branchname = gina#component#repo#branch()
+    let symbols = ['+', '~', '-']
+    let hunks = GitGutterGetHunkSummary()
+    let ret = []
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(ret, symbols[i] . hunks[i])
+      endif
+    endfor
+    if ret != []
+      let gitgutter = ' ' . join(ret, ' ')
+    else
+      let gitgutter = ''
     endif
-  catch
-  endtry
+    let gitinfo = mark.branchname . gitgutter . '  '
+    return winwidth(0) > 80 ? gitinfo : ''
+  endif
   return ''
 endfunction
 
@@ -192,7 +194,7 @@ function! LightLineFiletype()
        \ fname =~ '__Tagbar__' ? '' :
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
-       \ expand('%:p') =~ 'term://' ? '' :
+       \ expand('%:p') =~ 'term:\/\/' ? '' :
        \ winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
@@ -206,7 +208,7 @@ function! LightLineFileencoding()
        \ fname == 'Startify' ? '' :
        \ &ft   == 'qf' ? '' :
        \ &fenc == 'utf-8' ? '' :
-       \ expand('%:p') =~ 'term://' ? '' :
+       \ expand('%:p') =~ 'term:\/\/' ? '' :
        \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
        \ &enc . g:lightline.leftseparator) : ''
 endfunction

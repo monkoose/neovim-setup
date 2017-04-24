@@ -14,17 +14,27 @@ let g:ale_lint_on_text_changed = 0
 let g:ale_statusline_format = ['E:%d', 'W:%d', '']
 let g:ale_set_highlights = 0
 
+" Auto-pairs
+let g:AutoPairsShortcutFastWrap = ''
+
 " CtrlP
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:30'
 let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-let g:ctrlp_use_caching = 0
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+elseif executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
 let g:ctrlp_open_new_file = 'r'
 
-" DelimitMate
-let delimitMate_expand_cr = 2
-let delimitMate_expand_space = 1
+" " DelimitMate
+" let delimitMate_expand_cr = 2
+" let delimitMate_expand_space = 1
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -45,22 +55,12 @@ let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 nmap <space><space> <Plug>(easymotion-s)
 
 " Echodoc
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#highlight_identifier = "Function"
-
-" Fugitive Gstatus
-noremap <leader>g :Gstatus<Cr>
+" let g:echodoc#enable_at_startup = 1
+" let g:echodoc#highlight_identifier = 'Function'
 
 " Gist-vim
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
-" Grammarous
-let g:grammarous#languagetool_cmd = 'languagetool'
-let g:grammarous#disabled_rules = {
-    \ 'vim' : ['EN_QUOTES', 'EN_UNPAIRED_BRACKETS'],
-    \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-    \ }
-map <silent> <F5> :GrammarousCheck<CR>
 
 " JavaScript libraries syntax
 let g:used_javascript_libs = 'jquery'
@@ -177,6 +177,7 @@ function SetGPGOptions()
 endfunction
 
 augroup GnuPGExtra
+  autocmd!
   autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
   autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
 augroup END
