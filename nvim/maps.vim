@@ -18,8 +18,8 @@ nmap <expr> <C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
-nnoremap <space>p "+p
-vnoremap <space>p "+p
+nnoremap <space>pp "+p
+vnoremap <space>pp "+p
 " Jump to keyword definition
 nnoremap <space>f <C-]>
 " Remap C-j and C-k to scroll halfpage

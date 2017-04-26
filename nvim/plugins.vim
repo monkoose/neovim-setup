@@ -15,7 +15,7 @@ let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 0
+" let g:ale_lint_on_text_changed = 0
 let g:ale_statusline_format = ['E:%d', 'W:%d', '']
 let g:ale_set_highlights = 0
 
@@ -183,7 +183,7 @@ nmap <silent> <M-4> :UndotreeToggle<CR>
 let g:GPGPreferArmor = 1
 let g:GPGPreferSign = 1
 
-function SetGPGOptions()
+function! SetGPGOptions()
   set updatetime=60000
   set foldmethod=marker
   set foldclose=all
