@@ -1,8 +1,3 @@
-" Ag
-nnoremap <space>ss :AgBuffer!<space>
-nnoremap <space>sa :Ag!<space>
-let g:ag_mapping_message = 0
-
 " ALE
 let g:ale_linters = {
     \ 'javascript': ['jshint'],
@@ -15,38 +10,20 @@ let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_lint_on_enter = 0
-" let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_text_changed = 0
 let g:ale_statusline_format = ['E:%d', 'W:%d', '']
 let g:ale_set_highlights = 0
 
 " Auto-pairs
 let g:AutoPairsShortcutFastWrap = ''
 
-" CtrlP
-let g:ctrlp_by_filename = 1
-let g:ctrlp_match_window = 'bottom,order:btt,min:10,max:10,results:30'
-let g:ctrlp_working_path_mode = 'a'
-if executable('rg')
-  set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-elseif executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-let g:ctrlp_open_new_file = 'r'
-
-" " DelimitMate
-" let delimitMate_expand_cr = 2
-" let delimitMate_expand_space = 1
-
 " Deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#statement_length = 40
+let g:deoplete#sources#jedi#statement_length = 60
+let g:deoplete#sources#jedi#server_timeout = 25
 let g:python3_host_prog = '/usr/bin/python'
 let g:deoplete#max_list = 40
-let g:deoplete#max_abbr_width = 40
+let g:deoplete#max_abbr_width = 60
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
@@ -60,8 +37,12 @@ let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 nmap <space><space> <Plug>(easymotion-s)
 
 " Echodoc
-" let g:echodoc#enable_at_startup = 1
-" let g:echodoc#highlight_identifier = 'Function'
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#highlight_identifier = 'Function'
+
+" Open in url in browser
+nmap gG <Plug>(openbrowser-smart-search)
+vmap gG <Plug>(openbrowser-smart-search)
 
 " Fugitive
 nnoremap <space>gg :Gstatus<CR>
@@ -69,6 +50,16 @@ nnoremap <space>gb :Gblame<CR>
 nnoremap <space>gc :Gcommit<CR>
 nnoremap <space>gd :Gdiff<CR>
 nnoremap <space>gp :Gpush<CR>
+
+" Fzf
+let g:fzf_command_prefix = 'Fzf'
+
+command! -bang -nargs=* FzfRg
+  \ call fzf#vim#grep(
+  \   'rg --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 
 " Gist-vim
 let g:gist_show_privates = 1
@@ -85,7 +76,7 @@ let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = 0
 let g:jedi#show_call_signatures_delay = 0
-let g:jedi#completions_enabled = 1
+let g:jedi#completions_enabled = 0
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#use_tag_stack = 0
 let g:jedi#goto_command = '<space>jg'
@@ -135,35 +126,6 @@ let g:startify_list_order = [
     \ ['    -== BOOKMARKS ==-'],
     \ 'bookmarks',
     \ ]
-
-" Tagbar
-let g:tagbar_autofocus = 1
-let g:tagbar_sort = 0
-nmap <silent> <M-8> :TagbarToggle<CR>
-nmap <silent> <M-9> :TagbarCurrentTag('fs')<CR>
-"css
-let g:tagbar_type_css = {
-    \ 'ctagstype' : 'Css',
-        \ 'kinds'     : [
-            \ 'c:classes',
-            \ 's:selectors',
-            \ 'i:identities'
-        \ ]
-\ }
-"markdown
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
-\ }
-"ultisnips
-let g:tagbar_type_snippets = {
-    \ 'ctagstype' : 'snippets',
-    \ 'kinds' : ['s:snippets',]
-\ }
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger = '<M-e>'

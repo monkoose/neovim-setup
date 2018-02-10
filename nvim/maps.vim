@@ -12,16 +12,26 @@ nmap <silent> <F3> :setlocal spell!<CR>
 " UPPER/lower entire word
 nnoremap <space>U mQviwU`Q
 nnoremap <space>u mQviwu`Q
-" CTRL-SPACE monster key(expand/close CtrlP in normal mode, else change keymap)
+
 map! <C-space> <C-^>
-nmap <expr> <C-space> expand('%:t') == 'ControlP' ? "\<C-c>" : ":CtrlPBuffer<CR>"
+nmap <C-space> :FzfBuffers<CR>
+nmap <space>ff :FzfFiles<CR>
+nmap <space>fg :FzfGFiles?<CR>
+nmap <space>ft :FzfBTags<CR>
+nmap <space>fa :FzfTags<CR>
+nmap <space>fc :FzfCommits<CR>
+nmap <space>fb :FzfBCommits<CR>
+nmap <space>fm :FzfMarks<CR>
+nmap <space>ss :FzfRg<space>
+nmap <space>sb :FzfBLines<space>
+
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
 nnoremap <space>pp "+p
 vnoremap <space>pp "+p
 " Jump to keyword definition
-nnoremap <space>f <C-]>
+nnoremap <space>d <C-]>
 " Remap C-j and C-k to scroll halfpage
 nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
@@ -36,10 +46,6 @@ inoremap <C-k> <C-p>
 "Move cursor with Alt-hjkl
 inoremap <expr> <M-h> pumvisible() ? deoplete#mappings#smart_close_popup() : "\<Left>"
 inoremap <M-l> <Right>
-nnoremap <M-h> <Left>
-nnoremap <M-l> <Right>
-nnoremap <M-j> <Down>
-nnoremap <M-k> <Up>
 cnoremap <M-h> <Left>
 cnoremap <M-l> <Right>
 cnoremap <M-j> <Down>
@@ -59,11 +65,11 @@ nnoremap cof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort
   if a:0
-    let [line, col] = [a:1, a:2]
+    let [line, column] = [a:1, a:2]
   else
-    let [line, col] = [line('.'), col('.')]
+    let [line, column] = [line('.'), col('.')]
   endif
-  return reverse(map(synstack(line, col), 'synIDattr(v:val,"name")'))
+  return reverse(map(synstack(line, column), 'synIDattr(v:val,"name")'))
 endfunction
 
 function! s:syncount(count)

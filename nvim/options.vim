@@ -12,6 +12,7 @@ set iminsert=0
 set imsearch=0
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
+set nofixendofline
 set number
 set relativenumber
 set nowrap
@@ -29,7 +30,7 @@ set scrolljump=12
 set linebreak
 set showbreak=└
 set list
-set listchars=tab:→·,trail:·,extends:▐,precedes:▌,nbsp:~
+set listchars=tab:→-,trail:·,extends:▐,precedes:▌,nbsp:~
 set fillchars=vert:\ ,fold:_,
 set tabpagemax=20
 set smartindent
@@ -47,6 +48,7 @@ set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c
 set diffopt=filler,vertical
+set guicursor=
 
 " Folds prettifier
 function! NeatFoldText()
