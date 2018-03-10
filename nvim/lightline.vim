@@ -30,7 +30,7 @@ let g:lightline = {
         \ 'kmap':          'LightLineKeymap',
     \ },
     \ 'component_expand': {
-        \ 'ale': 'ALEGetStatusLine',
+        \ 'ale': 'ALEStatusLine',
     \ },
     \ 'component_type': {
         \ 'ale': 'error',
@@ -187,6 +187,14 @@ function! LightLineFileencoding()
        \ expand('%:p') =~ 'term:\/\/' ? '' :
        \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
        \ &enc . g:lightline.leftseparator) : ''
+endfunction
+
+function! ALEStatusLine() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '' : printf('E:%d W:%d', all_errors, all_non_errors)
 endfunction
 
 " ALE

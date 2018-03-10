@@ -57,8 +57,8 @@ let g:fzf_command_prefix = 'Fzf'
 command! -bang -nargs=* FzfRg
   \ call fzf#vim#grep(
   \   'rg --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0 ? fzf#vim#with_preview('up:60%:wrap')
+  \           : fzf#vim#with_preview('right:50%:hidden:wrap', '?'),
   \   <bang>0)
 
 " Gist-vim

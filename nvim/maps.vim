@@ -22,8 +22,8 @@ nmap <space>fa :FzfTags<CR>
 nmap <space>fc :FzfCommits<CR>
 nmap <space>fb :FzfBCommits<CR>
 nmap <space>fm :FzfMarks<CR>
-nmap <space>ss :FzfRg<space>
-nmap <space>sb :FzfBLines<space>
+nmap <space>ss :FzfRg!<CR>
+nmap <space>sb :FzfBLines<CR>
 
 " Yank and Paste clipboard
 nnoremap <space>y "+y
