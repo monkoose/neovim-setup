@@ -1,8 +1,8 @@
 filetype plugin indent on
 syntax enable
 set termguicolors
-set background=dark
 colorscheme boa
+set background=dark
 set title
 set synmaxcol=1000
 set hidden

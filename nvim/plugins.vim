@@ -15,7 +15,11 @@ let g:ale_statusline_format = ['E:%d', 'W:%d', '']
 let g:ale_set_highlights = 0
 
 " Auto-pairs
-let g:AutoPairsShortcutFastWrap = ''
+" let g:AutoPairsShortcutFastWrap = ''
+
+" Delimitmate
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -87,16 +91,19 @@ let g:jedi#documentation_command = 'K'
 let g:jedi#completions_command = ''
 
 " NeoTerm
-let g:neoterm_automap_keys = '<space>tt'
+let g:neoterm_automap_keys = '<space>t'
+let g:neoterm_autoscroll = 1
 nnoremap <silent> <f10> :TREPLSendFile<cr>
 nnoremap <silent> <f9> :TREPLSendLine<cr>
 vnoremap <silent> <f9> :TREPLSendSelection<cr>
 " hide/close terminal
-nnoremap <silent> <space>th :call neoterm#close()<cr>
+nnoremap <silent> <space>tc :Tclose<cr>
+" toggle last terminal
+nnoremap <silent> <space>tt :Ttoggle<cr>
 " clear terminal
-nnoremap <silent> <space>tl :call neoterm#clear()<cr>
+nnoremap <silent> <space>tl :Tclear<cr>
 " kills the current job (send a <c-c>)
-nnoremap <silent> <space>tc :call neoterm#kill()<cr>
+nnoremap <silent> <space>tk :Tkill<cr>
 
 " NERDTree
 nmap <silent> <M-1> :NERDTreeToggle<CR>
