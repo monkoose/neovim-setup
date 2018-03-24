@@ -81,7 +81,7 @@ function! SetTermColors()
   let b:terminal_color_6='#598991'
   let b:terminal_color_14='#598991'
   let b:terminal_color_7='#7a6559'
-  let b:terminal_color_15='#c2b7a9'
+  let b:terminal_color_15='#b4a695'
 endfunction
 augroup terminalcolors
   autocmd!

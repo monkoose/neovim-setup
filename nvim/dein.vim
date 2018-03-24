@@ -25,7 +25,6 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('tpope/vim-unimpaired')
   call dein#add('tpope/vim-commentary')
   call dein#add('Raimondi/delimitMate')
-  " call dein#add('jiangmiao/auto-pairs')
   call dein#add('tyru/open-browser.vim')
   call dein#add('itchyny/lightline.vim')
   call dein#add('airblade/vim-gitgutter',

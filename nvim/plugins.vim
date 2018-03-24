@@ -14,9 +14,6 @@ let g:ale_lint_on_text_changed = 0
 let g:ale_statusline_format = ['E:%d', 'W:%d', '']
 let g:ale_set_highlights = 0
 
-" Auto-pairs
-" let g:AutoPairsShortcutFastWrap = ''
-
 " Delimitmate
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
@@ -93,9 +90,10 @@ let g:jedi#completions_command = ''
 " NeoTerm
 let g:neoterm_automap_keys = '<space>t'
 let g:neoterm_autoscroll = 1
-nnoremap <silent> <f10> :TREPLSendFile<cr>
-nnoremap <silent> <f9> :TREPLSendLine<cr>
-vnoremap <silent> <f9> :TREPLSendSelection<cr>
+let g:neoterm_default_mod = "belowright"
+nnoremap <silent> <f10> :Topen \| TREPLSendFile<cr>
+nnoremap <silent> <f9> :Topen \| TREPLSendLine<cr>
+vnoremap <silent> <f9> :Topen \| TREPLSendSelection<cr>
 " hide/close terminal
 nnoremap <silent> <space>tc :Tclose<cr>
 " toggle last terminal
