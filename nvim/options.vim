@@ -63,27 +63,3 @@ function! NeatFoldText()
   return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 set foldtext=NeatFoldText()
-
-" Terminal colors
-function! SetTermColors()
-  let b:terminal_color_0='#171202'
-  let b:terminal_color_8='#513c32'
-  let b:terminal_color_1='#e36660'
-  let b:terminal_color_9='#e36660'
-  let b:terminal_color_2='#599161'
-  let b:terminal_color_10='#599161'
-  let b:terminal_color_3='#b58b4e'
-  let b:terminal_color_11='#b58b4e'
-  let b:terminal_color_4='#7a9ac6'
-  let b:terminal_color_12='#7a9ac6'
-  let b:terminal_color_5='#a686b2'
-  let b:terminal_color_13='#a686b2'
-  let b:terminal_color_6='#598991'
-  let b:terminal_color_14='#598991'
-  let b:terminal_color_7='#7a6559'
-  let b:terminal_color_15='#b4a695'
-endfunction
-augroup terminalcolors
-  autocmd!
-  autocmd TermOpen * call SetTermColors()
-augroup END
