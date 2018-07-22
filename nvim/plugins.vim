@@ -18,11 +18,20 @@ let g:ale_set_highlights = 0
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
+" Denite
+" call denite#custom#var('grep', 'command', ['ag'])
+" call denite#custom#var('grep', 'default_opts',
+"                 \ ['-i', '--vimgrep'])
+" call denite#custom#var('grep', 'recursive_opts', [])
+" call denite#custom#var('grep', 'pattern_opt', [])
+" call denite#custom#var('grep', 'separator', ['--'])
+" call denite#custom#var('grep', 'final_opts', [])
+
+
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#statement_length = 60
 let g:deoplete#sources#jedi#server_timeout = 25
-let g:python3_host_prog = '/usr/bin/python'
 let g:deoplete#max_list = 40
 let g:deoplete#max_abbr_width = 60
 if !exists('g:deoplete#omni#input_patterns')
@@ -36,6 +45,18 @@ let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 
 " Easymotion
 nmap <space><space> <Plug>(easymotion-s)
+
+" Esearch
+let g:esearch#cmdline#help_prompt = 0
+call esearch#out#win#map('<C-n>', 'next-file')
+call esearch#out#win#map('<C-p>', 'prev-file')
+call esearch#out#win#map('S', 'split-silent')
+call esearch#out#win#map('I', 'vsplit-silent')
+call esearch#out#win#map('<C-t>', 'tab')
+call esearch#out#win#map('<C-x>', 'split')
+call esearch#out#win#map('<C-v>', 'vsplit')
+nmap <space>se <Plug>(esearch)
+nmap <space>sw <Plug>(esearch-word-under-cursor)
 
 " Echodoc
 let g:echodoc#enable_at_startup = 1
@@ -55,16 +76,36 @@ nnoremap <space>gp :Gpush<CR>
 " Fzf
 let g:fzf_command_prefix = 'Fzf'
 
-command! -bang -nargs=* FzfRg
-  \ call fzf#vim#grep(
-  \   'rg --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+command! -bang -nargs=* FzfMyAg
+  \ call fzf#vim#ag(<q-args>,
   \   <bang>0 ? fzf#vim#with_preview('up:60%:wrap')
   \           : fzf#vim#with_preview('right:50%:hidden:wrap', '?'),
   \   <bang>0)
 
+" Open QuickFix with marked items from fzf
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let g:fzf_colors =
+  \ { 'info':    ['fg', 'PreProc'],
+    \ 'prompt':  ['fg', 'Special'] }
+
 " Gist-vim
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
+
+" Gruvbox
+let g:gruvbox_italic = 1
+let g:gruvbox_italicize_comments = 1
 
 " JavaScript libraries syntax
 let g:used_javascript_libs = 'jquery'

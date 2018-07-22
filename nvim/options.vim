@@ -1,7 +1,7 @@
 filetype plugin indent on
 syntax enable
 set termguicolors
-colorscheme boa
+colorscheme gruvbox
 set background=dark
 set title
 set synmaxcol=1000
@@ -13,8 +13,6 @@ set imsearch=0
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
-set number
-set relativenumber
 set nowrap
 set ignorecase
 set smartcase
@@ -30,8 +28,9 @@ set scrolljump=12
 set linebreak
 set showbreak=└
 set list
+set cursorline
 set listchars=tab:→-,trail:·,extends:▐,precedes:▌,nbsp:~
-set fillchars=vert:\ ,fold:_,
+set fillchars=vert:⎢,fold:+,
 set tabpagemax=20
 set smartindent
 set shiftround
@@ -49,17 +48,19 @@ set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c
 set diffopt=filler,vertical
 set guicursor=
+set inccommand=split
 
 " Folds prettifier
 function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart),
         \ '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let lines_count_text = printf("%10s", lines_count . ' lines  ')
   let foldchar = matchstr(&fillchars, 'fold:\zs.')
-  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(foldchar, 6)
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+  let emptychar = ' '
+  let foldtextstart = strpart(repeat(foldchar, v:foldlevel) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(emptychar, 6)
+  let foldtextlength = strlen( substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(emptychar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 set foldtext=NeatFoldText()

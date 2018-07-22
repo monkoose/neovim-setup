@@ -1,10 +1,12 @@
 set runtimepath+=$HOME/.local/share/nvim/site/dein/repos/github.com/Shougo/dein.vim
+let g:python3_host_prog = '/usr/bin/python'
 
 if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#begin(expand('$HOME/.local/share/nvim/site/dein'))
 
   call dein#add('kassio/neoterm')
   call dein#add('Shougo/dein.vim')
+  call dein#add('monkoose/gruvbox')
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-eunuch')
   call dein#add('monkoose/boa.vim')
@@ -12,11 +14,13 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('SirVer/ultisnips', {'on_event': 'InsertEnter'})
   call dein#add('junegunn/fzf', {'build': './install --all'})
   call dein#add('junegunn/fzf.vim')
+  call dein#add('junegunn/vim-easy-align')
   call dein#add('jamessan/vim-gnupg')
+  call dein#add('eugen0329/vim-esearch')
   call dein#add('kopischke/vim-stay')
   call dein#add('mhinz/vim-startify')
   call dein#add('tpope/vim-fugitive')
-  call dein#add('gregsexton/gitv')
+  " call dein#add('Shougo/denite.nvim')
   call dein#add('tpope/vim-surround')
   call dein#add('honza/vim-snippets', {'on_event': 'InsertEnter'})
   call dein#add('wellle/targets.vim',
@@ -32,7 +36,6 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('easymotion/vim-easymotion', {'on_map': '<Plug>'})
   call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
-  call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('vimwiki/vimwiki', {'on_map': '<Plug>'})
   call dein#add('mbbill/undotree', {'on_cmd': ':UndotreeToggle'})
   call dein#add('scrooloose/nerdtree', {'on_cmd': ':NERDTreeToggle'})
@@ -50,8 +53,10 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
                                          \ 'depends': ['vim-misc', 'luarefvim']})
   "------------------- python
   call dein#add('tweekmonster/django-plus.vim')
+  call dein#add('Glench/Vim-Jinja2-Syntax')
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
-  call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
+  call dein#add('davidhalter/jedi-vim', {'on_ft': 'python',
+        \ 'on_event': ['CursorHold', 'CursorHoldI', 'CursorMoved', 'CursorMovedI']})
   call dein#add('vim-python/python-syntax', {'on_ft': 'python'})
   call dein#add('Vimjas/vim-python-pep8-indent', {'on_ft': 'python'})
   "------------------- frontend

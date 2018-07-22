@@ -22,7 +22,7 @@ nmap <space>fa :FzfTags<CR>
 nmap <space>fc :FzfCommits<CR>
 nmap <space>fb :FzfBCommits<CR>
 nmap <space>fm :FzfMarks<CR>
-nmap <space>ss :FzfRg!<CR>
+nmap <space>ss :FzfMyAg!<CR>
 nmap <space>sb :FzfBLines<CR>
 
 " Yank and Paste clipboard
