@@ -1,5 +1,5 @@
 let g:lightline = {
-    \ 'colorscheme': 'boa',
+    \ 'colorscheme': 'my_gruvbox',
     \ 'active': {
         \ 'left':  [
             \ [ 'lineinfo', 'mode', 'kmap', 'paste', 'spell' ],
@@ -11,7 +11,7 @@ let g:lightline = {
         \ ]
     \ },
     \ 'inactive': {
-        \ 'left':  [ [ 'lineinfo', 'inactivemode', 'filename' ] ],
+        \ 'left':  [ [ 'lineinfo', 'mode', 'filename' ] ],
         \ 'right': [ [ 'percent' ] ]
     \ },
     \ 'component_function': {
@@ -24,7 +24,6 @@ let g:lightline = {
         \ 'filetype':      'LightLineFiletype',
         \ 'fileencoding':  'LightLineFileencoding',
         \ 'mode':          'LightLineMode',
-        \ 'inactivemode':  'LightLineInactiveMode',
         \ 'percent':       'LightLinePercent',
         \ 'virtualenv':    'LightLineVenv',
         \ 'kmap':          'LightLineKeymap',
@@ -39,15 +38,26 @@ let g:lightline = {
     \ 'subseparator': { 'left': '', 'right': '' }
 \ }
 
-let g:lightline.leftseparator  = '  '
-let g:lightline.rightseparator = '  '
+let s:leftseparator  = '  '
+let s:rightseparator = '  '
+
+function! FilenameOrFiletypeMatch () abort
+  let l:fname = expand('%:t')
+  return l:fname =~ 'NERD_tree' ? 1 :
+       \ l:fname =~ 'undotree_2\|diffpanel_3' ? 1 :
+       \ &ft     == 'qf' ? 1 :
+       \ &ft     == 'startify' ? 1 :
+       \ l:fname == '__doc__' && &ft == 'rst' ? 1 :
+       \ expand('%:p') =~ 'term:\/\/' ? 1 :
+       \ 0
+endfunction
 
 function! LightLinePaste()
-  return &paste ? 'P' . g:lightline.leftseparator : ''
+  return &paste ? 'P' . s:leftseparator : ''
 endfunction
 
 function! LightLineSpell()
-  return &spell ? 'S' . g:lightline.leftseparator : ''
+  return &spell ? 'S' . s:leftseparator : ''
 endfunction
 
 function! LightLineKeymap()
@@ -61,132 +71,100 @@ function! LightLineVenv()
 endfunction
 
 function! LightLineLineinfo()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? '' :
-       \ fname == 'undotree_2' ? '' :
-       \ fname == 'diffpanel_3' ? '' :
-       \ fname == 'Startify' ? '' :
-       \ &ft   == 'qf' ? '' :
-       \ expand('%:p') =~ 'term:\/\/' ? '' :
-       \ printf('%2d', col('.')) . g:lightline.leftseparator
+  return FilenameOrFiletypeMatch() ? '' :
+       \ printf('%3d : %-2d', line('.'), col('.')) . s:leftseparator
 endfunction
-    " \ printf('%3d : %-2d', line('.'), col('.')) . g:lightline.leftseparator
+       " \ printf('%2d', col('.')) . s:leftseparator
 
-function! LightLinePercent()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? '' :
-       \ fname == 'undotree_2' ? '' :
-       \ fname == 'diffpanel_3' ? '' :
-       \ fname == 'Startify' ? '' :
-       \ &ft   == 'qf' ? line('$') :
-       \ g:lightline.rightseparator . LightLinePercentHelper()
-endfunction
-
-function! LightLinePercentHelper()
+function! PercentHelper() abort
   return line('w0') == 1 ? 'Top' :
        \ line('w$') == line('$') ? 'Bot' :
        \ printf('%2.0f', (100.0 * line('.') / line('$'))) . '%'
 endfunction
 
-function! LightLineModified()
+function! LightLinePercent()
+  let l:fname = expand('%:t')
+  return l:fname =~ 'NERD_tree_' ? '' :
+       \ l:fname == 'undotree_2' ? '' :
+       \ l:fname == 'diffpanel_3' ? '' :
+       \ &ft     == 'Startify' ? '' :
+       \ &ft     == 'qf' ? line('$') :
+       \ s:rightseparator . PercentHelper()
+endfunction
+
+function! IsModified() abort
   return &ft =~ 'help' ? '' : &modified ? '[+]' : &modifiable ? '' : '[-]'
 endfunction
 
-function! LightLineReadonly()
+function! IsReadOnly() abort
   return &ft !~? 'help' && &readonly ? '[RO]' : ''
 endfunction
 
 function! LightLineFilename()
-  let fname = expand('%:t')
-  let relpath = strlen(expand('%:.')) > 50 ? '../' . expand('%:t') : expand('%:.')
-  return fname =~ 'NERD_tree_\|undotree_2\|diffpanel_3' ? '' :
-       \ fname == 'Startify' ? '' :
-       \ &ft == 'qf' ? '' :
-       \ expand('%:p') =~ 'term:\/\/' ? '' :
-       \ ('' != fname ? relpath : '[No Name]') .
-       \ ('' != LightLineReadonly() ? ' ' . LightLineReadonly() : '') .
-       \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  let l:relpath = strlen(expand('%:.')) > 50 ? '../' . expand('%:t') : expand('%:.')
+  return FilenameOrFiletypeMatch() ? '' :
+       \ ('' != expand('%:t') ? relpath : '[No Name]') .
+          \ ('' != IsReadOnly() ? ' ' . IsReadOnly() : '') .
+          \ ('' != IsModified() ? ' ' . IsModified() : '')
 endfunction
 
-function! LightLineMode()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? ' NERDTree' :
-       \ fname == 'undotree_2' ? ' UndoTree' :
-       \ fname == 'diffpanel_3' ? ' diff' :
-       \ fname == 'Startify' ? ' Startify  ' :
-       \ fname == 'LocationList' ? ' Location List' :
-       \ &ft == 'qf' ? ' QuickFix' :
-       \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
-       \ expand('%:p') =~ 'term:\/\/' ? 'terminal' : ''
-       " \ winwidth(0) > 60 ? lightline#mode() . g:lightline.leftseparator : ''
+function! LightLineMode() abort
+  let l:fname = expand('%:t')
+  return l:fname =~ 'NERD_tree' ? 'NERD TREE' :
+       \ l:fname =~ 'undotree_2' ? 'UNDO TREE' :
+       \ l:fname =~ 'diffpanel_3' ? 'DIFF' :
+       \ l:fname == 'LocationList' ? 'LOCATION LIST' :
+       \ &ft     == 'qf' ? 'QUICK FIX' :
+       \ &ft     == 'startify' ? 'STARTIFY' :
+       \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING' :
+       \ expand('%:p') =~ 'term:\/\/' ? &ft == 'fzf' ? 'FZF' : &ft == 'neoterm' ? 'NEOTERM' : 'TERMINAL' :
+       \ ''
 endfunction
 
-function! LightLineInactiveMode()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? ' NERDTree' :
-       \ fname == 'undotree_2' ? ' UndoTree' :
-       \ fname == 'diffpanel_3' ? ' diff' :
-       \ fname == 'Startify' ? ' Startify  ' :
-       \ fname == 'LocationList' ? ' Location List' :
-       \ &ft == 'qf' ? ' QuickFix' :
-       \ fname =~ '#neoterm-\d' ? 'NeoTerm ' . fname[match(fname, '\d'):] :
-       \ expand('%:p') =~ 'term:\/\/' ? 'terminal' : ''
-endfunction
-
+" Shows branch name and number of hunks
 function! LightLineGit()
   try
     if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3' &&
           \ expand('%:p') !~? 'term:\/\/' &&
           \ &ft != 'qf' && exists('*fugitive#head')
-      let mark = ''
-      let branchname = fugitive#head()
-      let symbols = ['+', '~', '-']
-      let hunks = GitGutterGetHunkSummary()
-      let ret = []
+      let l:mark = ''
+      let l:branchname = fugitive#head()
+      let l:symbols = ['+', '~', '-']
+      let l:hunks = GitGutterGetHunkSummary()
+      let l:ret = []
       for i in [0, 1, 2]
-        if hunks[i] > 0
-          call add(ret, symbols[i] . hunks[i])
+        if l:hunks[i] > 0
+          call add(l:ret, l:symbols[i] . l:hunks[i])
         endif
       endfor
       if ret != []
-        let gitgutter = ' ' . join(ret, ' ')
+        let l:gitgutter = ' ' . join(l:ret, ' ')
       else
-        let gitgutter = ''
+        let l:gitgutter = ''
       endif
-      let gitinfo = mark.branchname . gitgutter . '  '
-      return strlen(branchname) && winwidth(0) > 80 ? gitinfo : ''
+      let l:gitinfo = l:mark.l:branchname . l:gitgutter . '  '
+      return strlen(l:branchname) && winwidth(0) > 80 ? l:gitinfo : ''
     endif
   catch
   endtry
   return ''
 endfunction
 
+" Shows nothing if fileformat is 'unix', shows fileformat otherwise
 function! LightLineFileformat()
-  return winwidth(0) > 70 && &fileformat != 'unix' ? &fileformat . g:lightline.leftseparator : ''
+  return winwidth(0) > 70 && &fileformat != 'unix' ? &fileformat . s:leftseparator : ''
 endfunction
 
 function! LightLineFiletype()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? '' :
-       \ fname == 'undotree_2' ? '' :
-       \ fname == 'diffpanel_3' ? '' :
-       \ fname == 'Startify' ? '' :
-       \ &ft   == 'qf' ? '' :
-       \ expand('%:p') =~ 'term:\/\/' ? '' :
+  return FilenameOrFiletypeMatch() ? '' :
        \ winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
 function! LightLineFileencoding()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree_' ? '' :
-       \ fname == 'undotree_2' ? '' :
-       \ fname == 'diffpanel_3' ? '' :
-       \ fname == 'Startify' ? '' :
-       \ &ft   == 'qf' ? '' :
+  return FilenameOrFiletypeMatch() ? '' :
        \ &fenc == 'utf-8' ? '' :
-       \ expand('%:p') =~ 'term:\/\/' ? '' :
-       \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . g:lightline.leftseparator :
-       \ &enc . g:lightline.leftseparator) : ''
+       \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . s:leftseparator :
+       \ &enc . s:leftseparator) : ''
 endfunction
 
 function! ALEStatusLine() abort
@@ -200,5 +178,5 @@ endfunction
 " ALE
 augroup AutoALE
   autocmd!
-  autocmd User ALELint call lightline#update()
+  autocmd User ALELintPost call lightline#update()
 augroup END

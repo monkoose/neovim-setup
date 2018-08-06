@@ -28,9 +28,8 @@ set scrolljump=12
 set linebreak
 set showbreak=└
 set list
-set cursorline
-set listchars=tab:→-,trail:·,extends:▐,precedes:▌,nbsp:~
-set fillchars=vert:⎢,fold:+,
+set listchars=tab:→-,trail:·,extends:⌇,precedes:⌇,nbsp:~
+set fillchars=vert:▌,fold:·,
 set tabpagemax=20
 set smartindent
 set shiftround
@@ -55,12 +54,12 @@ function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart),
         \ '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = printf("%10s", lines_count . ' lines  ')
+  let lines_count_text = printf('  ' . "%10s", lines_count . ' lines  ')
   let foldchar = matchstr(&fillchars, 'fold:\zs.')
-  let emptychar = ' '
-  let foldtextstart = strpart(repeat(foldchar, v:foldlevel) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(emptychar, 6)
+  " let emptychar = ' '
+  let foldtextstart = strpart(repeat('+', v:foldlevel) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 6)
   let foldtextlength = strlen( substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(emptychar, winwidth(0)-foldtextlength) . foldtextend
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 set foldtext=NeatFoldText()

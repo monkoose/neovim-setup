@@ -59,8 +59,10 @@ nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o
 nnoremap <M-w> <C-w>w
 nnoremap <M-d> :bd<CR>
+" Easy-align
+vmap <Enter> <Plug>(EasyAlign)
 " Toggle foldcolumn
-nnoremap cof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
+nnoremap yof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
 
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort

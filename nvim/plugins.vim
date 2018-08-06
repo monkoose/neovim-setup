@@ -103,10 +103,6 @@ let g:fzf_colors =
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
-" Gruvbox
-let g:gruvbox_italic = 1
-let g:gruvbox_italicize_comments = 1
-
 " JavaScript libraries syntax
 let g:used_javascript_libs = 'jquery'
 let g:javascript_plugin_jsdoc = 1
@@ -203,7 +199,7 @@ augroup GnuPGExtra
   autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
 augroup END
 
-"vim-lua-ftplugin
+" vim-lua-ftplugin
 let g:lua_check_syntax = 0
 let g:lua_complete_omni = 1
 let g:lua_complete_dynamic = 0
