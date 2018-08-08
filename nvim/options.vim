@@ -40,7 +40,6 @@ set nojoinspaces
 set sessionoptions-=blank
 set shada=!,'100,<50,:50,s10,h
 set textwidth=79
-set colorcolumn=80
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
@@ -48,6 +47,7 @@ set shortmess+=c
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
+set updatetime=1500
 
 " Folds prettifier
 function! NeatFoldText()

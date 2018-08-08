@@ -16,11 +16,11 @@ nnoremap <space>u mQviwu`Q
 map! <C-space> <C-^>
 nmap <C-space> :FzfBuffers<CR>
 nmap <space>ff :FzfFiles<CR>
-nmap <space>fg :FzfGFiles?<CR>
+nmap <space>fg :FzfGFiles!?<CR>
 nmap <space>ft :FzfBTags<CR>
 nmap <space>fa :FzfTags<CR>
-nmap <space>fc :FzfCommits<CR>
-nmap <space>fb :FzfBCommits<CR>
+nmap <space>fc :FzfCommits!<CR>
+nmap <space>fb :FzfBCommits!<CR>
 nmap <space>fm :FzfMarks<CR>
 nmap <space>ss :FzfMyAg!<CR>
 nmap <space>sb :FzfBLines<CR>
@@ -63,6 +63,7 @@ nnoremap <M-d> :bd<CR>
 vmap <Enter> <Plug>(EasyAlign)
 " Toggle foldcolumn
 nnoremap yof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
+nnoremap <silent>yoy :let &cc = &cc == '' ? '80' : ''<CR>
 
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort

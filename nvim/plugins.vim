@@ -76,11 +76,10 @@ nnoremap <space>gp :Gpush<CR>
 " Fzf
 let g:fzf_command_prefix = 'Fzf'
 
-command! -bang -nargs=* FzfMyAg
-  \ call fzf#vim#ag(<q-args>,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%:wrap')
-  \           : fzf#vim#with_preview('right:50%:hidden:wrap', '?'),
-  \   <bang>0)
+command! -bang -nargs=* FzfMyAg call fzf#vim#ag(<q-args>, fzf#vim#with_preview('up:60%:wrap'), <bang>0)
+command! -bang -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': '--preview-window up:60%:wrap'}, <bang>0)
+command! -bang FzfCommits call fzf#vim#commits({'options': '--preview-window up:60%:wrap'}, <bang>0)
+command! -bang FzfBCommits call fzf#vim#buffer_commits({'options': '--preview-window up:60%:wrap'}, <bang>0)
 
 " Open QuickFix with marked items from fzf
 function! s:build_quickfix_list(lines)

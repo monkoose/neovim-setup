@@ -2,17 +2,17 @@ let g:lightline = {
     \ 'colorscheme': 'my_gruvbox',
     \ 'active': {
         \ 'left':  [
-            \ [ 'lineinfo', 'mode', 'kmap', 'paste', 'spell' ],
-            \ [ 'git', 'filename' ]
+            \ [ 'mode', 'kmap', 'paste', 'spell' ],
+            \ [ 'filename', 'git' ]
         \ ],
         \ 'right': [
-            \ [ 'ale', 'percent' ],
+            \ [ 'ale', 'lineinfo', 'percent' ],
             \ [ 'virtualenv', 'fileformat', 'fileencoding', 'filetype' ]
         \ ]
     \ },
     \ 'inactive': {
-        \ 'left':  [ [ 'lineinfo', 'mode', 'filename' ] ],
-        \ 'right': [ [ 'percent' ] ]
+        \ 'left':  [ [ 'mode', 'filename' ] ],
+        \ 'right': [ [ 'lineinfo', 'percent' ] ]
     \ },
     \ 'component_function': {
         \ 'paste':         'LightLinePaste',
@@ -38,58 +38,56 @@ let g:lightline = {
     \ 'subseparator': { 'left': '', 'right': '' }
 \ }
 
-let s:leftseparator  = '  '
-let s:rightseparator = '  '
-
 function! FilenameOrFiletypeMatch () abort
   let l:fname = expand('%:t')
   return l:fname =~ 'NERD_tree' ? 1 :
        \ l:fname =~ 'undotree_2\|diffpanel_3' ? 1 :
        \ &ft     == 'qf' ? 1 :
        \ &ft     == 'startify' ? 1 :
+       \ &ft     == 'fugitiveblame' ? 1 :
+       \ &ft     == 'gitcommit' ? 1 :
        \ l:fname == '__doc__' && &ft == 'rst' ? 1 :
        \ expand('%:p') =~ 'term:\/\/' ? 1 :
        \ 0
 endfunction
 
-function! LightLinePaste()
-  return &paste ? 'P' . s:leftseparator : ''
+function! LightLinePaste() abort
+  return &paste ? 'P' : ''
 endfunction
 
-function! LightLineSpell()
-  return &spell ? 'S' . s:leftseparator : ''
+function! LightLineSpell() abort
+  return &spell ? 'S' : ''
 endfunction
 
-function! LightLineKeymap()
-  return &iminsert == 1 ? '[ru] ' : ''
+function! LightLineKeymap() abort
+  return &iminsert == 1 ? '[ru]' : ''
 endfunction
 
-function! LightLineVenv()
+function! LightLineVenv() abort
   return &ft =~# 'python' &&
       \ winwidth(0) > 70 &&
       \ $VIRTUAL_ENV != '' ? printf('(%s)', fnamemodify($VIRTUAL_ENV, ':t')) : ''
 endfunction
 
-function! LightLineLineinfo()
+function! LightLineLineinfo() abort
   return FilenameOrFiletypeMatch() ? '' :
-       \ printf('%3d : %-2d', line('.'), col('.')) . s:leftseparator
+       \ printf(' %2d', line('.'))
 endfunction
-       " \ printf('%2d', col('.')) . s:leftseparator
 
 function! PercentHelper() abort
-  return line('w0') == 1 ? 'Top' :
-       \ line('w$') == line('$') ? 'Bot' :
-       \ printf('%2.0f', (100.0 * line('.') / line('$'))) . '%'
+  return line('w0') == 1 ? ' Top' :
+       \ line('w$') == line('$') ? ' Bot' :
+       \ printf(' %2.0f', (100.0 * line('.') / line('$'))) . '%'
 endfunction
 
-function! LightLinePercent()
+function! LightLinePercent() abort
   let l:fname = expand('%:t')
   return l:fname =~ 'NERD_tree_' ? '' :
        \ l:fname == 'undotree_2' ? '' :
        \ l:fname == 'diffpanel_3' ? '' :
        \ &ft     == 'Startify' ? '' :
        \ &ft     == 'qf' ? line('$') :
-       \ s:rightseparator . PercentHelper()
+       \ PercentHelper()
 endfunction
 
 function! IsModified() abort
@@ -100,7 +98,7 @@ function! IsReadOnly() abort
   return &ft !~? 'help' && &readonly ? '[RO]' : ''
 endfunction
 
-function! LightLineFilename()
+function! LightLineFilename() abort
   let l:relpath = strlen(expand('%:.')) > 50 ? '../' . expand('%:t') : expand('%:.')
   return FilenameOrFiletypeMatch() ? '' :
        \ ('' != expand('%:t') ? relpath : '[No Name]') .
@@ -110,24 +108,26 @@ endfunction
 
 function! LightLineMode() abort
   let l:fname = expand('%:t')
-  return l:fname =~ 'NERD_tree' ? 'NERD TREE' :
-       \ l:fname =~ 'undotree_2' ? 'UNDO TREE' :
-       \ l:fname =~ 'diffpanel_3' ? 'DIFF' :
-       \ l:fname == 'LocationList' ? 'LOCATION LIST' :
-       \ &ft     == 'qf' ? 'QUICK FIX' :
-       \ &ft     == 'startify' ? 'STARTIFY' :
-       \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING' :
-       \ expand('%:p') =~ 'term:\/\/' ? &ft == 'fzf' ? 'FZF' : &ft == 'neoterm' ? 'NEOTERM' : 'TERMINAL' :
+  return l:fname =~ 'NERD_tree' ? 'NERDTREE ' :
+       \ l:fname =~ 'undotree_2' ? 'UNDOTREE ' :
+       \ l:fname =~ 'diffpanel_3' ? 'DIFF ' :
+       \ l:fname == 'LocationList' ? 'LOCATION LIST ' :
+       \ &ft     == 'qf' ? 'QUICK FIX ' :
+       \ &ft     == 'startify' ? 'STARTIFY ' :
+       \ &ft     == 'fugitiveblame' ? 'GIT BLAME ' :
+       \ &ft     == 'gitcommit' ? l:fname == 'index' ? 'GIT STATUS ' : 'GIT COMMIT ' :
+       \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING ' :
+       \ expand('%:p') =~ 'term:\/\/' ? &ft == 'fzf' ? 'FZF' : &ft == 'neoterm' ? 'NEOTERM ' : 'TERMINAL ' :
        \ ''
 endfunction
 
 " Shows branch name and number of hunks
-function! LightLineGit()
+function! LightLineGit() abort
   try
     if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3' &&
-          \ expand('%:p') !~? 'term:\/\/' &&
+          \ expand('%:p') !~? 'term:\/\/' && &ft != 'startify' &&
           \ &ft != 'qf' && exists('*fugitive#head')
-      let l:mark = ''
+      let l:mark = '   '
       let l:branchname = fugitive#head()
       let l:symbols = ['+', '~', '-']
       let l:hunks = GitGutterGetHunkSummary()
@@ -151,20 +151,20 @@ function! LightLineGit()
 endfunction
 
 " Shows nothing if fileformat is 'unix', shows fileformat otherwise
-function! LightLineFileformat()
-  return winwidth(0) > 70 && &fileformat != 'unix' ? &fileformat . s:leftseparator : ''
+function! LightLineFileformat() abort
+  return winwidth(0) > 70 && &fileformat != 'unix' ? &fileformat : ''
 endfunction
 
-function! LightLineFiletype()
+function! LightLineFiletype() abort
   return FilenameOrFiletypeMatch() ? '' :
        \ winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
-function! LightLineFileencoding()
+function! LightLineFileencoding() abort
   return FilenameOrFiletypeMatch() ? '' :
        \ &fenc == 'utf-8' ? '' :
-       \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc . s:leftseparator :
-       \ &enc . s:leftseparator) : ''
+       \ winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) :
+       \ ''
 endfunction
 
 function! ALEStatusLine() abort
