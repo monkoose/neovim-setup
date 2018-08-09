@@ -25,6 +25,10 @@ nmap <space>fm :FzfMarks<CR>
 nmap <space>ss :FzfMyAg!<CR>
 nmap <space>sb :FzfBLines<CR>
 
+" Jump to changes in file
+nnoremap <C-n> ]c
+nnoremap <C-p> [c
+
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y

@@ -72,6 +72,7 @@ nnoremap <space>gb :Gblame<CR>
 nnoremap <space>gc :Gcommit<CR>
 nnoremap <space>gd :Gdiff<CR>
 nnoremap <space>gp :Gpush<CR>
+nnoremap <space>ge :Gedit<CR>
 
 " Fzf
 let g:fzf_command_prefix = 'Fzf'

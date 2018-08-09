@@ -101,6 +101,7 @@ endfunction
 function! LightLineFilename() abort
   let l:relpath = strlen(expand('%:.')) > 50 ? '../' . expand('%:t') : expand('%:.')
   return FilenameOrFiletypeMatch() ? '' :
+       \ expand('%:p') =~ 'fugitive:///' ? expand('%:t') :
        \ ('' != expand('%:t') ? relpath : '[No Name]') .
           \ ('' != IsReadOnly() ? ' ' . IsReadOnly() : '') .
           \ ('' != IsModified() ? ' ' . IsModified() : '')
@@ -117,6 +118,7 @@ function! LightLineMode() abort
        \ &ft     == 'fugitiveblame' ? 'GIT BLAME ' :
        \ &ft     == 'gitcommit' ? l:fname == 'index' ? 'GIT STATUS ' : 'GIT COMMIT ' :
        \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING ' :
+       \ expand('%:p') =~ 'fugitive:///' ? 'GIT' :
        \ expand('%:p') =~ 'term:\/\/' ? &ft == 'fzf' ? 'FZF' : &ft == 'neoterm' ? 'NEOTERM ' : 'TERMINAL ' :
        \ ''
 endfunction
@@ -127,8 +129,7 @@ function! LightLineGit() abort
     if expand('%:t') !~? 'NERD_tree_\|undotree_2\|diffpanel_3' &&
           \ expand('%:p') !~? 'term:\/\/' && &ft != 'startify' &&
           \ &ft != 'qf' && exists('*fugitive#head')
-      let l:mark = '   '
-      let l:branchname = fugitive#head()
+      let l:gitstatus = FugitiveStatusline()
       let l:symbols = ['+', '~', '-']
       let l:hunks = GitGutterGetHunkSummary()
       let l:ret = []
@@ -142,8 +143,8 @@ function! LightLineGit() abort
       else
         let l:gitgutter = ''
       endif
-      let l:gitinfo = l:mark.l:branchname . l:gitgutter . '  '
-      return strlen(l:branchname) && winwidth(0) > 80 ? l:gitinfo : ''
+      let l:gitinfo = ' ' . l:gitstatus . l:gitgutter
+      return strlen(l:gitstatus) && winwidth(0) > 50 ? l:gitinfo : ''
     endif
   catch
   endtry
