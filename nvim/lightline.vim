@@ -46,6 +46,7 @@ function! FilenameOrFiletypeMatch () abort
        \ &ft     == 'startify' ? 1 :
        \ &ft     == 'fugitiveblame' ? 1 :
        \ &ft     == 'gitcommit' ? 1 :
+       \ &ft     == 'terndoc' ? 1 :
        \ l:fname == '__doc__' && &ft == 'rst' ? 1 :
        \ expand('%:p') =~ 'term:\/\/' ? 1 :
        \ 0
@@ -116,6 +117,7 @@ function! LightLineMode() abort
        \ &ft     == 'qf' ? 'QUICK FIX ' :
        \ &ft     == 'startify' ? 'STARTIFY ' :
        \ &ft     == 'fugitiveblame' ? 'GIT BLAME ' :
+       \ &ft     == 'terndoc' ? 'TERNDOC' :
        \ &ft     == 'gitcommit' ? l:fname == 'index' ? 'GIT STATUS ' : 'GIT COMMIT ' :
        \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING ' :
        \ expand('%:p') =~ 'fugitive:///' ? 'GIT' :

@@ -24,11 +24,11 @@ nmap <space>fb :FzfBCommits!<CR>
 nmap <space>fm :FzfMarks<CR>
 nmap <space>ss :FzfMyAg!<CR>
 nmap <space>sb :FzfBLines<CR>
+nmap <space>sl :FzfLines<CR>
 
 " Jump to changes in file
-nnoremap <C-n> ]c
-nnoremap <C-p> [c
-
+nmap <C-n> ]c
+nmap <C-p> [c
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
@@ -142,15 +142,3 @@ function! ToggleQuickfixList()
 endfunction
 nmap <script> <silent> <M-3> :call ToggleLocationList()<CR>
 nmap <script> <silent> <M-2> :call ToggleQuickfixList()<CR>
-
-" Remove all scratch buffers
-function! RemoveScratch()
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Scratch"'),
-        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
-    execute 'bwipeout' bufnum
-  endfor
-  echohl MoreMsg
-  echo "Scratch buffers were removed."
-  echohl None
-endfunction
-nmap <script> <silent> <F4> :call RemoveScratch()<CR>

@@ -4,6 +4,7 @@ let g:ale_linters = {
     \ 'python': ['flake8'],
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
+    \ 'd': ['dmd']
     \ }
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_sign_error = 'E'
@@ -27,21 +28,13 @@ let g:delimitMate_expand_space = 1
 " call denite#custom#var('grep', 'separator', ['--'])
 " call denite#custom#var('grep', 'final_opts', [])
 
-
 " Deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#statement_length = 60
-let g:deoplete#sources#jedi#server_timeout = 25
-let g:deoplete#max_list = 40
-let g:deoplete#max_abbr_width = 60
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.lua = '\w+|[^. *\t][.:]\w*'
-if !exists('g:deoplete#omni#functions')
-  let g:deoplete#omni#functions = {}
-endif
-let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
+call deoplete#custom#option({
+      \ 'auto_refresh_delay': 100,
+      \ 'max_list': 100,
+      \ })
+" call deoplete#custom#source('jedi', 'server_timeout', 25)
 
 " Easymotion
 nmap <space><space> <Plug>(easymotion-s)
@@ -78,9 +71,9 @@ nnoremap <space>ge :Gedit<CR>
 let g:fzf_command_prefix = 'Fzf'
 
 command! -bang -nargs=* FzfMyAg call fzf#vim#ag(<q-args>, fzf#vim#with_preview('up:60%:wrap'), <bang>0)
-command! -bang -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': '--preview-window up:60%:wrap'}, <bang>0)
-command! -bang FzfCommits call fzf#vim#commits({'options': '--preview-window up:60%:wrap'}, <bang>0)
-command! -bang FzfBCommits call fzf#vim#buffer_commits({'options': '--preview-window up:60%:wrap'}, <bang>0)
+command! -bang -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': '--preview-window up:60%'}, <bang>0)
+command! -bang FzfCommits call fzf#vim#commits({'options': '--preview-window up:60%'}, <bang>0)
+command! -bang FzfBCommits call fzf#vim#buffer_commits({'options': '--preview-window up:60%'}, <bang>0)
 
 " Open QuickFix with marked items from fzf
 function! s:build_quickfix_list(lines)
@@ -99,14 +92,9 @@ let g:fzf_colors =
   \ { 'info':    ['fg', 'PreProc'],
     \ 'prompt':  ['fg', 'Special'] }
 
-" Gist-vim
-let g:gist_show_privates = 1
-let g:gist_post_private = 1
-
 " JavaScript libraries syntax
-let g:used_javascript_libs = 'jquery'
-let g:javascript_plugin_jsdoc = 1
-
+" let g:used_javascript_libs = 'jquery'
+" let g:javascript_plugin_jsdoc = 1
 " Jedi-vim
 let g:jedi#auto_initialization = 1
 let g:jedi#force_py_version = 3
@@ -128,10 +116,13 @@ let g:jedi#completions_command = ''
 let g:neoterm_automap_keys = '<space>t'
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = "belowright"
+let g:neoterm_autoinsert = 1
 nnoremap <silent> <f10> :Topen \| TREPLSendFile<cr>
 nnoremap <silent> <f9> :Topen \| TREPLSendLine<cr>
 vnoremap <silent> <f9> :Topen \| TREPLSendSelection<cr>
 " hide/close terminal
+nnoremap <M-`> :Ttoggle<cr>
+tnoremap <M-`> <C-\><C-n>:Ttoggle<cr>
 nnoremap <silent> <space>tc :Tclose<cr>
 " toggle last terminal
 nnoremap <silent> <space>tt :Ttoggle<cr>
@@ -187,16 +178,9 @@ nmap <silent> <M-4> :UndotreeToggle<CR>
 let g:GPGPreferArmor = 1
 let g:GPGPreferSign = 1
 
-function! SetGPGOptions()
-  set updatetime=60000
-  set foldmethod=marker
-  set foldclose=all
-endfunction
-
 augroup GnuPGExtra
   autocmd!
-  autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
-  autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+  autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) set fdm=marker fcl=all
 augroup END
 
 " vim-lua-ftplugin

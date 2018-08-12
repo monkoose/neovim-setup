@@ -10,6 +10,6 @@ cp -av "$HOME/.config/nvim/maps.vim" "nvim/"
 cp -av "$HOME/.config/nvim/options.vim" "nvim/"
 cp -av "$HOME/.config/nvim/plugins.vim" "nvim/"
 cp -avr "$INSTALL_DIR/site/autoload/lightline/" "autoload/"
-cp -avr "$INSTALL_DIR/site/ftplugin/" .
+cp -avr "$INSTALL_DIR/site/after/" .
 cp -avr "$INSTALL_DIR/site/mysnippets/" .
 echo "Done."

@@ -50,7 +50,7 @@ set inccommand=split
 set updatetime=1500
 
 " Folds prettifier
-function! NeatFoldText()
+function! NeatFoldText() abort
   let line = ' ' . substitute(getline(v:foldstart),
         \ '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
