@@ -35,6 +35,8 @@ call deoplete#custom#option({
       \ 'max_list': 100,
       \ })
 " call deoplete#custom#source('jedi', 'server_timeout', 25)
+" let g:deoplete#sources#d#load_dub = 1
+" let g:deoplete#sources#d#std_path = '/home/monkoose/.dub/packages/'
 
 " Easymotion
 nmap <space><space> <Plug>(easymotion-s)
