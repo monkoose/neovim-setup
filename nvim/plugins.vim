@@ -66,7 +66,6 @@ nnoremap <space>gg :Gstatus<CR>
 nnoremap <space>gb :Gblame<CR>
 nnoremap <space>gc :Gcommit<CR>
 nnoremap <space>gd :Gdiff<CR>
-nnoremap <space>gp :Gpush<CR>
 nnoremap <space>ge :Gedit<CR>
 
 " Fzf
@@ -94,6 +93,11 @@ let g:fzf_colors =
   \ { 'info':    ['fg', 'PreProc'],
     \ 'prompt':  ['fg', 'Special'] }
 
+" Gista
+nnoremap <space>gl :Gista list<CR>
+nnoremap <space>gp :Gista post -P -d=""<Left>
+nnoremap <space>gP :Gista patch<CR>
+
 " JavaScript libraries syntax
 " let g:used_javascript_libs = 'jquery'
 " let g:javascript_plugin_jsdoc = 1
@@ -107,11 +111,6 @@ let g:jedi#show_call_signatures_delay = 0
 let g:jedi#completions_enabled = 0
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#use_tag_stack = 0
-let g:jedi#goto_command = '<space>jg'
-let g:jedi#rename_command = '<space>jr'
-let g:jedi#goto_assignments_command = '<space>jd'
-let g:jedi#usages_command = '<space>ju'
-let g:jedi#documentation_command = 'K'
 let g:jedi#completions_command = ''
 
 " NeoTerm

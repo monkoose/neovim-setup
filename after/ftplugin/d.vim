@@ -1,7 +1,7 @@
 function! DUddocPreview() abort
   let l:output = ''
   redir! => l:output
-    exec "silent DUddoc"
+    silent call dutyl#displayDDocForSymbolUnderCursor()
   redir END
   if output == ''
     echo 'No documentation found'
@@ -24,4 +24,4 @@ nnoremap <buffer> <silent> K :call DUddocPreview()<CR>
 nnoremap <buffer> <silent> <space>d :DUjump<CR>
 setlocal shiftwidth=4 softtabstop=-1
 
-nnoremap <script> <silent> <F9> :<C-u>exec 'Topen \| T dmd -run ' . expand("%")<CR>
+nnoremap <script> <silent> <F9> :<C-u>exec 'Topen \| T dmd -dw -w -unittest -run ' . expand("%")<CR>

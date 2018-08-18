@@ -58,10 +58,21 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 " Exit to normal mode in Terminal
 tnoremap <C-]> <C-\><C-n>
+tnoremap <M-w> <C-\><C-n><C-w>w
 " Windows manipulations
 nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o
-nnoremap <M-w> <C-w>w
+
+" Switch windwos with Alt+w if it is terminal buffer enter insert mode
+function! s:windowswitch() abort
+    wincmd w
+    if &ft == 'neoterm' || &ft == 'terminal'
+      startinsert
+    endif
+endfunction
+nnoremap <silent> <Plug>WindowSwitch :call <SID>windowswitch()<CR>
+nmap <M-w> <Plug>WindowSwitch
+
 nnoremap <M-d> :bd<CR>
 " Easy-align
 vmap <Enter> <Plug>(EasyAlign)
@@ -91,7 +102,7 @@ function! s:syncount(count)
   return ''
 endfunction
 
-nnoremap <silent> <Plug>ScripteaseSynnames :<C-U>exe <SID>syncount(v:count)<CR>
+nnoremap <silent> <Plug>ScripteaseSynnames :call <SID>syncount(v:count)<CR>
 nmap <F8> <Plug>ScripteaseSynnames
 
 " Toggle Location and QuickFix lists
@@ -102,7 +113,7 @@ function! s:GetBufferList()
   return buflist
 endfunction
 
-function! ToggleLocationList()
+function! s:toggle_location_list()
   let winnr = winnr()
   let prevwinnr = winnr("#")
   let curbufnr = winbufnr(0)
@@ -127,7 +138,7 @@ function! ToggleLocationList()
   endtry
 endfunction
 
-function! ToggleQuickfixList()
+function! s:toggle_quickfix_list()
   let winnr = winnr()
   let prevwinnr = winnr("#")
   for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'),
@@ -140,5 +151,7 @@ function! ToggleQuickfixList()
   endfor
     botright copen
 endfunction
-nmap <script> <silent> <M-3> :call ToggleLocationList()<CR>
-nmap <script> <silent> <M-2> :call ToggleQuickfixList()<CR>
+nnoremap <script> <silent> <Plug>ToggleQuickfixList :call <SID>toggle_quickfix_list()<CR>
+nnoremap <script> <silent> <Plug>ToggleLocationList :call <SID>toggle_location_list()<CR>
+nmap <M-2> <Plug>ToggleQuickfixList
+nmap <M-3> <Plug>ToggleLocationList
