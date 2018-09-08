@@ -40,10 +40,15 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   call dein#add('scrooloose/nerdtree', {'on_cmd': ':NERDTreeToggle'})
   call dein#add('lambdalisue/vim-gista', {'on_cmd': ':Gista'})
   call dein#add('Shougo/echodoc.vim', {'on_ft': ['vim', 'python', 'lua', 'javascript']})
-  call dein#add('w0rp/ale', {'on_ft': ['python', 'javascript', 'html', 'css', 'lua', 'd']})
+  call dein#add('w0rp/ale', {'on_ft': ['python', 'javascript', 'html', 'css', 'lua', 'd', 'haskell']})
   "-------------------- dlang
   call dein#add('idanarye/vim-dutyl', {'on_ft': 'd'})
   call dein#add('monkoose/deoplete-d', {'on_ft': 'd'})
+  "-------------------- haskell
+  call dein#add('neovimhaskell/haskell-vim', {'on_ft': 'haskell'})
+  call dein#add('Twinside/vim-hoogle', {'on_ft': 'haskell'})
+  call dein#add('eagletmt/neco-ghc', {'on_ft': 'haskell'})
+  call dein#add('parsonsmatt/intero-neovim')
   "-------------------- lua
   call dein#add('xolox/vim-misc')
   call dein#add('tbastos/vim-lua')

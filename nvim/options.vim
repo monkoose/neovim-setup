@@ -34,6 +34,7 @@ set tabpagemax=20
 set smartindent
 set shiftround
 set expandtab
+set tabstop=4
 set shiftwidth=2
 set softtabstop=-1
 set nojoinspaces

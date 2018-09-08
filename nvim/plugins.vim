@@ -4,8 +4,15 @@ let g:ale_linters = {
     \ 'python': ['flake8'],
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
-    \ 'd': ['dmd']
+    \ 'd': ['dmd'],
+    \ 'haskell': ['ghc', 'stack-ghc-mod', 'hlint']
     \ }
+
+let g:ale_fixers = {
+\   'haskell': [
+\       'hlint',
+\   ],
+\}
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
@@ -39,7 +46,7 @@ call deoplete#custom#option({
 " let g:deoplete#sources#d#std_path = '/home/monkoose/.dub/packages/'
 
 " Easymotion
-nmap <space><space> <Plug>(easymotion-s)
+nmap <space><space> <Plug>(easymotion-overwin-f)
 
 " Esearch
 let g:esearch#cmdline#help_prompt = 0
@@ -112,6 +119,18 @@ let g:jedi#completions_enabled = 0
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#use_tag_stack = 0
 let g:jedi#completions_command = ''
+
+" Intero
+let g:intero_use_neomake = 0
+let g:intero_backend = {
+        \ 'command': 'stack ghci --with-ghc intero',
+        \ 'cwd': expand('%:p:h')
+        \ }
+let g:intero_window_size = 20
+let g:necoghc_use_stack = 1
+augroup intero
+  au BufWritePost *.hs InteroReload
+augroup END
 
 " NeoTerm
 let g:neoterm_automap_keys = '<space>t'

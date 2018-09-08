@@ -58,27 +58,44 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 " Exit to normal mode in Terminal
 tnoremap <C-]> <C-\><C-n>
+tnoremap <F1> <C-\><C-n>
 tnoremap <M-w> <C-\><C-n><C-w>w
 " Windows manipulations
 nnoremap <M-q> <C-w>c
 nnoremap <M-o> <C-w>o
 
-" Switch windwos with Alt+w if it is terminal buffer enter insert mode
+" Switch windows with Alt+w if it is terminal buffer then enter insert mode too
 function! s:windowswitch() abort
     wincmd w
-    if &ft == 'neoterm' || &ft == 'terminal'
+    if &ft == 'neoterm' || &ft == 'terminal' || &ft == 'intero'
       startinsert
     endif
 endfunction
 nnoremap <silent> <Plug>WindowSwitch :call <SID>windowswitch()<CR>
 nmap <M-w> <Plug>WindowSwitch
 
-nnoremap <M-d> :bd<CR>
 " Easy-align
 vmap <Enter> <Plug>(EasyAlign)
 " Toggle foldcolumn
 nnoremap yof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
 nnoremap <silent>yoy :let &cc = &cc == '' ? '80' : ''<CR>
+
+"Ale autofix
+nnoremap <space>fi :ALEFix<CR>
+
+" Insert ; at the end of a line if there is none
+function! s:insert_dot_comma() abort
+  let column = col('.')
+  exec "normal $"
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') != ';'
+    exec "normal a;"
+  else
+    exec "normal x"
+  endif
+  call cursor(line('.'), column)
+endfunction
+nnoremap <silent> <Plug>InsertDotComma :call <SID>insert_dot_comma()<CR>
+nmap <M-f> <Plug>InsertDotComma
 
 " Show Syntax name for element under the cursor
 function! s:synnames(...) abort
