@@ -47,8 +47,7 @@ if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
   "-------------------- haskell
   call dein#add('neovimhaskell/haskell-vim', {'on_ft': 'haskell'})
   call dein#add('Twinside/vim-hoogle', {'on_ft': 'haskell'})
-  call dein#add('eagletmt/neco-ghc', {'on_ft': 'haskell'})
-  call dein#add('parsonsmatt/intero-neovim')
+  call dein#add('autozimu/LanguageClient-neovim', {'build': './install.sh'})
   "-------------------- lua
   call dein#add('xolox/vim-misc')
   call dein#add('tbastos/vim-lua')

@@ -46,7 +46,7 @@ call deoplete#custom#option({
 " let g:deoplete#sources#d#std_path = '/home/monkoose/.dub/packages/'
 
 " Easymotion
-nmap <space><space> <Plug>(easymotion-overwin-f)
+nmap <silent> <space><space> <Plug>(easymotion-overwin-f)
 
 " Esearch
 let g:esearch#cmdline#help_prompt = 0
@@ -120,17 +120,11 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#use_tag_stack = 0
 let g:jedi#completions_command = ''
 
-" Intero
-let g:intero_use_neomake = 0
-let g:intero_backend = {
-        \ 'command': 'stack ghci --with-ghc intero',
-        \ 'cwd': expand('%:p:h')
-        \ }
-let g:intero_window_size = 20
-let g:necoghc_use_stack = 1
-augroup intero
-  au BufWritePost *.hs InteroReload
-augroup END
+" Language Client
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['hie-wrapper'],
+    \ }
+let g:LanguageClient_diagnosticsEnable = 0
 
 " NeoTerm
 let g:neoterm_automap_keys = '<space>t'
