@@ -26,9 +26,23 @@ nmap <space>ss :FzfMyAg!<CR>
 nmap <space>sb :FzfBLines<CR>
 nmap <space>sl :FzfLines<CR>
 
-" Jump to changes in file
-nmap <C-n> ]c
-nmap <C-p> [c
+" Scroll preview window or jump to changes in file
+function! ScrollPreviewDownOrJumpToNextHunk()
+  if s:previewWindowOpened()
+    exec "normal! \<C-w>P3\<C-e>\<C-w>p"
+  else
+    exec "normal ]c"
+  endif
+endfunction
+function! ScrollPreviewUpOrJumpToPreviousHunk()
+  if s:previewWindowOpened()
+    exec "normal! \<C-w>P3\<C-y>\<C-w>p"
+  else
+    exec "normal [c"
+  endif
+endfunction
+nnoremap <silent> <C-n> :call ScrollPreviewDownOrJumpToNextHunk()<CR>
+nnoremap <silent> <C-p> :call ScrollPreviewUpOrJumpToPreviousHunk()<CR>
 " Yank and Paste clipboard
 nnoremap <space>y "+y
 vnoremap <space>y "+y
@@ -67,7 +81,7 @@ nnoremap <M-o> <C-w>o
 " Switch windows with Alt+w if it is terminal buffer then enter insert mode too
 function! s:windowswitch() abort
     wincmd w
-    if &ft == 'neoterm' || &ft == 'terminal' || &ft == 'intero'
+    if &ft == 'neoterm' || &ft == 'terminal'
       startinsert
     endif
 endfunction
@@ -149,7 +163,7 @@ function! s:toggle_location_list()
     endif
   catch /E776/
       echohl WarningMsg
-      echo "Location List is Empty."
+      echo "Location List is empty"
       echohl None
       return
   endtry
@@ -172,3 +186,25 @@ nnoremap <script> <silent> <Plug>ToggleQuickfixList :call <SID>toggle_quickfix_l
 nnoremap <script> <silent> <Plug>ToggleLocationList :call <SID>toggle_location_list()<CR>
 nmap <M-2> <Plug>ToggleQuickfixList
 nmap <M-3> <Plug>ToggleLocationList
+
+function! s:previewWindowOpened()
+  for nr in range(1, winnr('$'))
+    if getwinvar(nr, "&pvw") == 1
+      " found a preview
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
+" Close preview window
+function! s:closePreviewWindow()
+  if s:previewWindowOpened()
+    pclose
+  else
+    echo "There is no Preview window"
+  endif
+endfunction
+nnoremap <script> <silent> <Plug>ClosePreviewWindow :call <SID>closePreviewWindow()<CR>
+nmap q <Plug>ClosePreviewWindow
+nnoremap Q q

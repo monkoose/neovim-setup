@@ -6,6 +6,7 @@ function! TernPreviewDoc() abort
     return
   endtry
   setlocal filetype=terndoc
+  exec "normal! \<C-w>p"
 endfunction
 
 augroup terndoc_filetype_defaults
@@ -15,5 +16,5 @@ augroup terndoc_filetype_defaults
 augroup END
 
 nnoremap <buffer> <silent> K :call TernPreviewDoc()<CR>
-nnoremap <buffer> <silent> <space>r :TernRename<CR>
+nnoremap <buffer> <silent> <space>lr :TernRename<CR>
 nnoremap <buffer> <silent> <space>d :TernDef<CR>
