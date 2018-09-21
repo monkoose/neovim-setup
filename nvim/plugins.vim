@@ -5,7 +5,7 @@ let g:ale_linters = {
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
     \ 'd': ['dmd'],
-    \ 'haskell': ['ghc', 'stack-ghc-mod', 'hlint']
+    \ 'haskell': ['hie', 'hlint']
     \ }
 
 let g:ale_fixers = {

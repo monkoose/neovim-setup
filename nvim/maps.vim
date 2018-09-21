@@ -95,7 +95,7 @@ nnoremap yof :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
 nnoremap <silent>yoy :let &cc = &cc == '' ? '80' : ''<CR>
 
 "Ale autofix
-nnoremap <space>fi :ALEFix<CR>
+noremap <space>fi <Plug>(ale_fix)
 
 " Insert ; at the end of a line if there is none
 function! s:insert_dot_comma() abort
