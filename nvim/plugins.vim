@@ -9,9 +9,7 @@ let g:ale_linters = {
     \ }
 
 let g:ale_fixers = {
-\   'haskell': [
-\       'hlint',
-\   ],
+\   'haskell': ['hlint'],
 \}
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_sign_error = 'E'
@@ -38,7 +36,6 @@ let g:delimitMate_expand_space = 1
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-      \ 'auto_refresh_delay': 100,
       \ 'max_list': 100,
       \ })
 " call deoplete#custom#source('jedi', 'server_timeout', 25)
@@ -123,14 +120,19 @@ let g:jedi#completions_command = ''
 " Language Client
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie-wrapper'],
+    \ 'javascript': ['javascript-typescript-stdio'],
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_hasSnippetSupport = 0
+let g:LanguageClient_hoverPreview = "Always"
+let g:LanguageClient_selectionUI = "fzf"
 
 " NeoTerm
 let g:neoterm_automap_keys = '<space>t'
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = "belowright"
 let g:neoterm_autoinsert = 1
+let g:neoterm_size=22
 nnoremap <silent> <f10> :Topen \| TREPLSendFile<cr>
 nnoremap <silent> <f9> :Topen \| TREPLSendLine<cr>
 vnoremap <silent> <f9> :Topen \| TREPLSendSelection<cr>
@@ -205,4 +207,4 @@ let g:lua_define_completion_mappings = 0
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
-nmap <leader>ww :VimwikiIndex<CR>
+nmap <leader>ww <Plug>VimwikiIndex
