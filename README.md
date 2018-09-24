@@ -12,9 +12,9 @@
     sh ./installer.sh
     ```
 
-3. Open neovim and install dein with plugins
+3. Open neovim and install plugins
 
     ```vim
-    :call dein#install()
+    :PlugInstall
     ```
 

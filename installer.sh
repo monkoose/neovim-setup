@@ -46,13 +46,12 @@ copy_dir() {
 
 # Setup
 INSTALL_DIR="$HOME/.local/share/nvim"
-DEIN_DIR="$INSTALL_DIR/site/dein/repos/github.com/Shougo/dein.vim"
 msg "Checking..."
 variable_set "$HOME"
 program_must_exist "git"
+program_must_exist "curl"
 echo ""
 msg "Creating directories..."
-mkdir -pv "$INSTALL_DIR/site/dein"
 mkdir -pv "$INSTALL_DIR/session"
 mkdir -pv "$INSTALL_DIR/undo-files"
 mkdir -pv "$INSTALL_DIR/view"
@@ -63,8 +62,9 @@ copy_dir "autoload/" "$INSTALL_DIR/site/"
 copy_dir "after/" "$INSTALL_DIR/site/"
 copy_dir "mysnippets/" "$INSTALL_DIR/site/"
 echo ""
-msg "Begin fetching dein..."
-git clone https://github.com/Shougo/dein.vim "$DEIN_DIR"
+msg "Begin fetching vim-plug..."
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo ""
-msg "Done. Launch nvim and run the command :call dein#install()"
+msg "Done. Launch nvim and run the command :PlugInstall"
 echo ""
