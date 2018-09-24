@@ -1,75 +1,71 @@
-set runtimepath+=$HOME/.local/share/nvim/site/dein/repos/github.com/Shougo/dein.vim
 let g:python3_host_prog = '/usr/bin/python'
 
-if dein#load_state(expand('$HOME/.local/share/nvim/site/dein'))
-  call dein#begin(expand('$HOME/.local/share/nvim/site/dein'))
+call plug#begin('~/.local/share/nvim/plugged')
 
-  call dein#add('kassio/neoterm')
-  call dein#add('Shougo/dein.vim')
-  call dein#add('monkoose/gruvbox')
-  call dein#add('tpope/vim-repeat')
-  call dein#add('tpope/vim-eunuch')
-  call dein#add('Konfekt/FastFold')
-  call dein#add('SirVer/ultisnips', {'on_event': 'InsertEnter'})
-  call dein#add('junegunn/fzf', {'build': './install --all'})
-  call dein#add('junegunn/fzf.vim')
-  call dein#add('junegunn/vim-easy-align')
-  call dein#add('jamessan/vim-gnupg')
-  call dein#add('eugen0329/vim-esearch')
-  call dein#add('zhimsel/vim-stay')
-  call dein#add('mhinz/vim-startify')
-  call dein#add('tpope/vim-fugitive')
-  " call dein#add('Shougo/denite.nvim')
-  call dein#add('tpope/vim-surround')
-  call dein#add('honza/vim-snippets', {'on_event': 'InsertEnter'})
-  call dein#add('wellle/targets.vim', {'on_event': ['CursorHold', 'CursorHoldI', 'CursorMoved', 'CursorMovedI']})
-  call dein#add('airblade/vim-gitgutter', {'on_event': ['CursorHold', 'CursorHoldI', 'CursorMoved', 'CursorMovedI']})
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('tpope/vim-unimpaired')
-  call dein#add('tpope/vim-commentary')
-  call dein#add('Raimondi/delimitMate')
-  call dein#add('tyru/open-browser.vim')
-  call dein#add('itchyny/lightline.vim')
-  call dein#add('skywind3000/asyncrun.vim')
-  call dein#add('Shougo/context_filetype.vim')
-  call dein#add('Rip-Rip/clang_complete', {'on_ft': ['c', 'cpp']})
-  call dein#add('easymotion/vim-easymotion', {'on_map': '<Plug>'})
-  call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
-  call dein#add('vimwiki/vimwiki', {'on_map': {'n': '<Plug>VimwikiIndex'}})
-  call dein#add('mbbill/undotree', {'on_cmd': ':UndotreeToggle'})
-  call dein#add('scrooloose/nerdtree', {'on_cmd': ':NERDTreeToggle'})
-  call dein#add('lambdalisue/vim-gista', {'on_cmd': ':Gista'})
-  call dein#add('Shougo/echodoc.vim', {'on_ft': ['vim', 'python', 'lua', 'javascript']})
-  call dein#add('w0rp/ale', {'on_ft': ['python', 'javascript', 'html', 'css', 'lua', 'd', 'haskell']})
-  "-------------------- dlang
-  call dein#add('idanarye/vim-dutyl', {'on_ft': 'd'})
-  call dein#add('monkoose/deoplete-d', {'on_ft': 'd'})
-  "-------------------- haskell
-  call dein#add('neovimhaskell/haskell-vim', {'on_ft': 'haskell'})
-  call dein#add('Twinside/vim-hoogle', {'on_ft': 'haskell'})
-  call dein#add('autozimu/LanguageClient-neovim', {'build': './install.sh'})
-  "-------------------- lua
-  call dein#add('xolox/vim-misc')
-  call dein#add('tbastos/vim-lua')
-  call dein#add('monkoose/luarefvim')
-  call dein#add('xolox/vim-lua-ftplugin', {'on_ft': 'lua', 'depends': ['vim-misc', 'luarefvim']})
-  "------------------- python
-  call dein#add('tweekmonster/django-plus.vim')
-  call dein#add('Glench/Vim-Jinja2-Syntax')
-  call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
-  call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
-  call dein#add('vim-python/python-syntax', {'on_ft': 'python'})
-  call dein#add('Vimjas/vim-python-pep8-indent', {'on_ft': 'python'})
-  "------------------- frontend
-  call dein#add('groenewege/vim-less', {'on_ft': 'less'})
-  call dein#add('hail2u/vim-css3-syntax', {'on_ft': ['css', 'less', 'html']})
-  call dein#add('othree/html5.vim', {'on_ft': ['html', 'xhtml', 'htmldjango', 'css']})
-  " call dein#add('ternjs/tern_for_vim', {'on_ft': ['javascript', 'html', 'htmldjango']})
-  " call dein#add('carlitux/deoplete-ternjs', {'on_ft': ['javascript', 'html', 'htmldjango']})
-  call dein#add('pangloss/vim-javascript', {'on_ft': ['javascript', 'html', 'htmldjango']})
-  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'mdown', 'mkdn', 'mdwn', 'mkd', 'md']})
-  " call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': ['javascript', 'html', 'htmldjango']})
+Plug 'kassio/neoterm'                         " for better terminal experience
+Plug 'monkoose/gruvbox'                       " adds colorscheme
+Plug 'tpope/vim-repeat'                       " makes '.' command more usable
+Plug 'tpope/vim-eunuch'                       " adds sugar common UNIX shell commands
+Plug 'tpope/vim-fugitive'                     " adds git support inside vim
+Plug 'tpope/vim-surround'                     " makes manipulating with (),[],''... enjoyable
+Plug 'tpope/vim-unimpaired'                   " adds common toggling options, new ] and [ commands, encoding/decoding
+Plug 'tpope/vim-commentary'                   " for faster line commenting/uncommenting
+Plug 'Konfekt/FastFold'                       " makes non manual folds faster
+Plug 'junegunn/fzf.vim'                       " for fast searching of different sources
+Plug 'eugen0329/vim-esearch'                  " for grepping results in treelike style
+Plug 'junegunn/vim-easy-align'                " adds aligning of text
+Plug 'jamessan/vim-gnupg'                     " for editing gpg files
+Plug 'zhimsel/vim-stay'                       " for remembering session/cursor position
+Plug 'mhinz/vim-startify'                     " adds welcome screen
 
-  call dein#end()
-  call dein#save_state()
-endif
+Plug 'SirVer/ultisnips'                       " adds snippets support
+Plug 'honza/vim-snippets'                     " adds snippets support
+
+Plug 'wellle/targets.vim'                     " adds new targets like in( or 2alB
+Plug 'airblade/vim-gitgutter'                 " makes vcs changes visible
+Plug 'Raimondi/delimitMate'                   " adds auto pairs
+Plug 'tyru/open-browser.vim'                  " for better links opening with a browser
+Plug 'itchyny/lightline.vim'                  " adds configurable yet fast statusline
+Plug 'skywind3000/asyncrun.vim'               " adds support to asynchronously run shell commands
+Plug 'Shougo/context_filetype.vim'            " adds better support for different languages in one file
+Plug 'easymotion/vim-easymotion'              " for easier jumps to any position on the screen
+Plug 'Shougo/neco-vim'                        " adds completion for vim filetypes
+Plug 'vimwiki/vimwiki'                        " adds wiki and ToDo in vim
+Plug 'mbbill/undotree'                        " for visualizing undo history
+Plug 'lambdalisue/vim-gista'                  " adds gist support
+Plug 'Shougo/echodoc.vim'                     " adds parameters help for functions
+Plug 'w0rp/ale'                               " adds asynchronous linting
+
+Plug 'idanarye/vim-dutyl'                     " adds ide features for dlang
+Plug 'monkoose/deoplete-d'                    " adds completion source for dlang
+
+Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
+Plug 'Twinside/vim-hoogle'                    " for hoogle searching inside vim
+
+Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation
+Plug 'monkoose/luarefvim'                     " adds lua reference docs
+Plug 'xolox/vim-misc'                         " required by vim-lua-ftplugin
+Plug 'xolox/vim-lua-ftplugin'                 " adds completions for lua
+
+Plug 'tweekmonster/django-plus.vim'           " makes working with django easier
+Plug 'Glench/Vim-Jinja2-Syntax'               " adds jinja templates syntax highlighting
+Plug 'zchee/deoplete-jedi'                    " adds completion source for python
+Plug 'davidhalter/jedi-vim'                   " adds ide features for python
+Plug 'vim-python/python-syntax'               " improves python syntax highlighting
+Plug 'Vimjas/vim-python-pep8-indent'          " improves python indentation
+
+Plug 'hail2u/vim-css3-syntax'                 " improves CSS syntax highlighting
+Plug 'othree/html5.vim'                       " improves HTML syntax highlighting
+Plug 'pangloss/vim-javascript'                " improves JavaScript syntax highlighting and indentation
+Plug 'godlygeek/tabular', {'for': 'markdown'} " required by vim-markdown
+Plug 'plasticboy/vim-markdown'                " improves markdown syntax highlighting
+Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
+
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}            " adds sidebar file explorer
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}     " adds autocompletion engine
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': './install.sh'}                                   " adds lsp support
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'} " required by fzf.vim
+
+call plug#end()
