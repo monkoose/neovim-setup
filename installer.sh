@@ -37,34 +37,27 @@ variable_set() {
     fi
 }
 
-copy_dir() {
-    if [ ! -e "$1" ]; then
-        error "'$1' is missing."
-    fi
-    cp -avrn "$1" "$2"
-}
-
 # Setup
-INSTALL_DIR="$HOME/.local/share/nvim"
 msg "Checking..."
 variable_set "$HOME"
-program_must_exist "git"
 program_must_exist "curl"
+INSTALL_DIR="$HOME/.local/share/nvim"
+msg "Done"
 echo ""
 msg "Creating directories..."
 mkdir -pv "$INSTALL_DIR/session"
 mkdir -pv "$INSTALL_DIR/undo-files"
 mkdir -pv "$INSTALL_DIR/view"
+mkdir -pv "$HOME/.config/nvim"
+msg "Done"
 echo ""
-msg "Copying files..."
-copy_dir "nvim/" "$HOME/.config/"
-copy_dir "autoload/" "$INSTALL_DIR/site/"
-copy_dir "after/" "$INSTALL_DIR/site/"
-copy_dir "mysnippets/" "$INSTALL_DIR/site/"
+msg "Creating link for init.vim"
+ln -s $PWD/init.vim $HOME/.config/nvim/init.vim
+msg "Done"
 echo ""
 msg "Begin fetching vim-plug..."
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+curl -fLo $INSTALL_DIR/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo ""
-msg "Done. Launch nvim and run the command :PlugInstall"
+msg "Done. Launch nvim and run command :PlugInstall"
 echo ""
