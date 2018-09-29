@@ -345,6 +345,9 @@ augroup GnuPGExtra
   autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) set fdm=marker fcl=all
 augroup END
 
+"""""""""""""""""""""""""" vim-gnupg
+let g:plug_window  = "botright new"
+let g:plug_pwindow = "vertical new"
 """""""""""""""""""""""""" lua-ftplugin
 let g:lua_check_syntax               = 0
 let g:lua_complete_omni              = 1
