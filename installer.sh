@@ -51,8 +51,9 @@ mkdir -pv "$INSTALL_DIR/view"
 mkdir -pv "$HOME/.config/nvim"
 msg "Done"
 echo ""
-msg "Creating link for init.vim"
+msg "Creating symlinks"
 ln -s $PWD/init.vim $HOME/.config/nvim/init.vim
+ln -s $PWD/coc-settings.json $HOME/.config/nvim/coc-settings.json
 msg "Done"
 echo ""
 msg "Begin fetching vim-plug..."

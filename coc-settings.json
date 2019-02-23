@@ -1,0 +1,14 @@
+{
+  "coc.preferences.minTriggerInputLength": 2,
+  "coc.preferences.diagnostic.enable": false,
+  "languageserver": {
+    "golang": {
+      "command": "go-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "gocodeCompletionEnabled": true,
+        "lintTool": "golint"
+      }
+    }
+  }
+}

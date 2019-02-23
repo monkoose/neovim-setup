@@ -35,21 +35,14 @@ Plug 'lambdalisue/vim-gista'                  " adds gist support
 Plug 'Shougo/echodoc.vim'                     " adds parameters help for functions
 Plug 'w0rp/ale'                               " adds asynchronous linting
 
-Plug 'idanarye/vim-dutyl'                     " adds ide features for dlang
-Plug 'monkoose/deoplete-d'                    " adds completion source for dlang
-
 Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
 Plug 'Twinside/vim-hoogle'                    " for hoogle searching inside vim
 
 Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation
 Plug 'monkoose/luarefvim'                     " adds lua reference docs
-Plug 'xolox/vim-misc'                         " required by vim-lua-ftplugin
-Plug 'xolox/vim-lua-ftplugin'                 " adds completions for lua
 
-Plug 'tweekmonster/django-plus.vim'           " makes working with django easier
-Plug 'Glench/Vim-Jinja2-Syntax'               " adds jinja templates syntax highlighting
-Plug 'zchee/deoplete-jedi'                    " adds completion source for python
-Plug 'davidhalter/jedi-vim'                   " adds ide features for python
+" Plug 'tweekmonster/django-plus.vim'           " makes working with django easier
+" Plug 'Glench/Vim-Jinja2-Syntax'               " adds jinja templates syntax highlighting
 Plug 'vim-python/python-syntax'               " improves python syntax highlighting
 Plug 'Vimjas/vim-python-pep8-indent'          " improves python indentation
 
@@ -60,12 +53,9 @@ Plug 'godlygeek/tabular', {'for': 'markdown'} " required by vim-markdown
 Plug 'plasticboy/vim-markdown'                " improves markdown syntax highlighting
 Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
 
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}            " adds sidebar file explorer
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}     " adds autocompletion engine
-Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': './install.sh'}                                   " adds lsp support
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'} " required by fzf.vim
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " adds autocompletion and langserver
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}                   " adds sidebar file explorer
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}        " required by fzf.vim
 call plug#end()
 
 
@@ -143,11 +133,13 @@ let g:ale_linters = {
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
     \ 'd': ['dmd'],
-    \ 'haskell': ['hie', 'hlint']
+    \ 'haskell': ['hie', 'hlint'],
+    \ 'go': ['govet', 'gofmt', 'golint']
     \ }
 let g:ale_fixers = {
-\   'haskell': ['hlint'],
-\}
+      \ '*' :['remove_trailing_lines', 'trim_whitespace'],
+      \  'haskell': ['hlint']
+      \}
 let g:ale_python_flake8_args   = '--ignore=E501'
 let g:ale_sign_error           = 'E'
 let g:ale_sign_warning         = 'W'
@@ -155,30 +147,23 @@ let g:ale_echo_msg_format      = '[%linter%] %s'
 let g:ale_lint_on_enter        = 0
 let g:ale_lint_on_text_changed = 0
 let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
-let g:ale_set_highlights       = 0
+" let g:ale_set_highlights       = 0
+
+"""""""""""""""""""""""""" coc
+imap <silent><expr> <M-e> pumvisible() ? "\<Plug>(coc-snippets-expand)" : coc#refresh()
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
 
 """""""""""""""""""""""""" delimitmate
 let g:delimitMate_expand_cr    = 1
 let g:delimitMate_expand_space = 1
-
-"""""""""""""""""""""""""" deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-      \ 'max_list': 100,
-      \ })
-call deoplete#custom#source('omni', 'functions', {
-    \ 'lua':  'xolox#lua#omnifunc',
-    \})
-call deoplete#custom#buffer_var('omni', 'input_patterns', {
-    \ 'lua': ['\w+|[^. *\t][.:]\w*', 'require\s*\(?["'']\w*'],
-    \})
 
 """""""""""""""""""""""""" easy-align
 " activate easy-align plugin for visually selected text
 vmap              <Enter>       <Plug>(EasyAlign)
 
 """""""""""""""""""""""""" easymotion
-" jump to chosen chr on the screen
+" jump to chosen char on the screen
 nmap <silent>   <space><space>  <Plug>(easymotion-overwin-f)
 
 """""""""""""""""""""""""" esearch
@@ -196,6 +181,8 @@ nmap             <space>sw      <Plug>(esearch-word-under-cursor)
 """""""""""""""""""""""""" echodoc
 let g:echodoc#enable_at_startup    = 1
 let g:echodoc#highlight_identifier = 'Function'
+
+"""""""""""""""""""""""""" go
 
 """""""""""""""""""""""""" openbrowser
 nmap              gG            <Plug>(openbrowser-smart-search)
@@ -247,33 +234,6 @@ nnoremap          <space>gl     :Gista list<CR>
 nnoremap          <space>gp     :Gista post -P -d=""<Left>
 nnoremap          <space>gP     :Gista patch<CR>
 
-"""""""""""""""""""""""""" jedi-vim
-let g:jedi#auto_initialization        = 1
-let g:jedi#force_py_version           = 3
-let g:jedi#auto_vim_configuration     = 0
-let g:jedi#popup_on_dot               = 0
-let g:jedi#show_call_signatures       = 0
-let g:jedi#show_call_signatures_delay = 0
-let g:jedi#completions_enabled        = 0
-let g:jedi#smart_auto_mappings        = 0
-let g:jedi#use_tag_stack              = 0
-let g:jedi#completions_command        = ''
-let g:jedi#goto_command               = '<space>d'
-let g:jedi#rename_command             = '<space>r'
-let g:jedi#goto_assignments_command   = '<space>jd'
-let g:jedi#usages_command             = '<space>ju'
-let g:jedi#documentation_command      = 'K'
-
-"""""""""""""""""""""""""" languageclient-neovim
-let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie-wrapper'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ }
-let g:LanguageClient_diagnosticsEnable = 0
-let g:LanguageClient_hasSnippetSupport = 0
-let g:LanguageClient_hoverPreview      = "Always"
-let g:LanguageClient_selectionUI       = "fzf"
-
 """""""""""""""""""""""""" neoterm
 let g:neoterm_size         = 22
 let g:neoterm_autoscroll   = 1
@@ -300,6 +260,7 @@ let NERDTreeAutoDeleteBuffer  = 1
 let NERDTreeMinimalUI         = 1
 let NERDTreeQuitOnOpen        = 1
 let NERDTreeRespectWildIgnore = 1
+let NERDTreeWinSize           = 44
 nmap <silent>         <M-1>       :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""" python-syntax
@@ -324,7 +285,7 @@ let g:startify_list_order = [
     \ ]
 
 """""""""""""""""""""""""" ultisnips
-let g:UltiSnipsExpandTrigger       = '<M-e>'
+" let g:UltiSnipsExpandTrigger       = '<M-e>'
 let g:UltiSnipsJumpForwardTrigger  = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsSnippetsDir         = $HOME . '/.local/share/nvim/site/mysnippets'
@@ -345,14 +306,8 @@ augroup GnuPGExtra
   autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) set fdm=marker fcl=all
 augroup END
 
-"""""""""""""""""""""""""" vim-gnupg
-let g:plug_window  = "botright new"
-let g:plug_pwindow = "vertical new"
-"""""""""""""""""""""""""" lua-ftplugin
-let g:lua_check_syntax               = 0
-let g:lua_complete_omni              = 1
-let g:lua_complete_dynamic           = 0
-let g:lua_define_completion_mappings = 0
+"""""""""""""""""""""""""" vim-markdown
+let g:vim_markdown_fenced_languages = ['typescript=javascript']
 
 """""""""""""""""""""""""" vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/'}]
@@ -379,6 +334,8 @@ inoremap          <C-p>         <C-k>
 " Autocompletion scroll
 inoremap          <C-j>         <C-n>
 inoremap          <C-k>         <C-p>
+" Delete right char
+inoremap          <C-l>         <DEL>
 " Scroll history in command-line mode
 cnoremap          <C-n>         <Down>
 cnoremap          <C-p>         <Up>
@@ -740,63 +697,83 @@ augroup END
 augroup ft_css
   autocmd!
   autocmd FileType css setlocal iskeyword+=-
+  autocmd FileType css nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType css nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType css nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType css nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType css nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType css nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType css vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType css nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType css vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType css nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType css nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
-""""""""""""""""""""""""""""""""" dlang
-function! DUddocPreview() abort
-  let l:output = ''
-  redir! => l:output
-    silent call dutyl#displayDDocForSymbolUnderCursor()
-  redir END
-  if output == ''
-    echo 'No documentation found'
-    return
-  endif
-  pclose
-  pedit! __duddoc__
-  exec "normal! \<C-w>P"
-  call setline(1, split(l:output, "\n"))
-  setlocal filetype=duddoc
-  exec "normal! \<C-w>p"
-endfunction
-
-augroup duddoc_filetype
+""""""""""""""""""""""""""""""""" html
+augroup ft_html
   autocmd!
-  autocmd FileType duddoc setlocal nobuflisted buftype=nofile bufhidden=wipe nomodifiable nonumber wrap
+  autocmd FileType html nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType html nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType html nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType html nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType html nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType html nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType html vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType html nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType html vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType html nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType html nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
-augroup ft_d
+""""""""""""""""""""""""""""""""" go
+augroup ft_html
   autocmd!
-  autocmd FileType d setlocal shiftwidth=4 softtabstop=-1
-  autocmd FileType d nnoremap <buffer><silent> K :call DUddocPreview()<CR>
-  autocmd FileType d nnoremap <buffer><silent> <space>d :DUjump<CR>
-  autocmd FileType d
-        \ nnoremap <buffer><script><silent> <F9> :<C-u>exec 'Topen \| T dmd -dw -w -unittest -run ' . expand("%")<CR>
+  autocmd FileType go nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType go nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType go nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType go nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType go nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType go nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType go vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType go nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType go vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType go nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType go nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" haskell
 augroup ft_haskell
   autocmd!
-  autocmd FileType haskell nnoremap <buffer>         <space>hh :Hoogle<space>
-  autocmd FileType haskell nnoremap <buffer><silent> K         :call LanguageClient#textDocument_hover()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>d  :call LanguageClient#textDocument_definition()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>lf :call LanguageClient#textDocument_formatting()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>lr :call LanguageClient#textDocument_rename()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>ll :call LanguageClient#textDocument_references()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>la :call LanguageClient#textDocument_codeAction()<CR>
-  autocmd FileType haskell nnoremap <buffer><silent> <space>ft :call LanguageClient#textDocument_documentSymbol()<CR>
+  autocmd FileType haskell nnoremap <buffer>          <space>hh  :Hoogle<space>
+  autocmd FileType haskell nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType haskell nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType haskell nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType haskell nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType haskell nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType haskell nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType haskell vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType haskell nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType haskell vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType haskell nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType haskell nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" javascript
 augroup ft_javascript
   autocmd!
-  autocmd FileType javascript nnoremap <buffer><silent> K         :call LanguageClient#textDocument_hover()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>d  :call LanguageClient#textDocument_definition()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>lf :call LanguageClient#textDocument_formatting()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>lr :call LanguageClient#textDocument_rename()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>ll :call LanguageClient#textDocument_references()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>la :call LanguageClient#textDocument_codeAction()<CR>
-  autocmd FileType javascript nnoremap <buffer><silent> <space>ft :call LanguageClient#textDocument_documentSymbol()<CR>
+  autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType javascript nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType javascript nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType javascript nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType javascript nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType javascript nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType javascript nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType javascript vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType javascript nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType javascript vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType javascript nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType javascript nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" lua
@@ -804,6 +781,7 @@ augroup ft_lua
   autocmd!
   autocmd FileType lua setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
+
 """"""""""""""""""""""""""""""""" python
 function! SelectionWithPython(line1, line2) range
   write
@@ -818,6 +796,17 @@ augroup ft_python
         \ vmap <buffer><script> <silent> <F9> :call SelectionWithPython(line("'<"), line("'>"))<CR>
   autocmd FileType python
         \ nmap <buffer><script> <silent> <F9> :call SelectionWithPython(1, line("$"))<CR>
+  autocmd FileType python nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType python nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType python nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType python nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType python nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType python nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType python vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType python nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType python vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType python nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType python nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" vim
