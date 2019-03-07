@@ -51,7 +51,7 @@ Plug 'othree/html5.vim'                       " improves HTML syntax highlightin
 Plug 'pangloss/vim-javascript'                " improves JavaScript syntax highlighting and indentation
 Plug 'godlygeek/tabular', {'for': 'markdown'} " required by vim-markdown
 Plug 'plasticboy/vim-markdown'                " improves markdown syntax highlighting
-Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
+" Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " adds autocompletion and langserver
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}                   " adds sidebar file explorer
@@ -62,7 +62,7 @@ call plug#end()
 "=================================  OPTIONS  ===================================
 let g:python3_host_prog = '/usr/bin/python'
 set termguicolors
-colorscheme gruvbox
+colorscheme boa
 set background=dark
 set title
 set synmaxcol=1000
@@ -150,7 +150,7 @@ let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
 " let g:ale_set_highlights       = 0
 
 """""""""""""""""""""""""" coc
-imap <silent><expr> <M-e> pumvisible() ? "\<Plug>(coc-snippets-expand)" : coc#refresh()
+inoremap <silent><expr> <M-e> pumvisible() ? "\<C-y>" : coc#refresh()
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 
@@ -190,7 +190,7 @@ vmap              gG            <Plug>(openbrowser-smart-search)
 
 """""""""""""""""""""""""" fugitive
 nnoremap          <space>gg     :Gstatus<CR>
-nnoremap          <space>gb     :Gblame<CR>
+nnoremap          <space>gb     :Gblame --relative-date<CR>
 nnoremap          <space>gc     :Gcommit<CR>
 nnoremap          <space>gd     :Gdiff<CR>
 nnoremap          <space>ge     :Gedit<CR>
@@ -233,6 +233,9 @@ let g:fzf_action = {
 nnoremap          <space>gl     :Gista list<CR>
 nnoremap          <space>gp     :Gista post -P -d=""<Left>
 nnoremap          <space>gP     :Gista patch<CR>
+
+"""""""""""""""""""""""""" hoogle
+let g:hoogle_search_jump_back = 0
 
 """""""""""""""""""""""""" neoterm
 let g:neoterm_size         = 22
@@ -745,7 +748,9 @@ augroup END
 """"""""""""""""""""""""""""""""" haskell
 augroup ft_haskell
   autocmd!
-  autocmd FileType haskell nnoremap <buffer>          <space>hh  :Hoogle<space>
+  autocmd FileType haskell nnoremap <buffer>          <space>hh  :HoogleInfo<CR>
+  autocmd FileType haskell nnoremap <buffer>          <space>hs  :Hoogle<space>
+  autocmd FileType haskell nnoremap <buffer>          <space>hf  :Hoogle<CR>
   autocmd FileType haskell nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
   autocmd FileType haskell nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
   autocmd FileType haskell nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
@@ -762,7 +767,6 @@ augroup END
 """"""""""""""""""""""""""""""""" javascript
 augroup ft_javascript
   autocmd!
-  autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd FileType javascript nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
   autocmd FileType javascript nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
   autocmd FileType javascript nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)

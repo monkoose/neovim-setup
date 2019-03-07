@@ -1,7 +1,15 @@
 {
-  "coc.preferences.minTriggerInputLength": 2,
-  "coc.preferences.diagnostic.enable": false,
+  "suggest.minTriggerInputLength": 2,
+  "diagnostic.displayByAle": true,
+  "diagnostic.refreshAfterSave": true,
+  "coc.preferences.previewAutoClose": false,
   "languageserver": {
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {}
+    },
     "golang": {
       "command": "go-langserver",
       "filetypes": ["go"],
