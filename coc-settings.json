@@ -1,8 +1,8 @@
 {
   "suggest.minTriggerInputLength": 2,
-  "diagnostic.displayByAle": true,
-  "diagnostic.refreshAfterSave": true,
+  "diagnostic.enable": false,
   "coc.preferences.previewAutoClose": false,
+  "python.jediEnabled": false,
   "languageserver": {
     "haskell": {
       "command": "hie-wrapper",

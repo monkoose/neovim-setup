@@ -8,10 +8,10 @@ Plug 'tpope/vim-eunuch'                       " adds sugar common UNIX shell com
 Plug 'tpope/vim-fugitive'                     " adds git support inside vim
 Plug 'tpope/vim-surround'                     " makes manipulating with (),[],''... enjoyable
 Plug 'tpope/vim-unimpaired'                   " adds common toggling options, new ] and [ commands, encoding/decoding
-Plug 'tpope/vim-commentary'                   " for faster line commenting/uncommenting
+" Plug 'tpope/vim-commentary'                   " for faster line commenting/uncommenting
+Plug 'tyru/caw.vim'                           " for faster line commenting/uncommenting
 Plug 'Konfekt/FastFold'                       " makes non manual folds faster
 Plug 'junegunn/fzf.vim'                       " for fast searching of different sources
-Plug 'eugen0329/vim-esearch'                  " for grepping results in treelike style
 Plug 'junegunn/vim-easy-align'                " adds aligning of text
 Plug 'jamessan/vim-gnupg'                     " for editing gpg files
 Plug 'zhimsel/vim-stay'                       " for remembering session/cursor position
@@ -29,10 +29,10 @@ Plug 'skywind3000/asyncrun.vim'               " adds support to asynchronously r
 Plug 'Shougo/context_filetype.vim'            " adds better support for different languages in one file
 Plug 'easymotion/vim-easymotion'              " for easier jumps to any position on the screen
 Plug 'Shougo/neco-vim'                        " adds completion for vim filetypes
+Plug 'neoclide/coc-neco'
 Plug 'vimwiki/vimwiki'                        " adds wiki and ToDo in vim
 Plug 'mbbill/undotree'                        " for visualizing undo history
 Plug 'lambdalisue/vim-gista'                  " adds gist support
-Plug 'Shougo/echodoc.vim'                     " adds parameters help for functions
 Plug 'w0rp/ale'                               " adds asynchronous linting
 
 Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
@@ -41,19 +41,20 @@ Plug 'Twinside/vim-hoogle'                    " for hoogle searching inside vim
 Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation
 Plug 'monkoose/luarefvim'                     " adds lua reference docs
 
-" Plug 'tweekmonster/django-plus.vim'           " makes working with django easier
 " Plug 'Glench/Vim-Jinja2-Syntax'               " adds jinja templates syntax highlighting
 Plug 'vim-python/python-syntax'               " improves python syntax highlighting
 Plug 'Vimjas/vim-python-pep8-indent'          " improves python indentation
 
+Plug 'posva/vim-vue'                          " adds vue syntax highlighting
 Plug 'hail2u/vim-css3-syntax'                 " improves CSS syntax highlighting
+Plug 'cakebaker/scss-syntax.vim'              " add scss syntax highlighting
 Plug 'othree/html5.vim'                       " improves HTML syntax highlighting
 Plug 'pangloss/vim-javascript'                " improves JavaScript syntax highlighting and indentation
 Plug 'godlygeek/tabular', {'for': 'markdown'} " required by vim-markdown
 Plug 'plasticboy/vim-markdown'                " improves markdown syntax highlighting
 " Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} " adds autocompletion and langserver
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " adds autocompletion and langserver
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}                   " adds sidebar file explorer
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}        " required by fzf.vim
 call plug#end()
@@ -62,7 +63,7 @@ call plug#end()
 "=================================  OPTIONS  ===================================
 let g:python3_host_prog = '/usr/bin/python'
 set termguicolors
-colorscheme boa
+colorscheme gruvbox
 set background=dark
 set title
 set synmaxcol=1000
@@ -128,17 +129,15 @@ set foldtext=NeatFoldText()
 "=============================  PLUGINS OPTIONS  ===============================
 """""""""""""""""""""""""" ale
 let g:ale_linters = {
-    \ 'javascript': ['jshint'],
+    \ 'javascript': ['eslint'],
     \ 'python': ['flake8'],
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
-    \ 'd': ['dmd'],
-    \ 'haskell': ['hie', 'hlint'],
+    \ 'haskell': ['hie'],
     \ 'go': ['govet', 'gofmt', 'golint']
     \ }
 let g:ale_fixers = {
-      \ '*' :['remove_trailing_lines', 'trim_whitespace'],
-      \  'haskell': ['hlint']
+      \ '*' :['remove_trailing_lines', 'trim_whitespace']
       \}
 let g:ale_python_flake8_args   = '--ignore=E501'
 let g:ale_sign_error           = 'E'
@@ -153,6 +152,9 @@ let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
 inoremap <silent><expr> <M-e> pumvisible() ? "\<C-y>" : coc#refresh()
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
+" let g:coc_filetype_map = {
+"       \ 'htmldjango': 'html',
+"       \ }
 
 """""""""""""""""""""""""" delimitmate
 let g:delimitMate_expand_cr    = 1
@@ -165,24 +167,6 @@ vmap              <Enter>       <Plug>(EasyAlign)
 """""""""""""""""""""""""" easymotion
 " jump to chosen char on the screen
 nmap <silent>   <space><space>  <Plug>(easymotion-overwin-f)
-
-"""""""""""""""""""""""""" esearch
-let g:esearch#cmdline#help_prompt = 0
-call esearch#out#win#map('<C-n>', 'next-file')
-call esearch#out#win#map('<C-p>', 'prev-file')
-call esearch#out#win#map('S', 'split-silent')
-call esearch#out#win#map('I', 'vsplit-silent')
-call esearch#out#win#map('<C-t>', 'tab')
-call esearch#out#win#map('<C-x>', 'split')
-call esearch#out#win#map('<C-v>', 'vsplit')
-nmap             <space>se      <Plug>(esearch)
-nmap             <space>sw      <Plug>(esearch-word-under-cursor)
-
-"""""""""""""""""""""""""" echodoc
-let g:echodoc#enable_at_startup    = 1
-let g:echodoc#highlight_identifier = 'Function'
-
-"""""""""""""""""""""""""" go
 
 """""""""""""""""""""""""" openbrowser
 nmap              gG            <Plug>(openbrowser-smart-search)
@@ -229,6 +213,9 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
+"""""""""""""""""""""""""" javascript-libraries-syntax
+" let g:used_javascript_libs = 'jquery,react,vue'
+
 """""""""""""""""""""""""" gista
 nnoremap          <space>gl     :Gista list<CR>
 nnoremap          <space>gp     :Gista post -P -d=""<Left>
@@ -236,6 +223,8 @@ nnoremap          <space>gP     :Gista patch<CR>
 
 """""""""""""""""""""""""" hoogle
 let g:hoogle_search_jump_back = 0
+" let g:hoogle_search_bin = 'stack exec -- hoogle -q'
+let g:hoogle_search_bin = 'hoogle -q'
 
 """""""""""""""""""""""""" neoterm
 let g:neoterm_size         = 22
@@ -384,7 +373,7 @@ endfunction
 nnoremap <silent> <Plug>WindowSwitch :call <SID>windowswitch()<CR>
 nmap              <M-w>         <Plug>WindowSwitch
 tnoremap          <M-w>         <C-\><C-n><C-w>w
-" scroll *preview* window or jump to vcs changes in file
+" scroll *preview* window or jump to vcs changes in the file
 function! ScrollPreviewDownOrJumpToNextHunk()
   if s:previewWindowOpened()
     exec "normal! \<C-w>P3\<C-e>\<C-w>p"
@@ -493,17 +482,7 @@ function! s:previewWindowOpened()
   endfor
   return 0
 endfunction
-function! s:closePreviewWindow()
-  if s:previewWindowOpened()
-    pclose
-  else
-    echo "There is no Preview window"
-  endif
-endfunction
-nnoremap <script> <silent> <Plug>ClosePreviewWindow :call <SID>closePreviewWindow()<CR>
-nmap              q             <Plug>ClosePreviewWindow
-nnoremap          Q             q
-
+nmap <expr> <silent>   <Esc>    <SID>previewWindowOpened() ? ":pclose\<CR>" : "\<Esc>"
 
 "================================  LIGHTLINE  ==================================
 let g:lightline = {
@@ -554,9 +533,6 @@ function! FilenameOrFiletypeMatch () abort
        \ &ft     == 'startify' ? 1 :
        \ &ft     == 'fugitiveblame' ? 1 :
        \ &ft     == 'gitcommit' ? 1 :
-       \ &ft     == 'terndoc' ? 1 :
-       \ &ft     == 'duddoc' ? 1 :
-       \ l:fname == '__doc__' && &ft == 'rst' ? 1 :
        \ expand('%:p') =~ 'term:\/\/' ? 1 :
        \ 0
 endfunction
@@ -627,9 +603,6 @@ function! LightLineMode() abort
        \ &ft     == 'startify' ? 'STARTIFY ' :
        \ &ft     == 'fugitiveblame' ? 'GIT BLAME ' :
        \ &ft     == 'gitcommit' ? l:fname == 'index' ? 'GIT STATUS ' : 'GIT COMMIT ' :
-       \ &ft     == 'terndoc' ? 'TERNDOC' :
-       \ &ft     == 'duddoc' ? 'DDOC' :
-       \ l:fname == '__doc__' && &ft == 'rst' ? 'DOCSTRING ' :
        \ expand('%:p') =~ 'fugitive:///' ? 'GIT' :
        \ expand('%:p') =~ 'term:\/\/' ? &ft == 'fzf' ? 'FZF' : &ft == 'neoterm' ? 'NEOTERM ' : 'TERMINAL ' :
        \ ''
@@ -699,18 +672,18 @@ augroup END
 """"""""""""""""""""""""""""""""" css
 augroup ft_css
   autocmd!
-  autocmd FileType css setlocal iskeyword+=-
-  autocmd FileType css nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
-  autocmd FileType css nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
-  autocmd FileType css nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
-  autocmd FileType css nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
-  autocmd FileType css nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
-  autocmd FileType css nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
-  autocmd FileType css vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
-  autocmd FileType css nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
-  autocmd FileType css vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
-  autocmd FileType css nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
-  autocmd FileType css nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
+  autocmd FileType css,scss setlocal iskeyword+=-
+  autocmd FileType css,scss nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType css,scss nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType css,scss vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType css,scss vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType css,scss nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType css,scss nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" html
@@ -729,6 +702,20 @@ augroup ft_html
   autocmd FileType html nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
+augroup ft_htmldjango
+  autocmd!
+  autocmd FileType htmldjango nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType htmldjango vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType htmldjango vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType htmldjango nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType htmldjango nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
+augroup END
 """"""""""""""""""""""""""""""""" go
 augroup ft_html
   autocmd!
@@ -778,6 +765,22 @@ augroup ft_javascript
   autocmd FileType javascript vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
   autocmd FileType javascript nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
   autocmd FileType javascript nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
+augroup END
+
+""""""""""""""""""""""""""""""""" vue
+augroup ft_vue
+  autocmd!
+  autocmd FileType vue nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType vue nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  autocmd FileType vue nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  autocmd FileType vue nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  autocmd FileType vue nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  autocmd FileType vue nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  autocmd FileType vue vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  autocmd FileType vue nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  autocmd FileType vue vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  autocmd FileType vue nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  autocmd FileType vue nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" lua
