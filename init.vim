@@ -36,6 +36,7 @@ Plug 'lambdalisue/vim-gista'                  " adds gist support
 Plug 'w0rp/ale'                               " adds asynchronous linting
 
 Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
+Plug 'bitc/vim-hdevtools'
 Plug 'Twinside/vim-hoogle'                    " for hoogle searching inside vim
 
 Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation
@@ -76,6 +77,7 @@ set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
 set nowrap
+set number
 set ignorecase
 set smartcase
 set noshowmode
@@ -107,7 +109,7 @@ set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess+=c
 set diffopt=filler,vertical
-set guicursor=
+set guicursor=n-i:blinkoff0
 set inccommand=split
 set updatetime=1500
 " custom looking folds function
@@ -133,10 +135,12 @@ let g:ale_linters = {
     \ 'python': ['flake8'],
     \ 'css': ['csslint'],
     \ 'html': ['HTMLHint'],
-    \ 'haskell': ['hie'],
+    \ 'haskell': ['hlint', 'hdevtools'],
     \ 'go': ['govet', 'gofmt', 'golint']
     \ }
+    "\ 'haskell': ['hie'],
 let g:ale_fixers = {
+      \ 'haskell': ['hindent', 'brittany'],
       \ '*' :['remove_trailing_lines', 'trim_whitespace']
       \}
 let g:ale_python_flake8_args   = '--ignore=E501'
@@ -145,6 +149,7 @@ let g:ale_sign_warning         = 'W'
 let g:ale_echo_msg_format      = '[%linter%] %s'
 let g:ale_lint_on_enter        = 0
 let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 0
 let g:ale_statusline_format    = ['E:%d', 'W:%d', '']
 " let g:ale_set_highlights       = 0
 
@@ -226,6 +231,8 @@ let g:hoogle_search_jump_back = 0
 " let g:hoogle_search_bin = 'stack exec -- hoogle -q'
 let g:hoogle_search_bin = 'hoogle -q'
 
+let g:hdevtools_options = '-g-fdefer-type-errors'
+
 """""""""""""""""""""""""" neoterm
 let g:neoterm_size         = 22
 let g:neoterm_autoscroll   = 1
@@ -236,8 +243,8 @@ nnoremap <silent>     <f10>       :Topen \| TREPLSendFile<cr>
 nnoremap <silent>     <f9>        :Topen \| TREPLSendLine<cr>
 vnoremap <silent>     <f9>        :Topen \| TREPLSendSelection<cr>
 " toggle neoterm
-nnoremap              <M-`>       :Ttoggle<cr>
-tnoremap              <M-`>       <C-\><C-n>:Ttoggle<cr>
+nnoremap <silent>     <M-`>       :Ttoggle<cr>
+tnoremap <silent>     <M-`>       <C-\><C-n>:Ttoggle<cr>
 " close last neoterm
 nnoremap <silent>     <space>tc   :Tclose<cr>
 " toggle last neoterm
@@ -331,6 +338,8 @@ inoremap          <C-l>         <DEL>
 " Scroll history in command-line mode
 cnoremap          <C-n>         <Down>
 cnoremap          <C-p>         <Up>
+cnoremap          <C-j>         <C-n>
+cnoremap          <C-k>         <C-p>
 " for current search disable highlighting
 nmap <silent>     <space>/      :nohlsearch<CR>
 " paste and Spell toggle
@@ -735,20 +744,20 @@ augroup END
 """"""""""""""""""""""""""""""""" haskell
 augroup ft_haskell
   autocmd!
-  autocmd FileType haskell nnoremap <buffer>          <space>hh  :HoogleInfo<CR>
-  autocmd FileType haskell nnoremap <buffer>          <space>hs  :Hoogle<space>
-  autocmd FileType haskell nnoremap <buffer>          <space>hf  :Hoogle<CR>
-  autocmd FileType haskell nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
-  autocmd FileType haskell nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
-  autocmd FileType haskell nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
-  autocmd FileType haskell nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
-  autocmd FileType haskell nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
-  autocmd FileType haskell nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
-  autocmd FileType haskell vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
-  autocmd FileType haskell nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
-  autocmd FileType haskell vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
-  autocmd FileType haskell nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
-  autocmd FileType haskell nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
+  autocmd BufWrite *.hs ALEFix
+  autocmd FileType haskell nnoremap <buffer> <space>hh :Hoogle<space>
+  autocmd FileType haskell nnoremap <buffer> K         :Hoogle<CR>
+  " autocmd FileType haskell nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  " autocmd FileType haskell nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>kd  <Plug>(coc-declaration)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>kr  <Plug>(coc-references)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>kR  <Plug>(coc-rename)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction)
+  " autocmd FileType haskell vmap <buffer><silent>      <space>ka  <Plug>(coc-codeaction-selected)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>kf  <Plug>(coc-format)
+  " autocmd FileType haskell vmap <buffer><silent>      <space>kf  <Plug>(coc-format-selected)
+  " autocmd FileType haskell nmap <buffer><silent>      <space>ki  <Plug>(coc-diagnostic-info)
+  " autocmd FileType haskell nnoremap <buffer><silent>  <space>kl  :call CocActionAsync('diagnosticList')<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""" javascript
