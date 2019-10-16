@@ -1,16 +1,7 @@
 {
   "suggest.minTriggerInputLength": 2,
   "diagnostic.enable": false,
+  "session.directory": "~/.local/share/nvim/sessions",
+  "session.saveOnVimLeave": false,
   "coc.preferences.previewAutoClose": false,
-  "python.jediEnabled": false,
-  "languageserver": {
-    "golang": {
-      "command": "go-langserver",
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "gocodeCompletionEnabled": true,
-        "lintTool": "golint"
-      }
-    }
-  }
-}
+  "coc.preferences.extensionUpdateCheck": "weekly"}
