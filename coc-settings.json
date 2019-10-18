@@ -1,7 +1,35 @@
 {
+  "diagnostic.infoSign": "I",
+  "diagnostic.hintSign": "H",
+  "diagnostic.errorSign": "E",
+  "diagnostic.warningSign": "W",
+  "diagnostic.enableMessage": "jump",
+  "diagnostic.maxWindowHeight": 20,
+  "diagnostic.refreshAfterSave": true,
   "suggest.minTriggerInputLength": 2,
-  "diagnostic.enable": false,
   "session.directory": "~/.local/share/nvim/sessions",
   "session.saveOnVimLeave": false,
   "coc.preferences.previewAutoClose": false,
-  "coc.preferences.extensionUpdateCheck": "weekly"}
+  "coc.preferences.extensionUpdateCheck": "weekly",
+  "languageserver": {
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [
+        "stack.yaml",
+        "cabal.config",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
+      ],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      }
+    }
+  },
+  "python.jediEnabled": false
+}

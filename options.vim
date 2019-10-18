@@ -1,6 +1,6 @@
 let g:python3_host_prog = '/usr/bin/python'
 set termguicolors
-colorscheme gruvbox
+colorscheme boa
 set background=dark
 set title
 set synmaxcol=1000
@@ -28,7 +28,7 @@ set linebreak
 set showbreak=└
 set list
 set listchars=tab:→-,trail:·,extends:⌇,precedes:⌇,nbsp:~
-set fillchars=vert:▌,fold:·,
+set fillchars=vert:█,fold:·,
 set tabpagemax=20
 set smartindent
 set shiftround
@@ -43,7 +43,7 @@ set textwidth=99
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
-set shortmess+=c
+set shortmess+=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split

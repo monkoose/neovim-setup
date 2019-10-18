@@ -1,5 +1,5 @@
 " Plugins without custom config
-Plug 'monkoose/gruvbox'                       " adds colorscheme
+Plug 'monkoose/boa.vim'                       " adds colorscheme
 Plug 'tpope/vim-repeat'                       " makes '.' command more usable
 Plug 'tpope/vim-eunuch'                       " adds sugar common UNIX shell commands
 Plug 'tpope/vim-surround'                     " makes manipulating with (),[],''... enjoyable
@@ -13,7 +13,6 @@ Plug 'wellle/targets.vim'                     " adds new targets like in( or 2al
 Plug 'airblade/vim-gitgutter'                 " makes vcs changes visible
 Plug 'Shougo/context_filetype.vim'            " adds better support for different languages in one file
 Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
-Plug 'bitc/vim-hdevtools'                     " adds :type and :info for haskell files
 Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation
 Plug 'Vimjas/vim-python-pep8-indent'          " improves python indentation
 Plug 'hail2u/vim-css3-syntax'                 " improves CSS syntax highlighting
@@ -22,7 +21,6 @@ Plug 'othree/html5.vim'                       " improves HTML syntax highlightin
 Plug 'pangloss/vim-javascript'                " improves JavaScript syntax highlighting and indentation
 
 " Plugins with custom config
-source $HOME/.config/nvim/plugins/ale.vim
 source $HOME/.config/nvim/plugins/coc.vim
 source $HOME/.config/nvim/plugins/delimitMate.vim
 source $HOME/.config/nvim/plugins/neoterm.vim

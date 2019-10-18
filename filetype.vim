@@ -6,20 +6,20 @@ augroup ft_load
   autocmd FileType python setlocal complete+=t formatoptions-=t define=^\s*\\(def\\\\|class\\)
   autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
   autocmd FileType css,scss setlocal iskeyword+=-
-  autocmd FileType css,scss,javascript,html,python nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
-  autocmd FileType css,scss,javascript,html,python nmap     <buffer><silent>  <space>d   <Plug>(coc-definition)
+  autocmd FileType css,scss,javascript,html,python,haskell
+        \ nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType css,scss,javascript,html,python,haskell
+        \ nmap     <buffer><silent>  <space>d   <Plug>(coc-definition)
+  autocmd FileType css,scss,javascript,html,python,haskell
+        \ nmap <buffer>      <space>l   <Plug>(coc-diagnostic-next-error)
+  autocmd FileType css,scss,javascript,html,python,haskell
+        \ nmap <buffer>      <space>L   <Plug>(coc-diagnostic-prev-error)
 augroup END
 
 """"""""""""""""""""""""""""""""" haskell
 augroup ft_haskell
   autocmd!
-  autocmd BufWrite *.hs ALEFix
-  autocmd User ALEFixPost write
   autocmd FileType haskell setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd FileType haskell nnoremap <buffer>         <space>hs :Hoogle<space>
   autocmd FileType haskell nnoremap <buffer>         <space>hh :Hoogle<CR>
-  autocmd FileType haskell nnoremap <buffer>         K         :HdevtoolsType<CR>
-  autocmd FileType haskell nmap     <buffer><silent> <space>/  :nohlsearch <bar> :call hdevtools#type_clear()<CR>
-  " autocmd FileType haskell nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
-  " autocmd FileType haskell nmap <buffer><silent>      <space>d   <Plug>(coc-definition)
 augroup END
