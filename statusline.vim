@@ -1,5 +1,4 @@
-" set statusline=%<%4*%{ALEStatusLine()}%*\ %f\ \ %h%m%r\ \ %{MyGitStatus()}%=%-12.(%l,%c%V%)\ %y\ \ %P\ 
-set statusline=%<\ %f\ \ %h%m%r\ \ %{MyGitStatus()}%=%-12.(%l,%c%V%)\ %y\ \ %P\ 
+set statusline=%<\ %f\ \ %h%m%r\ \ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}%=%-12.(%l,%c%V%)\ %y\ \ %P\ 
 
 augroup StatusLineColor
   autocmd!
@@ -11,31 +10,6 @@ augroup SetStatusLine
   autocmd!
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END
-
-function! MyGitStatus() abort
-  try
-    if exists('*fugitive#head')
-      let l:gitbranch = FugitiveStatusline()
-      let l:symbols = ['+', '~', '-']
-      let l:hunks = GitGutterGetHunkSummary()
-      let l:ret = []
-      for i in [0, 1, 2]
-        if l:hunks[i] > 0
-          call add(l:ret, l:symbols[i] . l:hunks[i])
-        endif
-      endfor
-      if ret != []
-        let l:gitgutter = ' ' . join(l:ret, ' ')
-      else
-        let l:gitgutter = ''
-      endif
-      let l:gitinfo = ' ' . l:gitbranch . l:gitgutter
-      return strlen(l:gitbranch) && winwidth(0) > 50 ? l:gitinfo : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
 
 " function! ALEStatusLine() abort
 "   let l:counts = ale#statusline#Count(bufnr(''))

@@ -17,4 +17,7 @@
     ```vim
     :PlugInstall
     ```
-
+4. Install CoC plugings
+    ```vim
+    :CocInstall <coc-plugin>
+    ```

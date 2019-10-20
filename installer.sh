@@ -42,18 +42,21 @@ msg "Checking..."
 variable_set "$HOME"
 program_must_exist "curl"
 INSTALL_DIR="$HOME/.local/share/nvim"
+CONFIG_DIR="$HOME/.config/nvim"
 msg "Done"
 echo ""
 msg "Creating directories..."
 mkdir -pv "$INSTALL_DIR/session"
 mkdir -pv "$INSTALL_DIR/undo-files"
 mkdir -pv "$INSTALL_DIR/view"
-mkdir -pv "$HOME/.config/nvim"
+mkdir -pv "$CONFIG_DIR"
+mkdir -pv "$CONFIG_DIR/plugins"
 msg "Done"
 echo ""
 msg "Creating symlinks"
-ln -s $PWD/init.vim $HOME/.config/nvim/init.vim
-ln -s $PWD/coc-settings.json $HOME/.config/nvim/coc-settings.json
+ln -s $PWD/*.vim $CONFIG_DIR
+ln -s $PWD/coc-settings.json $CONFIG_DIR/coc-settings.json
+ln -s $PWD/plugins/*.vim $CONFIG_DIR/plugins
 msg "Done"
 echo ""
 msg "Begin fetching vim-plug..."
@@ -61,4 +64,5 @@ curl -fLo $INSTALL_DIR/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo ""
 msg "Done. Launch nvim and run command :PlugInstall"
+msg "Then install all CoC plugins with :CocInstall <coc-plugin>"
 echo ""

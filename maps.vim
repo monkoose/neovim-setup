@@ -17,8 +17,6 @@ nnoremap <silent> <C-n>         :call ScrollPreviewDownOrJumpToNextHunk()<CR>
 nnoremap <silent> <C-p>         :call ScrollPreviewUpOrJumpToPreviousHunk()<CR>
 nnoremap          <M-q>         <C-w>c
 nnoremap          <M-o>         <C-w>o
-nmap              <M-2>         <Plug>ToggleQuickfixList
-nmap              <M-3>         <Plug>ToggleLocationList
 nmap              <M-w>         <Plug>WindowSwitch
 nmap              <M-f>         <Plug>InsertDotComma
 nnoremap          yof           :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
@@ -57,19 +55,29 @@ function! s:windowSwitch() abort
 endfunction
 nnoremap <silent> <Plug>WindowSwitch :call <SID>windowSwitch()<CR>
 "}}}
+" isPreviewWindow() {{{
+function! s:isPreviewWindow()
+  for nr in range(1, winnr('$'))
+    if getwinvar(nr, "&pvw") == 1
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+"}}}
 " scroll *preview* window or jump to vcs changes in the file {{{
 function! ScrollPreviewDownOrJumpToNextHunk()
   if s:isPreviewWindow()
     exec "normal! \<C-w>P3\<C-e>\<C-w>p"
   else
-    exec "normal ]c"
+    exec "normal \<Plug>(coc-git-nextchunk)"
   endif
 endfunction
 function! ScrollPreviewUpOrJumpToPreviousHunk()
   if s:isPreviewWindow()
     exec "normal! \<C-w>P3\<C-y>\<C-w>p"
   else
-    exec "normal [c"
+    exec "normal \<Plug>(coc-git-prevchunk)"
   endif
 endfunction
 "}}}
@@ -86,7 +94,7 @@ function! s:insertDotComma() abort
 endfunction
 nnoremap <silent> <Plug>InsertDotComma :call <SID>insertDotComma()<CR>
 "}}}
-" show Syntax name for element under the cursor {{{
+" show Syntax highlight group for element under the cursor {{{
 function! s:synnames(...) abort
   if a:0
     let [line, column] = [a:1, a:2]
@@ -107,62 +115,5 @@ function! s:syncount(count)
   return ''
 endfunction
 nnoremap <silent> <Plug>ScripteaseSynnames :call <SID>syncount(v:count)<CR>
-"}}}
-" toggle Location and QuickFix lists {{{
-function! s:getBufferList()
-  redir =>buflist
-  silent! ls
-  redir END
-  return buflist
-endfunction
-function! s:toggle_location_list()
-  let winnr = winnr()
-  let prevwinnr = winnr("#")
-  let curbufnr = winbufnr(0)
-  for bufnum in map(filter(split(s:getBufferList(), '\n'), 'v:val =~ "Location List"'),
-        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if curbufnr == bufnum
-      exec prevwinnr . "wincmd w"
-      lclose
-      return
-    endif
-  endfor
-  try
-    botright lopen
-    if &ft == 'qf'
-      silent file LocationList
-    endif
-  catch /E776/
-      echohl WarningMsg
-      echo "Location List is empty"
-      echohl None
-      return
-  endtry
-endfunction
-function! s:toggle_quickfix_list()
-  let winnr = winnr()
-  let prevwinnr = winnr("#")
-  for bufnum in map(filter(split(s:getBufferList(), '\n'), 'v:val =~ "Quickfix List"'),
-        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec prevwinnr . "wincmd w"
-      cclose
-      return
-    endif
-  endfor
-    botright copen
-endfunction
-nnoremap <script> <silent> <Plug>ToggleQuickfixList :call <SID>toggle_quickfix_list()<CR>
-nnoremap <script> <silent> <Plug>ToggleLocationList :call <SID>toggle_location_list()<CR>
-"}}}
-" isPreviewWindow() {{{
-function! s:isPreviewWindow()
-  for nr in range(1, winnr('$'))
-    if getwinvar(nr, "&pvw") == 1
-      return 1
-    endif
-  endfor
-  return 0
-endfunction
 "}}}
 " vim: foldmethod=marker:

@@ -10,7 +10,6 @@ Plug 'junegunn/gv.vim'                        " git log for vim
 Plug 'junegunn/vim-slash'                     " enchance search expirience
 Plug 'zhimsel/vim-stay'                       " for remembering session/cursor position
 Plug 'wellle/targets.vim'                     " adds new targets like in( or 2alB
-Plug 'airblade/vim-gitgutter'                 " makes vcs changes visible
 Plug 'Shougo/context_filetype.vim'            " adds better support for different languages in one file
 Plug 'neovimhaskell/haskell-vim'              " improves haskell syntax and indentation
 Plug 'tbastos/vim-lua'                        " improves lua syntax highlighting and indentation

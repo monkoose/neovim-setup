@@ -5,7 +5,6 @@
   "diagnostic.warningSign": "W",
   "diagnostic.enableMessage": "jump",
   "diagnostic.maxWindowHeight": 20,
-  "diagnostic.refreshAfterSave": true,
   "suggest.minTriggerInputLength": 2,
   "session.directory": "~/.local/share/nvim/sessions",
   "session.saveOnVimLeave": false,
