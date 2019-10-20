@@ -1,9 +1,9 @@
 # neovim-setup
 
-1. Clone the repository
+1. Download installer
 
     ```
-    git clone https://github.com/monkoose/neovim-setup
+    curl -Lo installer.sh https://raw.githubusercontent.com/monkoose/neovim-setup/master/installer.sh
     ```
 
 2. Run installer.sh

@@ -43,6 +43,7 @@ variable_set "$HOME"
 program_must_exist "curl"
 INSTALL_DIR="$HOME/.local/share/nvim"
 CONFIG_DIR="$HOME/.config/nvim"
+NVIM_REPO="https://github.com/monkoose/neovim-setup"
 msg "Done"
 echo ""
 msg "Creating directories..."
@@ -50,13 +51,10 @@ mkdir -pv "$INSTALL_DIR/session"
 mkdir -pv "$INSTALL_DIR/undo-files"
 mkdir -pv "$INSTALL_DIR/view"
 mkdir -pv "$CONFIG_DIR"
-mkdir -pv "$CONFIG_DIR/plugins"
 msg "Done"
 echo ""
-msg "Creating symlinks"
-ln -s $PWD/*.vim $CONFIG_DIR
-ln -s $PWD/coc-settings.json $CONFIG_DIR/coc-settings.json
-ln -s $PWD/plugins/*.vim $CONFIG_DIR/plugins
+msg "Cloning repo"
+git clone --depth=1 $NVIM_REPO $CONFIG_DIR 
 msg "Done"
 echo ""
 msg "Begin fetching vim-plug..."
