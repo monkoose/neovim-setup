@@ -6,7 +6,6 @@ Plug 'tpope/vim-surround'                            " makes manipulating with (
 Plug 'tpope/vim-unimpaired'                          " adds common toggling options, new ] and [ commands, encoding/decoding
 Plug 'Konfekt/FastFold'                              " makes non manual folds faster
 Plug 'tomtom/tcomment_vim'                           " adds easy lines commenting
-Plug 'junegunn/gv.vim'                               " git log for vim
 Plug 'junegunn/vim-slash'                            " enchance search expirience
 Plug 'zhimsel/vim-stay'                              " for remembering session/cursor position
 Plug 'wellle/targets.vim'                            " adds new targets like in( or 2alB
@@ -21,6 +20,7 @@ Plug 'pangloss/vim-javascript'                       " improves JavaScript synta
 Plug 'honza/vim-snippets'                            " adds snippets support
 
 " Plugins with custom config
+source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
 source $HOME/.config/nvim/plugins/coc.vim            " adds autocompletion and langserver
 source $HOME/.config/nvim/plugins/delimitMate.vim    " adds auto pairs
 source $HOME/.config/nvim/plugins/neoterm.vim        " for better terminal experience
