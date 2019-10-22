@@ -1,4 +1,4 @@
-Plug 'Twinside/vim-hoogle'                    " for hoogle searching inside vim
+Plug 'Twinside/vim-hoogle'
 
 let g:hoogle_search_jump_back = 0
-let g:hoogle_search_bin = 'hoogle -q'
+let g:hoogle_search_bin       = 'hoogle -q'

@@ -1,3 +1,3 @@
-Plug 'junegunn/vim-easy-align'                " adds aligning of text
+Plug 'junegunn/vim-easy-align'
 
-vmap              <Enter>       <Plug>(EasyAlign)
+vmap    <Enter>    <Plug>(EasyAlign)

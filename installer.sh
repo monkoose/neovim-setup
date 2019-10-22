@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Helper functions
 msg() {
@@ -41,6 +41,7 @@ variable_set() {
 msg "Checking..."
 variable_set "$HOME"
 program_must_exist "curl"
+program_must_exist "git"
 INSTALL_DIR="$HOME/.local/share/nvim"
 CONFIG_DIR="$HOME/.config/nvim"
 NVIM_REPO="https://github.com/monkoose/neovim-setup"

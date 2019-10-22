@@ -1,3 +1,3 @@
-Plug 'easymotion/vim-easymotion'              " for easier jumps to any position on the screen
+Plug 'easymotion/vim-easymotion'
 
-nmap <silent>   <space><space>  <Plug>(easymotion-overwin-f)
+nmap    <silent>    <space><space>    <Plug>(easymotion-overwin-f)

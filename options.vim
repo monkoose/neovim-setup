@@ -47,7 +47,6 @@ set shortmess+=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
-set updatetime=1500
 set foldtext=NeatFoldText()  "custom looking folds
 
 " NeatFoldText() {{{

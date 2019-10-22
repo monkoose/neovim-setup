@@ -2,7 +2,7 @@ set statusline=%{MyStatusLine()}
 
 function! MyStatusLine() abort
   let l:filename = '%< %f '
-  if w:active && (mode() == 'i' || mode() == 's')
+  if w:current_win && (mode() == 'i' || mode() == 's')
     let l:filename = '%<%1* %f %*'
   elseif &modified
     let l:filename = '%<%2* %f %*'
@@ -16,8 +16,8 @@ endfunction
 
 augroup SetStatusLine
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * let w:active = 1
-  autocmd WinNew,WinLeave * let w:active = 0
+  autocmd VimEnter,WinEnter,BufWinEnter * let w:current_win = 1
+  autocmd WinNew,WinLeave * let w:current_win = 0
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END
 

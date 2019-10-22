@@ -1,50 +1,50 @@
-set   pastetoggle=<F2>
-nmap <silent>     <F3>          :setlocal spell!<CR>
-nmap              <F8>          <Plug>ScripteaseSynnames
-nmap <silent>     <space>/      :nohlsearch<CR>
-nnoremap <silent> <C-space>     :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
-noremap!          <C-space>     <C-^>
-nnoremap          <space>a      <C-^>
-nnoremap          <space>d      <C-]>
-nnoremap          <space>U      mQviwU`Q
-nnoremap          <space>u      mQviwu`Q
-nnoremap          <space>y      "+y
-nnoremap          <space>pp     "+p
-nnoremap          <C-j>         <C-d>
-nnoremap          <C-k>         <C-u>
-nnoremap          <C-l>         <space>
-nnoremap <silent> <C-n>         :call ScrollPreviewDownOrJumpToNextHunk()<CR>
-nnoremap <silent> <C-p>         :call ScrollPreviewUpOrJumpToPreviousHunk()<CR>
-nnoremap          <M-q>         <C-w>c
-nnoremap          <M-o>         <C-w>o
-nmap              <M-w>         <Plug>WindowSwitch
-nmap              <M-f>         <Plug>InsertDotComma
-nnoremap          yof           :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
-nnoremap <silent> yoy           :let &cc = &cc == '' ? '80' : ''<CR>
-nmap <expr> <silent>   <Esc>    <SID>isPreviewWindow() ? ":pclose\<CR>" : "\<Esc>"
+set pastetoggle=<F2>
+nmap     <silent>       <F3>        :setlocal spell!<CR>
+nmap                    <F8>        <Plug>ScripteaseSynnames
+nmap     <silent>       <space>/    :nohlsearch<CR>
+nnoremap <silent>       <C-space>   :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
+noremap!                <C-space>   <C-^>
+nnoremap                <space>a    <C-^>
+nnoremap                <space>d    <C-]>
+nnoremap                <space>U    mQviwU`Q
+nnoremap                <space>u    mQviwu`Q
+nnoremap                <space>y    "+y
+nnoremap                <space>pp   "+p
+nnoremap                <C-j>       <C-d>
+nnoremap                <C-k>       <C-u>
+nnoremap                <C-l>       <space>
+nnoremap <silent>       <C-n>       :call ScrollPreviewDownOrJumpToNextHunk()<CR>
+nnoremap <silent>       <C-p>       :call ScrollPreviewUpOrJumpToPreviousHunk()<CR>
+nnoremap                <M-q>       <C-w>c
+nnoremap                <M-o>       <C-w>o
+nmap                    <M-w>       <Plug>WindowSwitch
+nmap                    <M-f>       <Plug>InsertDotComma
+nnoremap                yof         :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
+nnoremap <silent>       yoy         :let &cc = &cc == '' ? &textwidth + 1 : ''<CR>
+nmap     <silent><expr> <Esc>       <SID>isPreviewWindow() ? ":pclose\<CR>" : "\<Esc>"
 
-vnoremap          <space>y      "+y
-vnoremap          <space>pp     "+p
-vnoremap          <C-j>         <C-d>
-vnoremap          <C-k>         <C-u>
+vnoremap                <space>y    "+y
+vnoremap                <space>pp   "+p
+vnoremap                <C-j>       <C-d>
+vnoremap                <C-k>       <C-u>
 
-inoremap          <C-p>         <C-k>
-inoremap          <C-j>         <C-n>
-inoremap          <C-k>         <C-p>
-inoremap          <C-l>         <DEL>
-inoremap          <M-h>         <Left>
-inoremap          <M-l>         <Right>
+inoremap                <C-p>       <C-k>
+inoremap                <C-j>       <C-n>
+inoremap                <C-k>       <C-p>
+inoremap                <C-l>       <DEL>
+inoremap                <M-h>       <Left>
+inoremap                <M-l>       <Right>
 
-cnoremap          <C-n>         <Down>
-cnoremap          <C-p>         <Up>
-cnoremap          <C-j>         <C-n>
-cnoremap          <C-k>         <C-p>
-cnoremap          <M-h>         <Left>
-cnoremap          <M-l>         <Right>
+cnoremap                <C-n>       <Down>
+cnoremap                <C-p>       <Up>
+cnoremap                <C-j>       <C-n>
+cnoremap                <C-k>       <C-p>
+cnoremap                <M-h>       <Left>
+cnoremap                <M-l>       <Right>
 
-tnoremap          <F1>          <C-\><C-n>
-tnoremap          <C-]>         <C-\><C-n>
-tnoremap          <M-w>         <C-\><C-n><C-w>w
+tnoremap                <F1>        <C-\><C-n>
+tnoremap                <C-]>       <C-\><C-n>
+tnoremap                <M-w>       <C-\><C-n><C-w>w
 
 " windowSwitch() {{{
 function! s:windowSwitch() abort
