@@ -48,6 +48,18 @@ set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
 set foldtext=NeatFoldText()  "custom looking folds
+let g:markdown_folding=1
+
+augroup FileTypeOptions
+  autocmd!
+  autocmd FileType qf       setlocal wrap
+  autocmd FileType markdown setlocal foldexpr=MarkdownFold()
+  autocmd FileType vim      setlocal iskeyword-=#
+  autocmd FileType python   setlocal complete+=t formatoptions-=t define=^\s*\\(def\\\\|class\\)
+  autocmd FileType css,scss setlocal iskeyword+=-
+  autocmd FileType lua      setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType haskell  setlocal tabstop=4 softtabstop=4 shiftwidth=4
+augroup END
 
 " NeatFoldText() {{{
 function! NeatFoldText() abort

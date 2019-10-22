@@ -26,3 +26,15 @@ nmap                      <space>sm   :CocList maps<CR>
 nmap                      <space>sl   :CocList lines<CR>
 nmap                      <space>sw   :CocList words<CR>
 nmap                      <space>;    :CocList buffers<CR>
+
+augroup CocFiletypeMaps
+  autocmd!
+  autocmd FileType css,scss,javascript,html,python,haskell,json,yaml
+        \ nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
+  autocmd FileType css,scss,javascript,html,python,haskell,json,yaml
+        \ nmap     <buffer><silent>  <space>d   <Plug>(coc-definition)
+  autocmd FileType css,scss,javascript,html,python,haskell,json,yaml
+        \ nmap <buffer>      <space>l   <Plug>(coc-diagnostic-next-error)
+  autocmd FileType css,scss,javascript,html,python,haskell
+        \ nmap <buffer>      <space>L   <Plug>(coc-diagnostic-prev-error)
+augroup END
