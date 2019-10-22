@@ -22,6 +22,7 @@ nmap     <silent>         <M-3>       :CocList locationlist<CR>
 nmap                      <space>fm   :CocList mru<CR>
 nmap                      <space>ff   :CocList files -L<CR>
 nmap                      <space>ss   :CocList grep<CR>
+nmap                      <space>sm   :CocList maps<CR>
 nmap                      <space>sl   :CocList lines<CR>
 nmap                      <space>sw   :CocList words<CR>
 nmap                      <space>;    :CocList buffers<CR>
