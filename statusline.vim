@@ -1,13 +1,23 @@
-set statusline=%<\ %f\ \ %h%m%r\ \ %{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}%=%-12.(%l,%c%V%)\ %y\ \ %P\ 
+set statusline=%{MyStatusLine()}
 
-augroup StatusLineColor
-  autocmd!
-  au InsertEnter * hi StatusLine guifg=#221111 guibg=#7c7e1d
-  au InsertLeave * hi StatusLine guifg=#b8af96 guibg=#48382f
-augroup END
+function! MyStatusLine() abort
+  let l:filename = '%< %f '
+  if w:active && (mode() == 'i' || mode() == 's')
+    let l:filename = '%<%1* %f %*'
+  elseif &modified
+    let l:filename = '%<%2* %f %*'
+  endif
+  let l:redraw = '%{MyStatusLine()}'
+  let l:coc = "%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}"
+  let l:statusline = l:redraw . l:filename . "%h%r " . l:coc . " %=%-12.(%l,%c%V%) %y  %P "
+  call setwinvar(winnr(), '&statusline', l:statusline)
+  return ''
+endfunction
 
 augroup SetStatusLine
   autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * let w:active = 1
+  autocmd WinNew,WinLeave * let w:active = 0
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END
 
