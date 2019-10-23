@@ -29,6 +29,8 @@ nmap                      <space>;    :CocList buffers<CR>
 
 augroup CocFiletypeMaps
   autocmd!
+  autocmd BufWinEnter,WinEnter list:///* hi Search guifg=#d35b4b guibg=NONE gui=NONE
+  autocmd WinLeave list:///* hi Search guifg=#26201c guibg=#826a33 gui=NONE
   autocmd FileType css,scss,javascript,html,python,haskell,json,yaml
         \ nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
   autocmd FileType css,scss,javascript,html,python,haskell,json,yaml

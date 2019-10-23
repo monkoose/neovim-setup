@@ -16,8 +16,8 @@ endfunction
 
 augroup SetStatusLine
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * let w:current_win = 1
-  autocmd WinNew,WinLeave * let w:current_win = 0
+  autocmd WinEnter,BufWinEnter * let w:current_win = 1
+  autocmd WinLeave * let w:current_win = 0
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END
 
