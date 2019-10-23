@@ -47,6 +47,8 @@ set shortmess+=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
+set winheight=10
+set winminheight=10
 set foldtext=NeatFoldText()  "custom looking folds
 let g:markdown_folding=1
 
