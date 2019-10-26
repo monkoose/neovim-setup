@@ -20,6 +20,7 @@ Plug 'pangloss/vim-javascript'                       " improves JavaScript synta
 Plug 'honza/vim-snippets'                            " adds snippets support
 
 " Plugins with custom config
+source $HOME/.config/nvim/plugins/fzf.vim
 source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
 source $HOME/.config/nvim/plugins/coc.vim            " adds autocompletion and langserver
 source $HOME/.config/nvim/plugins/delimitMate.vim    " adds auto pairs

@@ -8,7 +8,6 @@
   "suggest.minTriggerInputLength": 2,
   "session.directory": "~/.local/share/nvim/sessions",
   "list.source.grep.args": ["-L"],
-  "list.autoResize": false,
   "session.saveOnVimLeave": false,
   "suggest.noselect": true,
   "suggest.enablePreselect": false,

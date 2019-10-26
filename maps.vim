@@ -1,94 +1,140 @@
 set pastetoggle=<F2>
-nmap     <silent>       <F3>        :setlocal spell!<CR>
-nmap                    <F8>        <Plug>ScripteaseSynnames
-nmap     <silent>       <space>/    :nohlsearch<CR>
-nnoremap <silent>       <C-space>   :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
-noremap!                <C-space>   <C-^>
-nnoremap                <space>a    <C-^>
-nnoremap                <space>d    <C-]>
-nnoremap                <space>U    mQviwU`Q
-nnoremap                <space>u    mQviwu`Q
-nnoremap                <space>y    "+y
-nnoremap                <space>pp   "+p
-nnoremap                <C-j>       <C-d>
-nnoremap                <C-k>       <C-u>
-nnoremap                <C-l>       <space>
-nnoremap <silent>       <C-n>       :call ScrollPreviewDownOrJumpToNextHunk()<CR>
-nnoremap <silent>       <C-p>       :call ScrollPreviewUpOrJumpToPreviousHunk()<CR>
-nnoremap                <M-q>       <C-w>c
-nnoremap                <M-o>       <C-w>o
-nmap                    <M-w>       <Plug>WindowSwitch
-nmap                    <M-f>       <Plug>InsertDotComma
-nnoremap                yof         :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
-nnoremap <silent>       yoy         :let &cc = &cc == '' ? &textwidth + 1 : ''<CR>
-nmap     <silent><expr> <Esc>       <SID>isPreviewWindow() ? ":pclose\<CR>" : "\<Esc>"
+nmap     <silent>  <F3>        :setlocal spell!<CR>
+nmap     <silent>  <space>/    :nohlsearch<CR>
+nmap               <F8>        <Plug>ScripteaseSynnames
+nmap               <M-w>       <Plug>WinSwitch
+nmap               <M-f>       <Plug>InsertDotComma
+nmap               <Esc>       <Plug>ClosePF
+nmap               <C-n>       <Plug>ScrollOrJumpDown
+nmap               <C-p>       <Plug>ScrollOrJumpUp
+noremap!           <C-space>   <C-^>
+nnoremap           <space>a    <C-^>
+nnoremap           <space>d    <C-]>
+nnoremap           <space>U    mQviwU`Q
+nnoremap           <space>u    mQviwu`Q
+nnoremap           <space>y    "+y
+nnoremap           <space>pp   "+p
+nnoremap           <C-j>       <C-d>
+nnoremap           <C-k>       <C-u>
+nnoremap           <C-l>       <space>
+nnoremap           <M-q>       <C-w>c
+nnoremap           <M-o>       <C-w>o
+nnoremap           yof         :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
+nnoremap <silent>  yoy         :let &cc = &cc == '' ? &textwidth + 1 : ''<CR>
+nnoremap <silent>  <C-space>   :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
 
-vnoremap                <space>y    "+y
-vnoremap                <space>pp   "+p
-vnoremap                <C-j>       <C-d>
-vnoremap                <C-k>       <C-u>
+vnoremap           <space>y    "+y
+vnoremap           <space>pp   "+p
+vnoremap           <C-j>       <C-d>
+vnoremap           <C-k>       <C-u>
 
-inoremap                <C-p>       <C-k>
-inoremap                <C-j>       <C-n>
-inoremap                <C-k>       <C-p>
-inoremap                <C-l>       <DEL>
-inoremap                <M-h>       <Left>
-inoremap                <M-l>       <Right>
+inoremap           <C-p>       <C-k>
+inoremap           <C-j>       <C-n>
+inoremap           <C-k>       <C-p>
+inoremap           <C-l>       <DEL>
+inoremap           <M-h>       <Left>
+inoremap           <M-l>       <Right>
 
-cnoremap                <C-n>       <Down>
-cnoremap                <C-p>       <Up>
-cnoremap                <C-j>       <C-n>
-cnoremap                <C-k>       <C-p>
-cnoremap                <M-h>       <Left>
-cnoremap                <M-l>       <Right>
+cnoremap           <C-n>       <Down>
+cnoremap           <C-p>       <Up>
+cnoremap           <C-j>       <C-n>
+cnoremap           <C-k>       <C-p>
+cnoremap           <M-h>       <Left>
+cnoremap           <M-l>       <Right>
 
-tnoremap                <F1>        <C-\><C-n>
-tnoremap                <C-]>       <C-\><C-n>
-tnoremap                <M-w>       <C-\><C-n><C-w>w
+tnoremap           <F1>        <C-\><C-n>
+tnoremap           <C-]>       <C-\><C-n>
+tnoremap           <M-w>       <C-\><C-n><C-w>w
 
-" windowSwitch() {{{
-function! s:windowSwitch() abort
+" WindowSwitch() {{{
+function! s:WindowSwitch() abort
     wincmd w
     if &ft == 'neoterm' || &ft == 'terminal'
       startinsert
     endif
 endfunction
-nnoremap <silent> <Plug>WindowSwitch :call <SID>windowSwitch()<CR>
+nnoremap <silent> <Plug>WinSwitch :call <SID>WindowSwitch()<CR>
 "}}}
-" isPreviewWindow() {{{
-function! s:isPreviewWindow()
+" PreviewOrFloat() {{{
+function! s:PreviewOrFloat() abort
   for nr in range(1, winnr('$'))
-    if getwinvar(nr, "&pvw") == 1
-      return 1
+    if getwinvar(nr, 'float')
+      return nr
+    elseif getwinvar(nr, '&pvw')
+      return -1
     endif
   endfor
   return 0
 endfunction
 "}}}
-" scroll *preview* window or jump to vcs changes in the file {{{
-function! ScrollPreviewDownOrJumpToNextHunk()
-  if s:isPreviewWindow()
-    exec "normal! \<C-w>P3\<C-e>\<C-w>p"
+" ClosePvwOrFloat() {{{
+function! s:ClosePvwOrFloat() abort
+  let l:winnr = s:PreviewOrFloat()
+  if l:winnr
+    execute l:winnr . "close"
+  elseif l:winnr == -1
+    execute "pclose"
   else
-    exec "normal \<Plug>(coc-git-nextchunk)"
+    execute "normal! \<Esc>"
   endif
 endfunction
-function! ScrollPreviewUpOrJumpToPreviousHunk()
-  if s:isPreviewWindow()
-    exec "normal! \<C-w>P3\<C-y>\<C-w>p"
+nnoremap <silent> <Plug>ClosePF :call <SID>ClosePvwOrFloat()<CR>
+"}}}
+" scroll preview or float windows or jump to git changes {{{
+function! s:ScrollPvwOrFloatDownOrJumpToNextHunk() abort
+  let l:winnr = s:PreviewOrFloat()
+  if l:winnr == -1
+    execute "normal! \<C-w>P"
+    try
+      execute "normal! 3\<C-e>"
+    finally
+      execute "normal! \<C-w>p"
+    endtry
+  elseif l:winnr
+    let l:curr_win = winnr()
+    execute l:winnr . "wincmd w"
+    try
+      execute "normal! 3\<C-e>"
+    finally
+      execute l:curr_win . "wincmd w"
+    endtry
+  else
+    execute "normal \<Plug>(coc-git-nextchunk)"
+  endif
+endfunction
+nnoremap <silent> <Plug>ScrollOrJumpDown :call <SID>ScrollPvwOrFloatDownOrJumpToNextHunk()<CR>
+
+function! s:ScrollPvwOrFloatUpOrJumpToPreviousHunk() abort
+  let l:winnr = s:PreviewOrFloat()
+  if l:winnr == -1
+    execute "normal! \<C-w>P"
+    try
+      execute "normal! 3\<C-y>"
+    finally
+      execute "normal! \<C-w>p"
+    endtry
+  elseif l:winnr
+    let l:curr_win = winnr()
+    execute l:winnr . "wincmd w"
+    try
+      execute "normal! 3\<C-y>"
+    finally
+      execute l:curr_win . "wincmd w"
+    endtry
   else
     exec "normal \<Plug>(coc-git-prevchunk)"
   endif
 endfunction
+nnoremap <silent> <Plug>ScrollOrJumpUp :call <SID>ScrollPvwOrFloatUpOrJumpToPreviousHunk()<CR>
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:insertDotComma() abort
   let column = col('.')
-  exec "normal $"
+  exec "normal! $"
   if matchstr(getline('.'), '\%' . col('.') . 'c.') != ';'
-    exec "normal a;"
+    exec "normal! a;"
   else
-    exec "normal x"
+    exec "normal! x"
   endif
   call cursor(line('.'), column)
 endfunction
