@@ -1,12 +1,10 @@
-set statusline=%!MyStatusLine()
+set statusline=%{MyStatusLine()}
 
 let s:coc_git = "%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}"
 
 function! MyStatusLine() abort
   let l:filename = '%< %f '
-  if IsCurrentWin() && has_key(s:modes, mode())
-    let l:filename = '%<%1* %f %*'
-  elseif &modified
+  if &modified
     let l:filename = '%<%2* %f %*'
   endif
   let l:redraw = '%{MyStatusLine()}'
@@ -15,16 +13,8 @@ function! MyStatusLine() abort
   return ''
 endfunction
 
-let s:modes = {'s': 1, 'i': 1, 't': 1}
-
-function IsCurrentWin() abort
-  return getwinvar(winnr(), 'current_win')
-endfunction
-
 augroup SetStatusLine
   autocmd!
-  autocmd WinEnter,BufWinEnter * call setwinvar(0, 'current_win', 1)
-  autocmd WinLeave * call setwinvar(0, 'current_win', 0)
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END
 " function! ALEStatusLine() abort

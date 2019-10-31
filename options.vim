@@ -6,9 +6,6 @@ set title
 set synmaxcol=1000
 set hidden
 set spelllang=en_us,ru_yo
-set keymap=russian-jcukenwin
-set iminsert=0
-set imsearch=0
 set pumheight=10
 set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
@@ -16,7 +13,8 @@ set nowrap
 set number
 set ignorecase
 set smartcase
-set noshowmode
+set scrolloff=5
+set sidescrolloff=5
 set history=2000
 set undolevels=300
 set noswapfile
@@ -43,14 +41,14 @@ set textwidth=99
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
-set shortmess+=filnrxtToOFIc
+set shortmess=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
-" set winheight=10
-" set winminheight=10
+set timeoutlen=3000
 set foldtext=NeatFoldText()  "custom looking folds
 let g:markdown_folding=1
+let loaded_netrwPlugin = 1
 
 augroup FileTypeOptions
   autocmd!
@@ -62,6 +60,7 @@ augroup FileTypeOptions
   autocmd FileType lua      setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd FileType haskell  setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
+
 
 " NeatFoldText() {{{
 function! NeatFoldText() abort

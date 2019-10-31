@@ -20,7 +20,7 @@ Plug 'pangloss/vim-javascript'                       " improves JavaScript synta
 Plug 'honza/vim-snippets'                            " adds snippets support
 
 " Plugins with custom config
-source $HOME/.config/nvim/plugins/fzf.vim
+source $HOME/.config/nvim/plugins/fzf.vim            " adds fuzzy finder for multiple sources
 source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
 source $HOME/.config/nvim/plugins/coc.vim            " adds autocompletion and langserver
 source $HOME/.config/nvim/plugins/delimitMate.vim    " adds auto pairs
@@ -33,7 +33,6 @@ source $HOME/.config/nvim/plugins/vim-easy-align.vim " adds aligning of text
 source $HOME/.config/nvim/plugins/vim-easymotion.vim " for easier jumps to any position on the screen
 source $HOME/.config/nvim/plugins/vim-fugitive.vim   " adds git support inside vim
 source $HOME/.config/nvim/plugins/vim-gista.vim      " adds gist support
-source $HOME/.config/nvim/plugins/vim-hoogle.vim     " for hoogle searching inside vim
 
 " Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
 " Plug 'skywind3000/asyncrun.vim'               " adds support to asynchronously run shell commands
