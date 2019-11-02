@@ -1,8 +1,9 @@
 Plug 'monkoose/fzf.nvim'
 
-let s:fzf_big_float = 'call fzf#vim#floating(36, 140)'
+let s:fzf_big_float = 'call fzf#floating(36, 140)'
 let s:fzf_defaults = [
-      \ '--bind="alt-t:toggle-preview,ctrl-n:preview-down,ctrl-p:preview-up,ctrl-l:accept,ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history"',
+      \ '--bind="alt-t:toggle-preview,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' .
+          \ 'ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
       \ '--color=hl:#608bbf,fg+:#b8af96,hl+:#608bbf,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
       \ '--layout=reverse-list --tabstop=2 --inline-info --margin=1,3 --exact'
       \ ]
@@ -19,49 +20,6 @@ augroup FzfMapsAu
   autocmd FileType fzf tnoremap <M-q> <Esc>
 augroup END
 
-function! s:hoogle_handler(lines) abort
-  " exit if empty
-  if a:lines == [] || a:lines == ['','','']
-      return
-  endif
-
-  " Expect at least 2 elements, `query` and `keypress`, which may be empty strings.
-  let query    = a:lines[0] . ' '
-  let keypress = a:lines[1]
-  if keypress ==? 'enter'
-    let new_search = 'FzfHoogle ' . query
-    execute new_search
-    if has('nvim')
-      call feedkeys('i', 'n')
-    endif
-  endif
-endfunction
-
-command! -nargs=* -bang FzfHoogle
-    \ call fzf#run(fzf#wrap('hoogle', {
-            \ 'sink*': function('s:hoogle_handler'),
-            \ 'source': 'hoogle --quiet --count=1000 ' . <q-args> . " 2> /dev/null | " .
-                \ "awk '{ printf \"\033[32m\"$1\"\033[0m \033[33m\"$2\"\033[0m\";$1=\"\";$2=\"\";print$0}'",
-            \ 'window': s:fzf_big_float,
-            \ 'options': [
-                  \ '--print-query',
-                  \ '--expect=enter',
-                  \ '--ansi',
-                  \ '--exact',
-                  \ '--inline-info',
-                  \ '--prompt',
-                  \ 'hoogle ' . <q-args> . '> ',
-                  \ '--header', ':: Press `enter` to research with current query',
-                  \ '--preview', 'hoogle --info {1}.{2}',
-                  \ '--preview-window', 'up:60%'
-                  \ ]
-            \ }, <bang>0))
-
-augroup HoogleMaps
-  autocmd!
-  autocmd FileType haskell nnoremap <buffer>   <space>hh :FzfHoogle <c-r>=expand("<cword>")<CR><CR>
-augroup END
-
 " Open QuickFix with marked items from fzf
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
@@ -70,7 +28,6 @@ function! s:build_quickfix_list(lines)
 endfunction
 
 let g:fzf_action = {
-  \ 'ctrl-r': function('s:hoogle_handler'),
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -88,3 +45,49 @@ nmap <silent>    <space>sb       :FzfBLines<CR>
 nmap <silent>    <space>sl       :FzfLines<CR>
 "nmap <silent>    <space>ft     :FzfBTags<CR>
 " nmap <silent>    <space>fa     :FzfTags<CR>
+
+" Hoogle
+function! s:hoogle_handler(lines) abort
+  if a:lines == [] || a:lines == ['','','']
+      return
+  endif
+  " Expect at least 2 elements, `query` and `keypress`, which may be empty strings.
+  let query    = a:lines[0] . ' '
+  let keypress = a:lines[1]
+  if keypress ==? 'enter'
+    let new_search = 'FzfHoogle ' . query
+    execute new_search
+    " fzf on neovim for some reason can't start in insert mode from previous fzf window
+    " so this helps to do it
+    if has('nvim')
+      call feedkeys('i', 'n')
+    endif
+  endif
+endfunction
+
+command! -nargs=* -bang FzfHoogle
+    \ call fzf#run(fzf#wrap('hoogle', {
+            \ 'sink*': function('s:hoogle_handler'),
+            \ 'source': 'hoogle --quiet --count=1000 ' . shellescape(<q-args>) . " 2> /dev/null | " .
+                \ "awk '{ printf \"\033[32m\"$1\"\033[0m \033[33m\"$2\"\033[0m\";$1=\"\";$2=\"\";print$0}'",
+            \ 'window': s:fzf_big_float,
+            \ 'options': [
+                  \ '--print-query',
+                  \ '--expect=enter',
+                  \ '--ansi',
+                  \ '--exact',
+                  \ '--inline-info',
+                  \ '--prompt',
+                  \ 'hoogle ' . <q-args> . '> ',
+                  \ '--header', ':: Press '. printf("\x1b[35m%s\x1b[m", 'enter') . ' to research with current query',
+                  \ '--preview', 'hoogle --info {1}.{2}',
+                  \ '--preview-window', 'up:60%'
+                  \ ]
+            \ },
+            \ <bang>0
+            \ ))
+
+augroup HoogleMaps
+  autocmd!
+  autocmd FileType haskell nnoremap <buffer>   <space>hh :FzfHoogle <c-r>=expand("<cword>")<CR><CR>
+augroup END

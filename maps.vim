@@ -7,6 +7,8 @@ nmap               <M-f>       <Plug>InsertDotComma
 nmap               <Esc>       <Plug>ClosePF
 nmap               <C-n>       <Plug>ScrollOrJumpDown
 nmap               <C-p>       <Plug>ScrollOrJumpUp
+nmap               <M-2>       <Plug>ToggleQuickfixList
+nmap               <M-3>       <Plug>ToggleLocationList
 noremap!           <C-space>   <C-^>
 nnoremap           <space>a    <C-^>
 nnoremap           <space>d    <C-]>
@@ -46,6 +48,55 @@ tnoremap           <F1>        <C-\><C-n>
 tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 
+" Toggle Location and QuickFix lists {{{
+function! s:GetBufferList()
+  redir =>buflist
+  silent! ls
+  redir END
+  return buflist
+endfunction
+
+function! s:toggle_location_list()
+  let winnr = winnr()
+  let prevwinnr = winnr("#")
+  let curbufnr = winbufnr(0)
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Location List"'),
+        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if curbufnr == bufnum
+      exec prevwinnr . "wincmd w"
+      lclose
+      return
+    endif
+  endfor
+  try
+    botright lopen
+    if &ft == 'qf'
+      silent file LocationList
+    endif
+  catch /E776/
+      echohl WarningMsg
+      echo "Location List is Empty."
+      echohl None
+      return
+  endtry
+endfunction
+
+function! s:toggle_quickfix_list()
+  let winnr = winnr()
+  let prevwinnr = winnr("#")
+  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'),
+        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec prevwinnr . "wincmd w"
+      cclose
+      return
+    endif
+  endfor
+    botright copen
+endfunction
+nnoremap <script> <silent> <Plug>ToggleQuickfixList :call <SID>toggle_quickfix_list()<CR>
+nnoremap <script> <silent> <Plug>ToggleLocationList :call <SID>toggle_location_list()<CR>
+"}}}
 " WindowSwitch() {{{
 function! s:WindowSwitch() abort
     wincmd w
@@ -69,10 +120,10 @@ endfunction
 "}}}
 " ClosePvwOrFloat() {{{
 function! s:ClosePvwOrFloat() abort
-  let l:winnr = s:PreviewOrFloat()
-  if l:winnr
-    execute l:winnr . "close"
-  elseif l:winnr == -1
+  let winnr = s:PreviewOrFloat()
+  if winnr
+    execute winnr . "close"
+  elseif winnr == -1
     execute "pclose"
   else
     execute "normal! \<Esc>"
@@ -82,21 +133,21 @@ nnoremap <silent> <Plug>ClosePF :call <SID>ClosePvwOrFloat()<CR>
 "}}}
 " scroll preview or float windows or jump to git changes {{{
 function! s:ScrollPvwOrFloatDownOrJumpToNextHunk() abort
-  let l:winnr = s:PreviewOrFloat()
-  if l:winnr == -1
+  let winnr = s:PreviewOrFloat()
+  if winnr == -1
     execute "normal! \<C-w>P"
     try
       execute "normal! 3\<C-e>"
     finally
       execute "normal! \<C-w>p"
     endtry
-  elseif l:winnr
-    let l:curr_win = winnr()
-    execute l:winnr . "wincmd w"
+  elseif winnr
+    let curr_win = winnr()
+    execute winnr . "wincmd w"
     try
       execute "normal! 3\<C-e>"
     finally
-      execute l:curr_win . "wincmd w"
+      execute curr_win . "wincmd w"
     endtry
   else
     execute "normal \<Plug>(coc-git-nextchunk)"
@@ -105,21 +156,21 @@ endfunction
 nnoremap <silent> <Plug>ScrollOrJumpDown :call <SID>ScrollPvwOrFloatDownOrJumpToNextHunk()<CR>
 
 function! s:ScrollPvwOrFloatUpOrJumpToPreviousHunk() abort
-  let l:winnr = s:PreviewOrFloat()
-  if l:winnr == -1
+  let winnr = s:PreviewOrFloat()
+  if winnr == -1
     execute "normal! \<C-w>P"
     try
       execute "normal! 3\<C-y>"
     finally
       execute "normal! \<C-w>p"
     endtry
-  elseif l:winnr
-    let l:curr_win = winnr()
-    execute l:winnr . "wincmd w"
+  elseif winnr
+    let curr_win = winnr()
+    execute winnr . "wincmd w"
     try
       execute "normal! 3\<C-y>"
     finally
-      execute l:curr_win . "wincmd w"
+      execute curr_win . "wincmd w"
     endtry
   else
     exec "normal \<Plug>(coc-git-prevchunk)"

@@ -6,7 +6,6 @@ Plug 'tpope/vim-surround'                            " makes manipulating with (
 Plug 'tpope/vim-unimpaired'                          " adds common toggling options, new ] and [ commands, encoding/decoding
 Plug 'Konfekt/FastFold'                              " makes non manual folds faster
 Plug 'tomtom/tcomment_vim'                           " adds easy lines commenting
-Plug 'junegunn/vim-slash'                            " enchance search expirience
 Plug 'zhimsel/vim-stay'                              " for remembering session/cursor position
 Plug 'wellle/targets.vim'                            " adds new targets like in( or 2alB
 Plug 'Shougo/context_filetype.vim'                   " adds better support for different languages in one file

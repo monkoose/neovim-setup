@@ -13,8 +13,6 @@ nmap     <silent>         <space>kf   <Plug>(coc-format)
 nmap     <silent>         <space>ki   <Plug>(coc-diagnostic-info)
 nmap     <silent>         <space>ko   :CocList outline<CR>
 nmap     <silent>         <space>gi   <Plug>(coc-git-chunkinfo)
-nmap     <silent>         <M-2>       :CocList quickfix<CR>
-nmap     <silent>         <M-3>       :CocList locationlist<CR>
 nmap     <silent>         <space>sw   :CocList words<CR>
 nnoremap <silent>         <space>kl   :call CocActionAsync('diagnosticList')<CR>
 vmap     <silent>         <space>ka   <Plug>(coc-codeaction-selected)
@@ -22,7 +20,7 @@ vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
 
 augroup CocFiletypeMaps
   autocmd!
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml
+  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim
         \ nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
   autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim
         \ nmap     <buffer><silent>  <space>d   <Plug>(coc-definition)

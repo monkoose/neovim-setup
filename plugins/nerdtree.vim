@@ -9,11 +9,3 @@ let NERDTreeDirArrowCollapsible = '◻'
 let NERDTreeDirArrowExpandable = '◼'
 
 nmap    <silent>    <M-1>    :NERDTreeToggle<CR>
-
-augroup NERDTreeMap
-  autocmd!
-  autocmd FileType nerdtree nmap <buffer> l o
-  autocmd FileType nerdtree nmap <buffer> L go
-  autocmd FileType nerdtree nmap <buffer> h x
-  autocmd FileType nerdtree nmap <buffer> H X
-augroup END
