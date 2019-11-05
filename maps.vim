@@ -7,7 +7,7 @@ nmap               <M-f>       <Plug>InsertDotComma
 nmap               <Esc>       <Plug>ClosePF
 nmap               <C-n>       <Plug>ScrollOrJumpDown
 nmap               <C-p>       <Plug>ScrollOrJumpUp
-nmap               <M-2>       <Plug>ToggleQuickfixList
+nmap               <M-2>       <Plug>ToggleQuickfix
 nmap               <M-3>       <Plug>ToggleLocationList
 noremap!           <C-space>   <C-^>
 nnoremap           <space>a    <C-^>
@@ -49,53 +49,38 @@ tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 
 " Toggle Location and QuickFix lists {{{
-function! s:GetBufferList()
-  redir =>buflist
-  silent! ls
-  redir END
-  return buflist
-endfunction
-
-function! s:toggle_location_list()
-  let winnr = winnr()
-  let prevwinnr = winnr("#")
-  let curbufnr = winbufnr(0)
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Location List"'),
-        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if curbufnr == bufnum
-      exec prevwinnr . "wincmd w"
-      lclose
-      return
-    endif
-  endfor
+function! s:ToggleLocList() abort
+  let is_loclist = getwininfo(win_getid())[0].loclist
+  if is_loclist
+    exec winnr('#') . "wincmd w"
+    lclose
+    return
+  endif
   try
-    botright lopen
-    if &ft == 'qf'
-      silent file LocationList
-    endif
+    lopen
   catch /E776/
       echohl WarningMsg
-      echo "Location List is Empty."
+      echo "Location List is empty"
       echohl None
       return
   endtry
 endfunction
 
-function! s:toggle_quickfix_list()
-  let winnr = winnr()
-  let prevwinnr = winnr("#")
-  for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'),
-        \ 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec prevwinnr . "wincmd w"
+function! s:ToggleQf() abort
+  let is_qf = getwininfo(win_getid())[0].quickfix
+  for win in getwininfo()
+    if win.quickfix && !win.loclist
+      if is_qf
+        exec winnr('#') . "wincmd w"
+      endif
       cclose
       return
     endif
   endfor
-    botright copen
+  botright copen
 endfunction
-nnoremap <script> <silent> <Plug>ToggleQuickfixList :call <SID>toggle_quickfix_list()<CR>
-nnoremap <script> <silent> <Plug>ToggleLocationList :call <SID>toggle_location_list()<CR>
+nnoremap <script><silent> <Plug>ToggleQuickfix :call <SID>ToggleQf()<CR>
+nnoremap <script><silent> <Plug>ToggleLocationList :call <SID>ToggleLocList()<CR>
 "}}}
 " WindowSwitch() {{{
 function! s:WindowSwitch() abort
