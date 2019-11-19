@@ -4,6 +4,7 @@
   "diagnostic.errorSign": "E",
   "diagnostic.warningSign": "W",
   "diagnostic.maxWindowHeight": 20,
+  "diagnostic.enableMessage": "jump",
   "suggest.minTriggerInputLength": 2,
   "session.directory": "~/.local/share/nvim/sessions",
   "list.source.grep.args": ["-L"],

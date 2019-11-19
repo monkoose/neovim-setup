@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Helper functions
 msg() {
@@ -12,7 +12,7 @@ error() {
 
 program_exists() {
     local ret='0'
-    command -v $1 >/dev/null 2>&1 || { local ret='1'; }
+    command -v "$1" >/dev/null 2>&1 || { local ret='1'; }
 
     # fail on non-zero return value
     if [ "$ret" -ne 0 ]; then
@@ -23,7 +23,7 @@ program_exists() {
 }
 
 program_must_exist() {
-    program_exists $1
+    program_exists "$1"
 
     # throw error on non-zero return value
     if [ "$?" -ne 0 ]; then
@@ -55,11 +55,11 @@ mkdir -pv "$CONFIG_DIR"
 msg "Done"
 echo ""
 msg "Cloning repo"
-git clone --depth=1 $NVIM_REPO $CONFIG_DIR 
+git clone --depth=1 "$NVIM_REPO" "$CONFIG_DIR"
 msg "Done"
 echo ""
 msg "Begin fetching vim-plug..."
-curl -fLo $INSTALL_DIR/site/autoload/plug.vim --create-dirs \
+curl -fLo "$INSTALL_DIR"/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo ""
 msg "Done. Launch nvim and run command :PlugInstall"
