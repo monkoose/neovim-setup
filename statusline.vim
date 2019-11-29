@@ -2,13 +2,14 @@ set statusline=%{MyStatusLine()}
 
 let s:coc_git = "%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}"
 
+" session - %{fnamemodify(v:this_session, ':t')}
 function! MyStatusLine() abort
   let filename = '%< %f '
   if &modified
     let filename = '%<%2* %f %*'
   endif
   let refresh = '%{MyStatusLine()}'
-  let statusline = refresh . filename . "%h%r " . s:coc_git . " %=%-12.(%l,%c%V%) %y  %P "
+  let statusline = refresh .. filename .. "%h%r " .. s:coc_git .. " %=%-12.(%l,%c%V%) %y  %P "
   call setwinvar(winnr(), '&statusline', statusline)
   return ''
 endfunction

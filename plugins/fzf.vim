@@ -5,7 +5,7 @@ let s:fzf_defaults = [
       \ '--bind="alt-t:toggle-preview,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' .
           \ 'ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
       \ '--color=hl:#608bbf,fg+:#b8af96,hl+:#608bbf,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
-      \ '--layout=reverse --tabstop=2 --inline-info --margin=1,3 --exact'
+      \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact'
       \ ]
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
 let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'

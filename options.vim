@@ -11,6 +11,7 @@ set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
 set nowrap
 set number
+set relativenumber
 set ignorecase
 set smartcase
 set scrolloff=5
@@ -60,7 +61,6 @@ augroup FileTypeOptions
   autocmd FileType lua      setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd FileType haskell  setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
-
 
 " NeatFoldText() {{{
 function! NeatFoldText() abort
