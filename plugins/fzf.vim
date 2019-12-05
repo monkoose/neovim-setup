@@ -50,3 +50,91 @@ augroup HoogleMaps
   autocmd!
   autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
 augroup END
+
+command! FzfLocationList call s:location_list()
+function! s:location_list_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+function! s:open_location_item(e) abort
+  let line = a:e
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
+endfunction
+function! s:location_list() abort
+  let s:source = 'location_list'
+  function! s:get_location_list() abort
+    return map(getloclist(0), 's:location_list_to_grep(v:val)')
+  endfunction
+  call fzf#run(fzf#wrap('location_list', {
+        \ 'source':  reverse(<sid>get_location_list()),
+        \ 'sink':    function('s:open_location_item'),
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
+        \ }))
+endfunction
+
+command! FzfQuickfix call s:quickfix()
+function! s:open_quickfix_item(e) abort
+  let line = a:e
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
+endfunction
+function! s:quickfix_to_grep(v) abort
+  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+endfunction
+function! s:quickfix() abort
+  let s:source = 'quickfix'
+  function! s:quickfix_list() abort
+    return map(getqflist(), 's:quickfix_to_grep(v:val)')
+  endfunction
+  call fzf#run(fzf#wrap('quickfix', {
+        \ 'source':  reverse(<sid>quickfix_list()),
+        \ 'sink':    function('s:open_quickfix_item'),
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
+        \ }))
+endfunction
+
+command! FzfJumps call <SID>jumps()
+function! s:bufopen(e) abort
+  let list = split(a:e)
+  if len(list) < 4
+    return
+  endif
+
+  let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
+  let lines = getbufline(file_text, linenr)
+  let path = file_text
+  if empty(lines)
+    if stridx(join(split(getline(linenr))), file_text) == 0
+      let lines = [file_text]
+      let path = bufname('%')
+    elseif filereadable(path)
+      let lines = ['buffer unloaded']
+    else
+      " Skip.
+      return
+    endif
+  endif
+
+  exe 'e '  . path
+  call cursor(linenr, col)
+endfunction
+function! s:jumps() abort
+  let s:source = 'jumps'
+  function! s:jumplist() abort
+    return split(execute('jumps'), '\n')[1:]
+  endfunction
+  call fzf#run(fzf#wrap('jumps', {
+        \   'source':  reverse(<sid>jumplist()),
+        \   'sink':    function('s:bufopen'),
+        \   'options': '+m',
+        \   'down':    len(<sid>jumplist()) + 2
+        \ }))
+endfunction

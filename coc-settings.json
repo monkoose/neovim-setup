@@ -10,11 +10,10 @@
   "suggest.enablePreselect": false,
   "coc.preferences.previewAutoClose": false,
   "coc.preferences.formatOnSaveFiletypes": ["haskell"],
-  "coc.preferences.extensionUpdateCheck": "weekly",
+  "coc.preferences.extensionUpdateCheck": "never",
   "snippets.autoTrigger": false,
   "snippets.ultisnips.directories": [],
   "snippets.extends": {
-    "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
@@ -33,7 +32,7 @@
       ],
       "initializationOptions": {
         "languageServerHaskell": {
-          "hlintOn": true
+          "diagnosticsOnChange": false
         }
       }
     }

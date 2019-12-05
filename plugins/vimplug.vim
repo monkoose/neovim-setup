@@ -36,4 +36,3 @@ source $HOME/.config/nvim/plugins/vim-gista.vim      " adds gist support
 source $HOME/.config/nvim/plugins/vim-hexokinase.vim " show colors preview
 
 " Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
-" Plug 'skywind3000/asyncrun.vim'               " adds support to asynchronously run shell commands
