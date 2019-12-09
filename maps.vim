@@ -3,13 +3,14 @@ nmap     <silent>  <F3>        :setlocal spell!<CR>
 nmap     <silent>  <space>/    :nohlsearch<CR>
 nmap               <F8>        <Plug>ScripteaseSynnames
 nmap               <M-w>       <Plug>WinSwitch
-nmap               <M-f>       <Plug>InsertDotComma
-nmap               <Esc>       <Plug>ClosePF
+nmap               <M-f>       <Plug>InsertSemicolon
+nmap               <Esc>       <Plug>CloseFloat
 nmap               <C-n>       <Plug>ScrollOrJumpDown
 nmap               <C-p>       <Plug>ScrollOrJumpUp
 nmap               <M-2>       <Plug>ToggleQuickfix
 nmap               <M-3>       <Plug>ToggleLocationList
 noremap!           <C-space>   <C-^>
+nnoremap           <space>q    :pclose<CR>
 nnoremap           <space>a    <C-^>
 nnoremap           <space>d    <C-]>
 nnoremap           <space>U    mQviwU`Q
@@ -52,7 +53,7 @@ tnoremap           <M-w>       <C-\><C-n><C-w>w
 function! s:ToggleLocList() abort
   let is_loclist = getwininfo(win_getid())[0].loclist
   if is_loclist
-    exec winnr('#') . "wincmd w"
+    exec winnr('#') .. "wincmd w"
     lclose
     return
   endif
@@ -71,7 +72,7 @@ function! s:ToggleQf() abort
   for win in getwininfo()
     if win.quickfix && !win.loclist
       if is_qf
-        exec winnr('#') . "wincmd w"
+        exec winnr('#') .. "wincmd w"
       endif
       cclose
       return
@@ -104,17 +105,15 @@ function! s:PreviewOrFloat() abort
 endfunction
 "}}}
 " ClosePvwOrFloat() {{{
-function! s:ClosePvwOrFloat() abort
+function! s:CloseFloatWindow() abort
   let winnr = s:PreviewOrFloat()
   if winnr
-    execute winnr . "close"
-  elseif winnr == -1
-    execute "pclose"
+    execute winnr .. "close"
   else
     execute "normal! \<Esc>"
   endif
 endfunction
-nnoremap <silent> <Plug>ClosePF :call <SID>ClosePvwOrFloat()<CR>
+nnoremap <silent> <Plug>CloseFloat :call <SID>CloseFloatWindow()<CR>
 "}}}
 " scroll preview or float windows or jump to git changes {{{
 function! s:ScrollPvwOrFloatDownOrJumpToNextHunk() abort
@@ -128,11 +127,11 @@ function! s:ScrollPvwOrFloatDownOrJumpToNextHunk() abort
     endtry
   elseif winnr
     let curr_win = winnr()
-    execute winnr . "wincmd w"
+    execute winnr .. "wincmd w"
     try
       execute "normal! 3\<C-e>"
     finally
-      execute curr_win . "wincmd w"
+      execute curr_win .. "wincmd w"
     endtry
   else
     execute "normal \<Plug>(coc-git-nextchunk)"
@@ -151,11 +150,11 @@ function! s:ScrollPvwOrFloatUpOrJumpToPreviousHunk() abort
     endtry
   elseif winnr
     let curr_win = winnr()
-    execute winnr . "wincmd w"
+    execute winnr .. "wincmd w"
     try
       execute "normal! 3\<C-y>"
     finally
-      execute curr_win . "wincmd w"
+      execute curr_win .. "wincmd w"
     endtry
   else
     exec "normal \<Plug>(coc-git-prevchunk)"
@@ -164,20 +163,17 @@ endfunction
 nnoremap <silent> <Plug>ScrollOrJumpUp :call <SID>ScrollPvwOrFloatUpOrJumpToPreviousHunk()<CR>
 "}}}
 " insert ; at the end of a line if there is none {{{
-function! s:insertDotComma() abort
-  let column = col('.')
-  exec "normal! $"
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') != ';'
-    exec "normal! a;"
+function! s:InsertSemiColon() abort
+  if match(getline('.'), ';\_$') == -1
+    execute 'keepp s/\(.*\)/\1;/'
   else
-    exec "normal! x"
+    execute 'keepp s/;\_$//'
   endif
-  call cursor(line('.'), column)
 endfunction
-nnoremap <silent> <Plug>InsertDotComma :call <SID>insertDotComma()<CR>
+nnoremap <silent> <Plug>InsertSemicolon :call <SID>InsertSemiColon()<CR>
 "}}}
 " show Syntax highlight group for element under the cursor {{{
-function! s:synnames(...) abort
+function! s:Synnames(...) abort
   if a:0
     let [line, column] = [a:1, a:2]
   else
@@ -185,17 +181,17 @@ function! s:synnames(...) abort
   endif
   return reverse(map(synstack(line, column), 'synIDattr(v:val,"name")'))
 endfunction
-function! s:syncount(count)
+function! s:Syncount(count)
   if a:count
-    let name = get(s:synnames(), a:count-1, '')
+    let name = get(s:Synnames(), a:count - 1, '')
     if name !=# ''
-      return 'syntax list '.name
+      return 'syntax list ' .. name
     endif
   else
-    echo join(s:synnames(), ' ')
+    echo join(s:Synnames(), ' ')
   endif
   return ''
 endfunction
-nnoremap <silent> <Plug>ScripteaseSynnames :call <SID>syncount(v:count)<CR>
+nnoremap <silent> <Plug>ScripteaseSynnames :call <SID>Syncount(v:count)<CR>
 "}}}
 " vim: foldmethod=marker:
