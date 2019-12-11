@@ -72,7 +72,6 @@ function! s:location_list() abort
         \ 'source':  reverse(<sid>get_location_list()),
         \ 'sink':    function('s:open_location_item'),
         \ 'options': '--reverse',
-        \ 'down' : '40%',
         \ }))
 endfunction
 
@@ -97,44 +96,34 @@ function! s:quickfix() abort
         \ 'source':  reverse(<sid>quickfix_list()),
         \ 'sink':    function('s:open_quickfix_item'),
         \ 'options': '--reverse',
-        \ 'down' : '40%',
         \ }))
 endfunction
 
-command! FzfJumps call <SID>jumps()
-function! s:bufopen(e) abort
+command! FzfJumps call s:Jumps()
+
+function! s:OpenBuf(e) abort
   let list = split(a:e)
   if len(list) < 4
     return
   endif
 
-  let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
-  let lines = getbufline(file_text, linenr)
-  let path = file_text
-  if empty(lines)
-    if stridx(join(split(getline(linenr))), file_text) == 0
-      let lines = [file_text]
-      let path = bufname('%')
-    elseif filereadable(path)
-      let lines = ['buffer unloaded']
-    else
-      " Skip.
+  let [linenr, col, path] = [list[1], list[2]+1, join(list[3:])]
+  if !filereadable(expand(path))
+    if bufname('%') == ''
       return
     endif
+    let path = bufname('%')
   endif
 
-  exe 'e '  . path
+  exe 'e ' .. path
   call cursor(linenr, col)
 endfunction
-function! s:jumps() abort
-  let s:source = 'jumps'
-  function! s:jumplist() abort
-    return split(execute('jumps'), '\n')[1:]
-  endfunction
+
+function! s:Jumps() abort
+  let lines = split(execute('jumps'), '\n')
   call fzf#run(fzf#wrap('jumps', {
-        \   'source':  reverse(<sid>jumplist()),
-        \   'sink':    function('s:bufopen'),
+        \   'source':  reverse(lines[1:len(lines) - 2]),
+        \   'sink':    function('s:OpenBuf'),
         \   'options': '+m',
-        \   'down':    len(<sid>jumplist()) + 2
         \ }))
 endfunction

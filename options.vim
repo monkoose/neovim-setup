@@ -1,4 +1,7 @@
 let g:python3_host_prog = '/usr/bin/python'
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_node_provider = 0
 set termguicolors
 colorscheme boa
 set background=dark

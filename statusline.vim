@@ -10,7 +10,7 @@ function! MyStatusLine() abort
   else
     let filename = '%< %f '
   endif
-  let statusline = " %-9(%3*%l%*·%4*%c%V%*%) " .. s:refresh .. filename .. "%h%r  " .. s:coc_git .. " %=%y  %5*%P%* "
+  let statusline = " %-9(%3*%l%*·%4*%c%V%*%) " .. s:refresh .. filename .. "%h%r  " .. s:coc_git .. " %=%Y  %5*%P%* "
   call setwinvar(winnr(), '&statusline', statusline)
   return ''
 endfunction

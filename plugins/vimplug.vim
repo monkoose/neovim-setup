@@ -25,7 +25,6 @@ source $HOME/.config/nvim/plugins/fzf.vim            " adds fuzzy finder for mul
 source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
 source $HOME/.config/nvim/plugins/neoterm.vim        " for better terminal experience
 source $HOME/.config/nvim/plugins/nerdtree.vim       " adds sidebar file explorer
-source $HOME/.config/nvim/plugins/open-browser.vim   " for better links opening with a browser
 source $HOME/.config/nvim/plugins/python-syntax.vim  " improves python syntax highlighting
 source $HOME/.config/nvim/plugins/targets.vim        " adds new targets like in( or 2alB
 source $HOME/.config/nvim/plugins/undotree.vim       " for visualizing undo history

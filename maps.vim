@@ -9,6 +9,7 @@ nmap               <C-n>       <Plug>ScrollOrJumpDown
 nmap               <C-p>       <Plug>ScrollOrJumpUp
 nmap               <M-2>       <Plug>ToggleQuickfix
 nmap               <M-3>       <Plug>ToggleLocationList
+nmap               gx          <Plug>OpenPath
 noremap!           <C-space>   <C-^>
 nnoremap           <space>q    :pclose<CR>
 nnoremap           <space>a    <C-^>
@@ -49,6 +50,18 @@ tnoremap           <F1>        <C-\><C-n>
 tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 
+" OpenPath() {{{
+function! s:OpenPath(path) abort
+  execute 'silent !xdg-open "' .. a:path .. '" &> /dev/null &'
+  redraw!
+  echohl String
+  echo "Open "
+  echohl Identifier
+  echon expand(a:path)
+  echohl None
+endfunction
+nnoremap <silent> <Plug>OpenPath :call <SID>OpenPath('<cfile>')<CR>
+"}}}
 " Toggle Location and QuickFix lists {{{
 function! s:ToggleLocList() abort
   let is_loclist = getwininfo(win_getid())[0].loclist
