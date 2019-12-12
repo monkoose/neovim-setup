@@ -4,10 +4,8 @@ Plug 'tpope/vim-repeat'                              " makes '.' command more us
 Plug 'tpope/vim-eunuch'                              " adds sugar common UNIX shell commands
 Plug 'tpope/vim-surround'                            " makes manipulating with (),[],''... enjoyable
 Plug 'tpope/vim-unimpaired'                          " adds common toggling options, new ] and [ commands, encoding/decoding
-Plug 'Konfekt/FastFold'                              " makes non manual folds faster
 Plug 'tomtom/tcomment_vim'                           " adds easy lines commenting
 Plug 'zhimsel/vim-stay'                              " for remembering session/cursor position
-Plug 'Shougo/context_filetype.vim'                   " adds better support for different languages in one file
 Plug 'neovimhaskell/haskell-vim'                     " improves haskell syntax and indentation
 Plug 'tbastos/vim-lua'                               " improves lua syntax highlighting and indentation
 Plug 'Vimjas/vim-python-pep8-indent'                 " improves python indentation
@@ -25,7 +23,6 @@ source $HOME/.config/nvim/plugins/fzf.vim            " adds fuzzy finder for mul
 source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
 source $HOME/.config/nvim/plugins/neoterm.vim        " for better terminal experience
 source $HOME/.config/nvim/plugins/nerdtree.vim       " adds sidebar file explorer
-source $HOME/.config/nvim/plugins/python-syntax.vim  " improves python syntax highlighting
 source $HOME/.config/nvim/plugins/targets.vim        " adds new targets like in( or 2alB
 source $HOME/.config/nvim/plugins/undotree.vim       " for visualizing undo history
 source $HOME/.config/nvim/plugins/vim-easy-align.vim " adds aligning of text

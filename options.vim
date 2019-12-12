@@ -50,32 +50,15 @@ set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
 set timeoutlen=3000
-set foldtext=NeatFoldText()  "custom looking folds
 let g:markdown_folding=1
 let loaded_netrwPlugin = 1
 
 augroup FileTypeOptions
   autocmd!
   autocmd FileType qf       setlocal wrap
-  autocmd FileType markdown setlocal foldexpr=MarkdownFold()
   autocmd FileType vim      setlocal iskeyword-=#
   autocmd FileType python   setlocal complete+=t formatoptions-=t define=^\s*\\(def\\\\|class\\)
   autocmd FileType css,scss setlocal iskeyword+=-
   autocmd FileType lua      setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd FileType haskell  setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
-
-" NeatFoldText() {{{
-function! NeatFoldText() abort
-  let line = ' ' . substitute(getline(v:foldstart),
-        \ '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = printf('  ' . "%10s", lines_count . ' lines  ')
-  let foldchar = matchstr(&fillchars, 'fold:\zs.')
-  let foldtextstart = strpart(repeat('+', v:foldlevel) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(foldchar, 6)
-  let foldtextlength = strlen( substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
-endfunction
-"}}}
-" vim:foldmethod=marker:

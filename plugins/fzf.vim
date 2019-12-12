@@ -22,9 +22,8 @@ augroup END
 
 " Open QuickFix with marked items from fzf
 function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  call setqflist(map(a:lines, '{ "filename": v:val }'))
   copen
-  cc
 endfunction
 
 let g:fzf_action = {
@@ -88,7 +87,6 @@ function! s:quickfix_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
 endfunction
 function! s:quickfix() abort
-  let s:source = 'quickfix'
   function! s:quickfix_list() abort
     return map(getqflist(), 's:quickfix_to_grep(v:val)')
   endfunction
@@ -96,34 +94,5 @@ function! s:quickfix() abort
         \ 'source':  reverse(<sid>quickfix_list()),
         \ 'sink':    function('s:open_quickfix_item'),
         \ 'options': '--reverse',
-        \ }))
-endfunction
-
-command! FzfJumps call s:Jumps()
-
-function! s:OpenBuf(e) abort
-  let list = split(a:e)
-  if len(list) < 4
-    return
-  endif
-
-  let [linenr, col, path] = [list[1], list[2]+1, join(list[3:])]
-  if !filereadable(expand(path))
-    if bufname('%') == ''
-      return
-    endif
-    let path = bufname('%')
-  endif
-
-  exe 'e ' .. path
-  call cursor(linenr, col)
-endfunction
-
-function! s:Jumps() abort
-  let lines = split(execute('jumps'), '\n')
-  call fzf#run(fzf#wrap('jumps', {
-        \   'source':  reverse(lines[1:len(lines) - 2]),
-        \   'sink':    function('s:OpenBuf'),
-        \   'options': '+m',
         \ }))
 endfunction
