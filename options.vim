@@ -4,13 +4,12 @@ let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
 set termguicolors
 colorscheme boa
-set background=dark
 set title
 set synmaxcol=1000
 set hidden
 set spelllang=en_us,ru_yo
 set pumheight=10
-set fileencodings=utf-8,cp1251,koi8-r
+" set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
 set nowrap
 set number
@@ -30,10 +29,12 @@ set linebreak
 set showbreak=└
 set list
 set listchars=tab:→-,trail:·,extends:⌇,precedes:⌇,nbsp:~
-set fillchars=vert:█,fold:·,
+set fillchars=vert:█,fold:·
+set noruler
 set tabpagemax=20
 set smartindent
 set shiftround
+set tildeop
 set expandtab
 set tabstop=4
 set shiftwidth=2
@@ -50,8 +51,10 @@ set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
 set timeoutlen=3000
+
 let g:markdown_folding=1
 let loaded_netrwPlugin = 1
+let g:python_highlight_all = 1
 
 augroup FileTypeOptions
   autocmd!

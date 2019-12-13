@@ -6,5 +6,4 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_verbose = 0
 
-nmap    <silent>    <space><space>    <Plug>(easymotion-s)
-vmap    <silent>    <space><space>    <Plug>(easymotion-s)
+map    <silent>    <space><space>    <Plug>(easymotion-s)

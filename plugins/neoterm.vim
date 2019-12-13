@@ -11,5 +11,4 @@ tnoremap    <silent>    <M-`>        <C-\><C-n>:Ttoggle<cr>
 nnoremap    <silent>    <space>tc    :Tclose<cr>
 nnoremap    <silent>    <space>tt    :Ttoggle<cr>
 nnoremap    <silent>    <space>tl    :Tclear<cr>
-" kills the current job (send a <c-c>)
 nnoremap    <silent>    <space>tk    :Tkill<cr>
