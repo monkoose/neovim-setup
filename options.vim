@@ -1,3 +1,4 @@
+" set fileencodings=utf-8,cp1251,koi8-r
 let g:python3_host_prog = '/usr/bin/python'
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
@@ -5,11 +6,10 @@ let g:loaded_node_provider = 0
 set termguicolors
 colorscheme boa
 set title
-set synmaxcol=1000
+set synmaxcol=250
 set hidden
 set spelllang=en_us,ru_yo
 set pumheight=10
-" set fileencodings=utf-8,cp1251,koi8-r
 set nofixendofline
 set nowrap
 set number

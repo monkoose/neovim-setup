@@ -5,8 +5,8 @@ nmap               <F8>        <Plug>ScripteaseSynnames
 nmap               <M-w>       <Plug>WinSwitch
 nmap               <M-f>       <Plug>InsertSemicolon
 nmap               <Esc>       <Plug>CloseFloat
-nmap               <C-n>       <Plug>ScrollOrJumpDown
-nmap               <C-p>       <Plug>ScrollOrJumpUp
+nmap               <C-n>       <Plug>ScrollFltPvwDownOrNextChunk
+nmap               <C-p>       <Plug>ScrollFltPvwUpOrPrevChunk
 nmap               <M-2>       <Plug>ToggleQuickfix
 nmap               <M-3>       <Plug>ToggleLocationList
 nmap               gx          <Plug>OpenPath
@@ -52,7 +52,7 @@ tnoremap           <M-w>       <C-\><C-n><C-w>w
 
 " OpenPath() {{{
 function! s:OpenPath(path) abort
-  execute 'silent !xdg-open "' .. a:path .. '" &> /dev/null &'
+  silent! execute '!xdg-open "' .. a:path .. '" &> /dev/null &'
   redraw!
   echohl String
   echo "Open "
@@ -105,21 +105,19 @@ function! s:WindowSwitch() abort
 endfunction
 nnoremap <silent> <Plug>WinSwitch :call <SID>WindowSwitch()<CR>
 "}}}
-" PreviewOrFloat() {{{
-function! s:PreviewOrFloat() abort
+" WinNrForWinVar() {{{
+function! s:WinNrForWinVar(win_var) abort
   for nr in range(1, winnr('$'))
-    if getwinvar(nr, 'float')
+    if getwinvar(nr, a:win_var)
       return nr
-    elseif getwinvar(nr, '&pvw')
-      return -1
     endif
   endfor
   return 0
 endfunction
 "}}}
-" ClosePvwOrFloat() {{{
+" CloseFloatWindow() {{{
 function! s:CloseFloatWindow() abort
-  let winnr = s:PreviewOrFloat()
+  let winnr = s:WinNrForWinVar('float')
   if winnr
     execute winnr .. "close"
   else
@@ -129,51 +127,27 @@ endfunction
 nnoremap <silent> <Plug>CloseFloat :call <SID>CloseFloatWindow()<CR>
 "}}}
 " scroll preview or float windows or jump to git changes {{{
-function! s:ScrollPvwOrFloatDownOrJumpToNextHunk() abort
-  let winnr = s:PreviewOrFloat()
-  if winnr == -1
-    execute "normal! \<C-w>P"
+function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
+  let winnr = s:WinNrForWinVar('float') ? s:WinNrForWinVar('float') : s:WinNrForWinVar('&pvw')
+  let curr_win = winnr()
+  if winnr
     try
-      execute "normal! 3\<C-e>"
-    finally
-      execute "normal! \<C-w>p"
-    endtry
-  elseif winnr
-    let curr_win = winnr()
-    execute winnr .. "wincmd w"
-    try
-      execute "normal! 3\<C-e>"
+      execute winnr .. "wincmd w"
+      execute a:cmd
     finally
       execute curr_win .. "wincmd w"
     endtry
   else
-    execute "normal \<Plug>(coc-git-nextchunk)"
+    execute a:curr_cmd
   endif
 endfunction
-nnoremap <silent> <Plug>ScrollOrJumpDown :call <SID>ScrollPvwOrFloatDownOrJumpToNextHunk()<CR>
 
-function! s:ScrollPvwOrFloatUpOrJumpToPreviousHunk() abort
-  let winnr = s:PreviewOrFloat()
-  if winnr == -1
-    execute "normal! \<C-w>P"
-    try
-      execute "normal! 3\<C-y>"
-    finally
-      execute "normal! \<C-w>p"
-    endtry
-  elseif winnr
-    let curr_win = winnr()
-    execute winnr .. "wincmd w"
-    try
-      execute "normal! 3\<C-y>"
-    finally
-      execute curr_win .. "wincmd w"
-    endtry
-  else
-    exec "normal \<Plug>(coc-git-prevchunk)"
-  endif
-endfunction
-nnoremap <silent> <Plug>ScrollOrJumpUp :call <SID>ScrollPvwOrFloatUpOrJumpToPreviousHunk()<CR>
+let g:maps_scroll_down = "normal! 3\<C-e>"
+let g:maps_scroll_up = "normal! 3\<C-y>"
+let g:maps_next_chunk = "normal \<Plug>(coc-git-nextchunk)"
+let g:maps_prev_chunk = "normal \<Plug>(coc-git-prevchunk)"
+nnoremap <silent> <Plug>ScrollFltPvwDownOrNextChunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_down, g:maps_next_chunk)<CR>
+nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevChunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_up, g:maps_prev_chunk)<CR>
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:InsertSemiColon() abort
