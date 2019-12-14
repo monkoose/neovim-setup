@@ -130,7 +130,7 @@ nnoremap <silent> <Plug>CloseFloat :call <SID>CloseFloatWindow()<CR>
 function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
   let winnr = s:WinNrForWinVar('float') ? s:WinNrForWinVar('float') : s:WinNrForWinVar('&pvw')
   let curr_win = winnr()
-  if winnr
+  if winnr > 0
     try
       execute winnr .. "wincmd w"
       execute a:cmd
@@ -144,8 +144,8 @@ endfunction
 
 let g:maps_scroll_down = "normal! 3\<C-e>"
 let g:maps_scroll_up = "normal! 3\<C-y>"
-let g:maps_next_hunk = ":GitGutterNextHunk"
-let g:maps_prev_hunk = ":GitGutterPrevHunk"
+let g:maps_next_hunk = "normal ]c"
+let g:maps_prev_hunk = "normal [c"
 nnoremap <silent> <Plug>ScrollFltPvwDownOrNextHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_down, g:maps_next_hunk)<CR>
 nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_up, g:maps_prev_hunk)<CR>
 "}}}
