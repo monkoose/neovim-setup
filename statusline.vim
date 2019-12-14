@@ -1,26 +1,42 @@
 set statusline=%{MyStatusLine()}
 
-let s:coc_git   = " %1*%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%*"
-let s:refresh   = '%{RefreshStatusLine(&modified, w:statusline_mod)}'
-let s:spell     = "  %5*%{&spell ? 'SPELL' : ''}%*"
+let s:git       = "%1*%{MyGitBranch()}%*%4*%{MyGitCommit()}%*"
+let s:refresh   = "%{MyRefreshStatusLine(&modified, w:statusline_mod)}"
+let s:spell     = "%5*%{&spell ? '  SPELL ' : ''}%*"
 let s:lncol     = "%< %-9(%3*%l%*·%4*%c%V%*%) "
 let s:tail      = " %=%Y  %5*%P%* "
 let s:fname     = " %f "
 let s:fname_mod = " %2*%f%* "
-let s:ro        = "%6*%{&ro ? ' ' : ''}%*"
+let s:ro        = "%6*%{&ro ? '' : ''}%*  "
+
+function! MyGitBranch() abort
+  let dir = FugitiveGitDir(bufnr(''))
+  if empty(dir)
+    return ''
+  endif
+  return ' ' .. FugitiveHead(7, dir)
+endfunction
+
+function! MyGitCommit() abort
+  let commit = matchstr(@%, '\c^fugitive:\%(//\)\=.\{-\}\%(//\|::\)\zs\x\{40,\}\|[0-3]\ze\%(/.*\)\=$')
+  if len(commit)
+    let commit = '·' .. commit[0:6]
+  endif
+  return commit .. ' '
+endfunction
 
 " session - %{fnamemodify(v:this_session, ':t')}
 function! MyStatusLine() abort
-  let statusline = s:lncol .. s:fname .. s:ro .. s:coc_git .. s:spell .. s:tail .. s:refresh
+  let statusline = s:lncol .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
   call setwinvar(winnr(), '&statusline', statusline)
   return ''
 endfunction
 
-function! RefreshStatusLine(mod, stlmod) abort
+function! MyRefreshStatusLine(mod, stlmod) abort
   if a:mod != a:stlmod
     let filename = a:mod ? s:fname_mod : s:fname
     let w:statusline_mod = a:stlmod ? 0 : 1
-    let statusline = s:lncol .. filename .. s:ro .. s:coc_git .. s:spell .. s:tail .. s:refresh
+    let statusline = s:lncol .. filename .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
     call setwinvar(winnr(), '&statusline', statusline)
   endif
   return ''
