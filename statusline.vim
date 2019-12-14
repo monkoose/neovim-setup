@@ -35,15 +35,15 @@ endfunction
 
 " session - %{fnamemodify(v:this_session, ':t')}
 function! MyStatusLine() abort
-let statusline = s:lncol .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
-call setwinvar(winnr(), '&statusline', statusline)
-return ''
+  let statusline = s:lncol .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
+  call setwinvar(winnr(), '&statusline', statusline)
+  return ''
 endfunction
 
 function! MyRefreshStatusLine(mod, stlmod) abort
-if a:mod != a:stlmod
-  let filename = a:mod ? s:fname_mod : s:fname
-  let w:statusline_mod = a:stlmod ? 0 : 1
+  if a:mod != a:stlmod
+    let filename = a:mod ? s:fname_mod : s:fname
+    let w:statusline_mod = a:stlmod ? 0 : 1
     let statusline = s:lncol .. filename .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
     call setwinvar(winnr(), '&statusline', statusline)
   endif
