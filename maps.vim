@@ -5,8 +5,8 @@ nmap               <F8>        <Plug>ScripteaseSynnames
 nmap               <M-w>       <Plug>WinSwitch
 nmap               <M-f>       <Plug>InsertSemicolon
 nmap               <Esc>       <Plug>CloseFloat
-nmap               <C-n>       <Plug>ScrollFltPvwDownOrNextChunk
-nmap               <C-p>       <Plug>ScrollFltPvwUpOrPrevChunk
+nmap               <C-n>       <Plug>ScrollFltPvwDownOrNextHunk
+nmap               <C-p>       <Plug>ScrollFltPvwUpOrPrevHunk
 nmap               <M-2>       <Plug>ToggleQuickfix
 nmap               <M-3>       <Plug>ToggleLocationList
 nmap               gx          <Plug>OpenPath
@@ -144,10 +144,10 @@ endfunction
 
 let g:maps_scroll_down = "normal! 3\<C-e>"
 let g:maps_scroll_up = "normal! 3\<C-y>"
-let g:maps_next_chunk = "normal \<Plug>(coc-git-nextchunk)"
-let g:maps_prev_chunk = "normal \<Plug>(coc-git-prevchunk)"
-nnoremap <silent> <Plug>ScrollFltPvwDownOrNextChunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_down, g:maps_next_chunk)<CR>
-nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevChunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_up, g:maps_prev_chunk)<CR>
+let g:maps_next_hunk = ":GitGutterNextHunk"
+let g:maps_prev_hunk = ":GitGutterPrevHunk"
+nnoremap <silent> <Plug>ScrollFltPvwDownOrNextHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_down, g:maps_next_hunk)<CR>
+nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_up, g:maps_prev_hunk)<CR>
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:InsertSemiColon() abort

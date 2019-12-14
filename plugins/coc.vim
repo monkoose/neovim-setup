@@ -1,5 +1,5 @@
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" CocInstall coc-git coc-vimlsp coc-yank coc-lists coc-highlight coc-json
+" CocInstall coc-vimlsp coc-yank coc-lists coc-json
 " coc-snippets coc-yaml coc-python coc-tsserver coc-html coc-css
 
 let g:coc_snippet_next = '<M-e>'
@@ -12,7 +12,6 @@ nmap     <silent>         <space>ka   :CocList actions<CR>
 nmap     <silent>         <space>kf   <Plug>(coc-format)
 nmap     <silent>         <space>ki   <Plug>(coc-diagnostic-info)
 nmap     <silent>         <space>ko   :CocList outline<CR>
-nmap     <silent>         <space>gi   <Plug>(coc-git-chunkinfo)
 nnoremap <silent>         <space>kl   :call CocActionAsync('diagnosticList')<CR>
 vmap     <silent>         <space>ka   <Plug>(coc-codeaction-selected)
 vmap     <silent>         <space>kf   <Plug>(coc-format-selected)

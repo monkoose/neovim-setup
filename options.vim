@@ -21,6 +21,7 @@ set sidescrolloff=5
 set history=2000
 set undolevels=300
 set noswapfile
+set updatetime=600
 set undofile
 set showcmd
 set undodir=~/.local/share/nvim/undo-files/

@@ -29,6 +29,7 @@ source $HOME/.config/nvim/plugins/vim-easy-align.vim " adds aligning of text
 source $HOME/.config/nvim/plugins/vim-easymotion.vim " for easier jumps to any position on the screen
 source $HOME/.config/nvim/plugins/vim-fugitive.vim   " adds git support inside vim
 source $HOME/.config/nvim/plugins/vim-gista.vim      " adds gist support
+source $HOME/.config/nvim/plugins/vim-gitgutter.vim  " adds git signs
 source $HOME/.config/nvim/plugins/vim-grammarous.vim " adds grammar checking with languagetool
 source $HOME/.config/nvim/plugins/vim-hexokinase.vim " show colors preview
 
