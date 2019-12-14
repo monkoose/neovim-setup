@@ -99,16 +99,27 @@ nnoremap <script><silent> <Plug>ToggleLocationList :call <SID>ToggleLocList()<CR
 " WindowSwitch() {{{
 function! s:WindowSwitch() abort
     wincmd w
-    if &ft == 'neoterm' || &ft == 'terminal'
+    if getwininfo(win_getid())[0].terminal
       startinsert
     endif
 endfunction
 nnoremap <silent> <Plug>WinSwitch :call <SID>WindowSwitch()<CR>
 "}}}
-" WinNrForWinVar() {{{
-function! s:WinNrForWinVar(win_var) abort
-  for nr in range(1, winnr('$'))
-    if getwinvar(nr, a:win_var)
+" PreviewWindowNr() {{{
+function! s:PreviewWindowNr(winnrs) abort
+  for nr in a:winnrs
+    if getwinvar(nr, '&pvw')
+      return nr
+    endif
+  endfor
+  return 0
+endfunction
+"}}}
+" FloatWindowNr() {{{
+function! s:FloatWindowNr(winnrs) abort
+  " return last one opened float first
+  for nr in reverse(a:winnrs)
+    if nvim_win_get_config(win_getid(nr)).relative != ''
       return nr
     endif
   endfor
@@ -117,7 +128,7 @@ endfunction
 "}}}
 " CloseFloatWindow() {{{
 function! s:CloseFloatWindow() abort
-  let winnr = s:WinNrForWinVar('float')
+  let winnr = s:FloatWindowNr(range(1, winnr('$')))
   if winnr
     execute winnr .. "close"
   else
@@ -128,9 +139,11 @@ nnoremap <silent> <Plug>CloseFloat :call <SID>CloseFloatWindow()<CR>
 "}}}
 " scroll preview or float windows or jump to git changes {{{
 function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
-  let winnr = s:WinNrForWinVar('float') ? s:WinNrForWinVar('float') : s:WinNrForWinVar('&pvw')
+  let winnrs = range(1, winnr('$'))
+  let float_win_nr = s:FloatWindowNr(winnrs)
+  let winnr = float_win_nr ? float_win_nr : s:PreviewWindowNr(winnrs)
   let curr_win = winnr()
-  if winnr > 0
+  if winnr != 0
     try
       execute winnr .. "wincmd w"
       execute a:cmd
@@ -142,12 +155,10 @@ function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
   endif
 endfunction
 
-let g:maps_scroll_down = "normal! 3\<C-e>"
-let g:maps_scroll_up = "normal! 3\<C-y>"
-let g:maps_next_hunk = "normal ]c"
-let g:maps_prev_hunk = "normal [c"
-nnoremap <silent> <Plug>ScrollFltPvwDownOrNextHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_down, g:maps_next_hunk)<CR>
-nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevHunk :call <SID>CmdFloatPvwOrCurrWin(g:maps_scroll_up, g:maps_prev_hunk)<CR>
+let ScrollDownNextHunk = function('s:CmdFloatPvwOrCurrWin', ["normal! 3\<C-e>", "normal ]c"])
+let ScrollUpPrevHunk   = function('s:CmdFloatPvwOrCurrWin', ["normal! 3\<C-y>", "normal [c"])
+nnoremap <silent> <Plug>ScrollFltPvwDownOrNextHunk :call ScrollDownNextHunk()<CR>
+nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevHunk :call ScrollUpPrevHunk()<CR>
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:InsertSemiColon() abort
