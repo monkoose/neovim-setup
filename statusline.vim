@@ -1,6 +1,6 @@
 set statusline=%{MyStatusLine()}
 
-let s:git       = "%1*%{MyGitBranch()}%*%4*%{MyGitCommit()}%*"
+let s:git       = "%1*%{MyGitBranch()}%*%4*%{MyGitCommit()}%*%3*%{MyGitGutter()}%*"
 let s:refresh   = "%{MyRefreshStatusLine(&modified, w:statusline_mod)}"
 let s:spell     = "%5*%{&spell ? '  SPELL ' : ''}%*"
 let s:lncol     = "%< %-9(%3*%l%*·%4*%c%V%*%) "
@@ -25,17 +25,25 @@ function! MyGitCommit() abort
   return commit .. ' '
 endfunction
 
+function! MyGitGutter() abort
+  let hunks = GitGutterGetHunkSummary()
+  let symbols = ['+', '~', '-']
+  let changes = join(map(copy(hunks), {i, v -> v == 0 ? '' : ' ' .. symbols[i] .. v}), '')
+  return changes
+  " return winwidth(winnr()) > 60 ? changes : ''
+endfunction
+
 " session - %{fnamemodify(v:this_session, ':t')}
 function! MyStatusLine() abort
-  let statusline = s:lncol .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
-  call setwinvar(winnr(), '&statusline', statusline)
-  return ''
+let statusline = s:lncol .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
+call setwinvar(winnr(), '&statusline', statusline)
+return ''
 endfunction
 
 function! MyRefreshStatusLine(mod, stlmod) abort
-  if a:mod != a:stlmod
-    let filename = a:mod ? s:fname_mod : s:fname
-    let w:statusline_mod = a:stlmod ? 0 : 1
+if a:mod != a:stlmod
+  let filename = a:mod ? s:fname_mod : s:fname
+  let w:statusline_mod = a:stlmod ? 0 : 1
     let statusline = s:lncol .. filename .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
     call setwinvar(winnr(), '&statusline', statusline)
   endif
