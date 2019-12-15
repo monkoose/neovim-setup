@@ -20,18 +20,9 @@ augroup FzfMapsAu
   autocmd FileType fzf tnoremap <M-q> <Esc>
 augroup END
 
-" Open QuickFix with marked items from fzf
-function! s:build_quickfix_list(lines)
-  call setqflist(map(a:lines, '{ "filename": v:val }'))
-  copen
-endfunction
-
-let g:fzf_action = {
-  \ 'ctrl-q': function('s:build_quickfix_list'),
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
+imap <c-x><c-k> <plug>(fzf-complete-file)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+imap <c-x><c-f> <plug>(fzf-complete-file-ag)
 nmap <silent>    <space>;        :FzfBuffers<CR>
 nmap <silent>    <space>ff       :FzfFiles<CR>
 nmap <silent>    <space>fg       :FzfGFiles?<CR>

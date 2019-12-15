@@ -49,6 +49,7 @@ cnoremap           <M-l>       <Right>
 tnoremap           <F1>        <C-\><C-n>
 tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
+tnoremap <silent>  <M-q>       <C-\><C-n>:close!<CR>
 
 " OpenPath() {{{
 function! s:OpenPath(path) abort

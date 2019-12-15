@@ -18,7 +18,7 @@ function! MyGitBranch() abort
 endfunction
 
 function! MyGitCommit() abort
-  let commit = matchstr(@%, '\c^fugitive:\%(//\)\=.\{-\}\%(//\|::\)\zs\x\{40,\}\|[0-3]\ze\%(/.*\)\=$')
+  let commit = matchstr(@%, '\c^fugitive:\%(//\)\=.\{-\}\%(//\|::\)\zs\%(\x\{40,\}\|[0-3]\)\ze\%(/.*\)\=$')
   if len(commit)
     let commit = '·' .. commit[0:6]
   endif
