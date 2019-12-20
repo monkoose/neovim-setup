@@ -17,20 +17,18 @@ Plug 'honza/vim-snippets'                            " adds snippets support
 Plug 'monkoose/fzf-hoogle.vim'                       " adds hoogle preview
 
 " Plugins with custom config
-source $HOME/.config/nvim/plugins/coc.vim            " adds autocompletion and langserver
-source $HOME/.config/nvim/plugins/delimitMate.vim    " adds auto pairs
-source $HOME/.config/nvim/plugins/fzf.vim            " adds fuzzy finder for multiple sources
-source $HOME/.config/nvim/plugins/gv.vim             " git log for vim
-source $HOME/.config/nvim/plugins/neoterm.vim        " for better terminal experience
-source $HOME/.config/nvim/plugins/nerdtree.vim       " adds sidebar file explorer
-source $HOME/.config/nvim/plugins/targets.vim        " adds new targets like in( or 2alB
-source $HOME/.config/nvim/plugins/undotree.vim       " for visualizing undo history
-source $HOME/.config/nvim/plugins/vim-easy-align.vim " adds aligning of text
-source $HOME/.config/nvim/plugins/vim-easymotion.vim " for easier jumps to any position on the screen
-source $HOME/.config/nvim/plugins/vim-fugitive.vim   " adds git support inside vim
-source $HOME/.config/nvim/plugins/vim-gista.vim      " adds gist support
-source $HOME/.config/nvim/plugins/vim-gitgutter.vim  " adds git signs
-source $HOME/.config/nvim/plugins/vim-grammarous.vim " adds grammar checking with languagetool
-source $HOME/.config/nvim/plugins/vim-hexokinase.vim " show colors preview
-
-" Plug 'othree/javascript-libraries-syntax.vim' " adds syntax highlighting of the popular js libraries
+runtime plugins/coc.vim            " adds autocompletion and langserver
+runtime plugins/delimitMate.vim    " adds auto pairs
+runtime plugins/fzf.vim            " adds fuzzy finder for multiple sources
+runtime plugins/gv.vim             " git log for vim
+runtime plugins/nuake.vim          " for better terminal experience
+runtime plugins/nerdtree.vim       " adds sidebar file explorer
+runtime plugins/targets.vim        " adds new targets like in( or 2alB
+runtime plugins/undotree.vim       " for visualizing undo history
+runtime plugins/vim-easy-align.vim " adds aligning of text
+runtime plugins/vim-easymotion.vim " for easier jumps to any position on the screen
+runtime plugins/vim-fugitive.vim   " adds git support inside vim
+runtime plugins/vim-gista.vim      " adds gist support
+runtime plugins/vim-gitgutter.vim  " adds git signs
+runtime plugins/vim-grammarous.vim " adds grammar checking with languagetool
+runtime plugins/vim-hexokinase.vim " show colors preview
