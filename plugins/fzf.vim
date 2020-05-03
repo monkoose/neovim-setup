@@ -10,7 +10,6 @@ let s:fzf_defaults = [
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
 let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'
 let g:fzf_command_prefix = 'Fzf'
-" command! -nargs=* FzfSearch call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'window': s:fzf_big_float}, 'up:60%:wrap' ))
 command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': '--preview-window up:60%', 'window': s:fzf_big_float})
 command! FzfCommits call fzf#vim#commits({'options': '--preview-window up:60%', 'window': s:fzf_big_float})
 command! FzfBCommits call fzf#vim#buffer_commits({'options': '--preview-window up:60%', 'window': s:fzf_big_float})

@@ -43,10 +43,10 @@ set softtabstop=-1
 set nojoinspaces
 set sessionoptions-=blank
 set shada=!,'100,<50,:50,s10,h
-set textwidth=99
+" set textwidth=99
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+" set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=

@@ -11,6 +11,7 @@
   "coc.preferences.previewAutoClose": false,
   "coc.preferences.formatOnSaveFiletypes": ["haskell"],
   "coc.preferences.extensionUpdateCheck": "never",
+  "coc.preferences.colorSupport": false,
   "snippets.autoTrigger": false,
   "snippets.ultisnips.directories": [],
   "snippets.extends": {

@@ -1,7 +1,6 @@
 set pastetoggle=<F2>
 nmap     <silent>  <F3>        :setlocal spell!<CR>
 nmap     <silent>  <space>/    :nohlsearch<CR>
-nmap               <F8>        <Plug>ScripteaseSynnames
 nmap               <M-w>       <Plug>WinSwitch
 nmap               <M-f>       <Plug>InsertSemicolon
 nmap               <Esc>       <Plug>CloseFloat
@@ -24,7 +23,7 @@ nnoremap           <C-l>       <space>
 nnoremap           <M-q>       <C-w>c
 nnoremap           <M-o>       <C-w>o
 nnoremap           yof         :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
-nnoremap <silent>  yoy         :let &cc = &cc == '' ? &textwidth + 1 : ''<CR>
+nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
 nnoremap <silent>  <C-space>   :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
 
 vnoremap           <space>y    "+y
@@ -168,29 +167,8 @@ function! s:InsertSemiColon() abort
   else
     execute 'keepp s/;\_$//'
   endif
+  normal ``
 endfunction
 nnoremap <silent> <Plug>InsertSemicolon :call <SID>InsertSemiColon()<CR>
-"}}}
-" show Syntax highlight group for element under the cursor {{{
-function! s:Synnames(...) abort
-  if a:0
-    let [line, column] = [a:1, a:2]
-  else
-    let [line, column] = [line('.'), col('.')]
-  endif
-  return reverse(map(synstack(line, column), 'synIDattr(v:val,"name")'))
-endfunction
-function! s:Syncount(count)
-  if a:count
-    let name = get(s:Synnames(), a:count - 1, '')
-    if name !=# ''
-      return 'syntax list ' .. name
-    endif
-  else
-    echo join(s:Synnames(), ' ')
-  endif
-  return ''
-endfunction
-nnoremap <silent> <Plug>ScripteaseSynnames :call <SID>Syncount(v:count)<CR>
 "}}}
 " vim: foldmethod=marker:

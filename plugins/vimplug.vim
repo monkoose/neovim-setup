@@ -4,6 +4,7 @@ Plug 'tpope/vim-repeat'                              " makes '.' command more us
 Plug 'tpope/vim-eunuch'                              " adds sugar common UNIX shell commands
 Plug 'tpope/vim-surround'                            " makes manipulating with (),[],''... enjoyable
 Plug 'tpope/vim-unimpaired'                          " adds common toggling options, new ] and [ commands, encoding/decoding
+Plug 'tpope/vim-scriptease'                          " adds help commands for vimscripting
 Plug 'tomtom/tcomment_vim'                           " adds easy lines commenting
 Plug 'zhimsel/vim-stay'                              " for remembering session/cursor position
 Plug 'neovimhaskell/haskell-vim'                     " improves haskell syntax and indentation
@@ -15,6 +16,9 @@ Plug 'othree/html5.vim'                              " improves HTML syntax high
 Plug 'pangloss/vim-javascript'                       " improves JavaScript syntax highlighting and indentation
 Plug 'honza/vim-snippets'                            " adds snippets support
 Plug 'monkoose/fzf-hoogle.vim'                       " adds hoogle preview
+Plug 'cespare/vim-toml'                              " adds toml highlighting
+Plug 'evanleck/vim-svelte'                           " adds svelte highlighting
+" Plug 'MaxMEllon/vim-jsx-pretty'                      " adds jsx highlighting
 
 " Plugins with custom config
 runtime plugins/coc.vim            " adds autocompletion and langserver

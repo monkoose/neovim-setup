@@ -28,7 +28,7 @@ endfunction
 function! MyGitGutter() abort
   let hunks = GitGutterGetHunkSummary()
   let symbols = ['+', '~', '-']
-  let changes = join(map(copy(hunks), {i, v -> v == 0 ? '' : ' ' .. symbols[i] .. v}), '')
+  let changes = join(map(copy(hunks), "v:val == 0 ? '' : ' ' .. symbols[v:key] .. v:val"), '')
   return changes
   " return winwidth(winnr()) > 60 ? changes : ''
 endfunction
