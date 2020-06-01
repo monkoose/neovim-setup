@@ -59,6 +59,7 @@ let g:python_highlight_all = 1
 
 augroup FileTypeOptions
   autocmd!
+  autocmd FileType svelte syntax sync minlines=200
   autocmd FileType qf       setlocal wrap
   autocmd FileType vim      setlocal iskeyword-=#
   autocmd FileType python   setlocal complete+=t formatoptions-=t define=^\s*\\(def\\\\|class\\)

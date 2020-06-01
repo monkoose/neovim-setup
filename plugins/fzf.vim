@@ -25,8 +25,12 @@ nmap <silent>    <space>fb       :FzfBCommits<CR>
 nmap <silent>    <space>fm       :FzfHistory<CR>
 nmap <silent>    <space>fk       :FzfMaps<CR>
 nmap <silent>    <space>ss       :FzfRg<CR>
+nmap <silent>    <space>sS       :FzfRgFull<CR>
 nmap <silent>    <space>sb       :FzfBLines<CR>
 nmap <silent>    <space>sl       :FzfLines<CR>
+nmap <silent>    <space>sw       :FzfRg <c-r>=expand("<cword>")<CR><CR>
+nmap <silent>    <space>fl       :FzfLocationList<CR>
+nmap <silent>    <space>fq       :FzfQuickfix<CR>
 "nmap <silent>    <space>ft     :FzfBTags<CR>
 "nmap <silent>    <space>fa     :FzfTags<CR>
 

@@ -18,7 +18,6 @@ Plug 'honza/vim-snippets'                            " adds snippets support
 Plug 'monkoose/fzf-hoogle.vim'                       " adds hoogle preview
 Plug 'cespare/vim-toml'                              " adds toml highlighting
 Plug 'evanleck/vim-svelte'                           " adds svelte highlighting
-" Plug 'MaxMEllon/vim-jsx-pretty'                      " adds jsx highlighting
 
 " Plugins with custom config
 runtime plugins/coc.vim            " adds autocompletion and langserver
@@ -26,7 +25,7 @@ runtime plugins/delimitMate.vim    " adds auto pairs
 runtime plugins/fzf.vim            " adds fuzzy finder for multiple sources
 runtime plugins/gv.vim             " git log for vim
 runtime plugins/nuake.vim          " for better terminal experience
-runtime plugins/nerdtree.vim       " adds sidebar file explorer
+runtime plugins/rnvimr.vim         " adds ranger support in neovim
 runtime plugins/targets.vim        " adds new targets like in( or 2alB
 runtime plugins/undotree.vim       " for visualizing undo history
 runtime plugins/vim-easy-align.vim " adds aligning of text

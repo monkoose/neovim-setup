@@ -3,40 +3,24 @@
   "diagnostic.hintSign": "H",
   "diagnostic.errorSign": "E",
   "diagnostic.warningSign": "W",
+  "diagnostic.level": "information",
   "diagnostic.maxWindowHeight": 20,
   "diagnostic.enableMessage": "jump",
   "suggest.minTriggerInputLength": 2,
   "suggest.noselect": true,
+  "yank.highlight.duration": 400,
+  "yank.enableCompletion": false,
   "suggest.enablePreselect": false,
+  "svelte.plugin.html.autoClosingTags": false,
   "coc.preferences.previewAutoClose": false,
-  "coc.preferences.formatOnSaveFiletypes": ["haskell"],
+  "coc.preferences.formatOnSaveFiletypes": ["svelte"],
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.colorSupport": false,
   "snippets.autoTrigger": false,
-  "snippets.ultisnips.directories": [],
+  "snippets.ultisnips.enable": false,
   "snippets.extends": {
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
-  },
-  "languageserver": {
-    "haskell": {
-      "command": "hie-wrapper",
-      "rootPatterns": [
-        "stack.yaml",
-        "cabal.config",
-        "package.yaml"
-      ],
-      "filetypes": [
-        "hs",
-        "lhs",
-        "haskell"
-      ],
-      "initializationOptions": {
-        "languageServerHaskell": {
-          "diagnosticsOnChange": false
-        }
-      }
-    }
   },
   "python.jediEnabled": false
 }
