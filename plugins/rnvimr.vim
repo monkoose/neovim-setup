@@ -4,5 +4,5 @@ let g:rnvimr_ex_enable = 1
 let g:rnvimr_pick_enable = 1
 let g:rnvimr_bw_enable = 1
 
-nmap        <silent>    <M-`>    :RnvimrToggle<CR>
-tnoremap    <silent>    <M-`>    <C-\><C-n>:RnvimrToggle<CR>
+nmap        <silent>    <M-1>    :RnvimrToggle<CR>
+tnoremap    <silent>    <M-1>    <C-\><C-n>:RnvimrToggle<CR>
