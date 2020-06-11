@@ -1,7 +1,7 @@
 set statusline=%{MyStatusLine()}
 
 let s:git       = "%1*%{MyGitBranch()}%*%4*%{MyGitCommit()}%*%3*%{MyGitGutter()}%*"
-let s:refresh   = "%{MyRefreshStatusLine(&modified, w:statusline_mod)}"
+let s:refresh   = "%{MyRefreshStatusLine(&modified, GetStatuslineMod())}"
 let s:spell     = "%5*%{&spell ? '  SPELL ' : ''}%*"
 let s:lncol     = "%< %-9(%3*%l%*·%4*%c%V%*%) "
 let s:tail      = " %=%Y  %4*%P%* "
@@ -15,6 +15,15 @@ function! MyGitBranch() abort
     return ''
   endif
   return ' ' .. FugitiveHead(7, dir)
+endfunction
+
+function! GetStatuslineMod() abort
+  try
+    let statusline_mod = nvim_win_get_var(win_getid(), "statusline_mod")
+    return statusline_mod
+  catch /E5555/
+    return 0
+  endtry
 endfunction
 
 function! MyGitCommit() abort
@@ -53,6 +62,5 @@ endfunction
 " trailing whitespace is required in statusline=
 augroup SetStatusLine
   autocmd!
-  autocmd CmdwinEnter,BufWinEnter,WinEnter * let w:statusline_mod = 0
   autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
 augroup END

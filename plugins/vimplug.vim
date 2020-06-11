@@ -5,7 +5,6 @@ Plug 'tpope/vim-eunuch'                              " adds sugar common UNIX sh
 Plug 'tpope/vim-surround'                            " makes manipulating with (),[],''... enjoyable
 Plug 'tpope/vim-unimpaired'                          " adds common toggling options, new ] and [ commands, encoding/decoding
 Plug 'tpope/vim-scriptease'                          " adds help commands for vimscripting
-Plug 'tomtom/tcomment_vim'                           " adds easy lines commenting
 Plug 'zhimsel/vim-stay'                              " for remembering session/cursor position
 Plug 'neovimhaskell/haskell-vim'                     " improves haskell syntax and indentation
 Plug 'tbastos/vim-lua'                               " improves lua syntax highlighting and indentation
@@ -27,6 +26,7 @@ runtime plugins/gv.vim             " git log for vim
 runtime plugins/nuake.vim          " for better terminal experience
 runtime plugins/rnvimr.vim         " adds ranger support in neovim
 runtime plugins/targets.vim        " adds new targets like in( or 2alB
+runtime plugins/tcomment.vim       " adds easy lines commenting
 runtime plugins/undotree.vim       " for visualizing undo history
 runtime plugins/vim-easy-align.vim " adds aligning of text
 runtime plugins/vim-easymotion.vim " for easier jumps to any position on the screen
