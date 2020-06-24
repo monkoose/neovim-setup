@@ -10,14 +10,3 @@
 
     ```
     sh ./installer.sh
-    ```
-
-3. Open neovim and install plugins
-
-    ```vim
-    :PlugInstall
-    ```
-4. Install CoC plugings
-    ```vim
-    :CocInstall <coc-plugin>
-    ```

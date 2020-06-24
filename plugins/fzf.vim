@@ -39,31 +39,9 @@ augroup HoogleMaps
   autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
 augroup END
 
-command! FzfLocationList call s:location_list()
-function! s:location_list_to_grep(v) abort
-  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
-endfunction
-function! s:open_location_item(e) abort
-  let line = a:e
-  let filename = fnameescape(split(line, ':\d\+:')[0])
-  let linenr = matchstr(line, ':\d\+:')[1:-2]
-  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-  exe 'e ' . filename
-  call cursor(linenr, colum)
-endfunction
-function! s:location_list() abort
-  let s:source = 'location_list'
-  function! s:get_location_list() abort
-    return map(getloclist(0), 's:location_list_to_grep(v:val)')
-  endfunction
-  call fzf#run(fzf#wrap('location_list', {
-        \ 'source':  reverse(<sid>get_location_list()),
-        \ 'sink':    function('s:open_location_item'),
-        \ 'options': '--reverse',
-        \ }))
-endfunction
+command! FzfQuickfix call s:quickfix(1)
+command! FzfLocationList call s:quickfix(0)
 
-command! FzfQuickfix call s:quickfix()
 function! s:open_quickfix_item(e) abort
   let line = a:e
   let filename = fnameescape(split(line, ':\d\+:')[0])
@@ -72,15 +50,22 @@ function! s:open_quickfix_item(e) abort
   exe 'e ' . filename
   call cursor(linenr, colum)
 endfunction
+
 function! s:quickfix_to_grep(v) abort
   return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
 endfunction
-function! s:quickfix() abort
-  function! s:quickfix_list() abort
+
+function! s:quickfix_list(nr) abort
+  if a:nr == 1
     return map(getqflist(), 's:quickfix_to_grep(v:val)')
-  endfunction
+  else
+    return map(getloclist(0), 's:quickfix_to_grep(v:val)')
+  endif
+endfunction
+
+function! s:quickfix(nr) abort
   call fzf#run(fzf#wrap('quickfix', {
-        \ 'source':  reverse(<sid>quickfix_list()),
+        \ 'source':  reverse(s:quickfix_list(a:nr)),
         \ 'sink':    function('s:open_quickfix_item'),
         \ 'options': '--reverse',
         \ }))

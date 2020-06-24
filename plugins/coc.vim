@@ -1,6 +1,6 @@
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf'
-" CocInstall coc-vimlsp coc-yank coc-lists coc-json
+" CocInstall coc-vimlsp coc-yank coc-json coc-sh coc-svelte
 " coc-snippets coc-yaml coc-python coc-tsserver coc-html coc-css
 
 let g:coc_snippet_next = '<M-e>'
@@ -25,12 +25,13 @@ vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
 augroup CocFiletypeMaps
   autocmd!
   autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
-        \ nnoremap <buffer><silent>  K          :call CocActionAsync('doHover')<CR>
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
-        \ nmap     <buffer><silent>  <space>d   <Plug>(coc-definition)
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
-        \ nmap <buffer>      <space>l   <Plug>(coc-diagnostic-next)
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
-        \ nmap <buffer>      <space>L   <Plug>(coc-diagnostic-prev)
+        \ call s:define_mappings()
   autocmd FileType haskell vmap <buffer><silent> K :call CocActionAsync('doHover')<CR>
 augroup END
+
+function! s:define_mappings() abort
+  nnoremap <buffer><silent> K        :call CocActionAsync('doHover')<CR>
+  nmap     <buffer><silent> <space>d <Plug>(coc-definition)
+  nmap     <buffer>         <space>l <Plug>(coc-diagnostic-next)
+  nmap     <buffer>         <space>L <Plug>(coc-diagnostic-prev)
+endfunction
