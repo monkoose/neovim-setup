@@ -11,16 +11,17 @@
   "yank.highlight.duration": 400,
   "yank.enableCompletion": false,
   "suggest.enablePreselect": false,
-  "svelte.plugin.html.autoClosingTags": false,
   "coc.preferences.previewAutoClose": false,
   "coc.preferences.formatOnSaveFiletypes": ["svelte"],
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.colorSupport": false,
   "snippets.autoTrigger": false,
   "snippets.ultisnips.enable": false,
+  "sh.highlightParsingErrors": false,
   "snippets.extends": {
     "javascriptreact": ["javascript"],
-    "typescript": ["javascript"]
+    "typescript": ["javascript"],
+    "svelte": ["html", "svelte"]
   },
   "python.jediEnabled": false
 }

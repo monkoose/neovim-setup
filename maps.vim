@@ -50,6 +50,8 @@ tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 tnoremap <silent>  <M-q>       <C-\><C-n>:close!<CR>
 
+command SudoWrite write !sudo tee > /dev/null %
+
 " OpenPath() {{{
 function! s:OpenPath(path) abort
   silent! execute '!xdg-open "' .. a:path .. '" &> /dev/null &'

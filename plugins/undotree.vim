@@ -1,4 +1,4 @@
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout       = 2

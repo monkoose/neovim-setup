@@ -1,4 +1,4 @@
-Plug 'lambdalisue/vim-gista'
+Plug 'lambdalisue/vim-gista', {'on': 'Gista'}
 
 let g:gista#client#default_username = "monkoose"
 let g:gista#command#list#enable_default_mappings = 0

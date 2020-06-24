@@ -1,4 +1,4 @@
-Plug 'Lenovsky/nuake'
+Plug 'Lenovsky/nuake', {'on': 'Nuake'}
 
 let g:nuake_size = 0.40
 
