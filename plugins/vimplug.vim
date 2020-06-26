@@ -23,6 +23,7 @@ runtime plugins/coc.vim            " adds autocompletion and langserver
 runtime plugins/delimitMate.vim    " adds auto pairs
 runtime plugins/fzf.vim            " adds fuzzy finder for multiple sources
 runtime plugins/nuake.vim          " for better terminal experience
+runtime plugins/reply.vim          " adds repl
 runtime plugins/rnvimr.vim         " adds ranger support in neovim
 runtime plugins/targets.vim        " adds new targets like in( or 2alB
 runtime plugins/tcomment.vim       " adds easy lines commenting
