@@ -27,6 +27,9 @@ program_exists "nvim"
 install_dir="$HOME/.local/share/nvim"
 config_dir="$HOME/.config/nvim"
 nvim_repo="https://github.com/monkoose/neovim-setup"
+vimplug_repo="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+coc_plugins="coc-sh coc-snippets coc-yank coc-css coc-html \
+    coc-json coc-python coc-svelte coc-tsserver coc-vimlsp coc-yaml"
 echo ""
 msg "Creating directories..."
 mkdir -pv "$install_dir/session"
@@ -38,9 +41,7 @@ msg "Cloning repo..."
 git clone --depth=1 "$nvim_repo" "$config_dir"
 echo ""
 msg "Begin fetching vim-plug..."
-curl -fLo "$install_dir"/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo "$install_dir/site/autoload/plug.vim" --create-dirs "$vimplug_repo"
 echo ""
-nvim +PlugInstall +"CocInstall coc-sh coc-snippets coc-yank coc-css coc-html \
-    coc-json coc-python coc-svelte coc-tsserver coc-vimlsp coc-yaml"
+# nvim +PlugInstall +"CocInstall $coc_plugins"
 echo "Done."
