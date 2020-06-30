@@ -35,6 +35,8 @@ set noruler
 set tabpagemax=20
 set smartindent
 set shiftround
+set splitbelow
+set splitright
 set tildeop
 set expandtab
 set tabstop=4
