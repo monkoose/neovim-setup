@@ -13,8 +13,6 @@ noremap!           <C-space>   <C-^>
 nnoremap           <space>q    :pclose<CR>
 nnoremap           <space>a    <C-^>
 nnoremap           <space>d    <C-]>
-nnoremap           <space>U    mQviwU`Q
-nnoremap           <space>u    mQviwu`Q
 nnoremap           <space>y    "+y
 nnoremap           <space>pp   "+p
 nnoremap           <C-j>       <C-d>
@@ -22,9 +20,9 @@ nnoremap           <C-k>       <C-u>
 nnoremap           <C-l>       <space>
 nnoremap           <M-q>       <C-w>c
 nnoremap           <M-o>       <C-w>o
-nnoremap           yof         :set <C-R>=&foldcolumn ? 'foldcolumn=0' : 'foldcolumn=1'<CR><CR>
+nnoremap           yof         :set foldcolumn=<C-R>=!&foldcolumn<CR><CR>
 nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
-nnoremap <silent>  <C-space>   :set <C-R>=&iminsert ? 'iminsert=0' : 'iminsert=1'<CR><CR>
+nnoremap <silent>  <C-space>   :set iminsert=<C-R>=!&iminsert<CR><CR>
 
 vnoremap           <space>y    "+y
 vnoremap           <space>pp   "+p

@@ -1,8 +1,3 @@
-" set fileencodings=utf-8,cp1251,koi8-r
-let g:python3_host_prog = '/usr/bin/python'
-let g:loaded_python_provider = 0
-let g:loaded_ruby_provider = 0
-let g:loaded_node_provider = 0
 set termguicolors
 colorscheme boa
 set title
@@ -45,7 +40,6 @@ set softtabstop=-1
 set nojoinspaces
 set sessionoptions-=blank
 set shada=!,'100,<50,:50,s10,h
-" set textwidth=99
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
@@ -54,11 +48,23 @@ set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
 set timeoutlen=3000
+set keymap=russian-jcukenwin
+set iminsert=0
+" set fileencodings=utf-8,cp1251,koi8-r
+" set textwidth=99
 
-let g:markdown_folding=1
-let loaded_netrwPlugin = 1
+" shipped plugins config
+let g:markdown_folding = 1
+let g:loaded_netrwPlugin = 1
 let g:python_highlight_all = 1
+let g:loaded_2html_plugin = 1
+let g:loaded_tutor_mode_plugin = 1
+let g:python3_host_prog = '/usr/bin/python'
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_node_provider = 0
 
+" FileType config
 augroup FileTypeOptions
   autocmd!
   autocmd FileType svelte syntax sync minlines=200
