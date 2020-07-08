@@ -20,7 +20,9 @@ set updatetime=600
 set undofile
 set showcmd
 set undodir=~/.local/share/nvim/undo-files/
-set viewoptions=cursor,folds
+set viewoptions=cursor,folds,curdir
+set shada=!,'100,<50,:300,s50,h
+set sessionoptions=buffers,curdir,folds,help,tabpages,winsize,options
 set linebreak
 set showbreak=└
 set list
@@ -32,14 +34,11 @@ set smartindent
 set shiftround
 set splitbelow
 set splitright
-set tildeop
 set expandtab
 set tabstop=4
 set shiftwidth=2
 set softtabstop=-1
 set nojoinspaces
-set sessionoptions-=blank
-set shada=!,'100,<50,:50,s10,h
 set completeopt=menuone,longest
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
@@ -63,6 +62,12 @@ let g:python3_host_prog = '/usr/bin/python'
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
+
+" restore cursor position
+augroup CursorPosition
+  autocmd!
+  autocmd BufReadPost * silent! normal! `"
+augroup END
 
 " FileType config
 augroup FileTypeOptions
