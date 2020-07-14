@@ -66,8 +66,15 @@ let g:loaded_node_provider = 0
 " restore cursor position
 augroup CursorPosition
   autocmd!
-  autocmd BufReadPost * silent! normal! `"
+  autocmd BufReadPost * call s:cursor_position()
 augroup END
+
+function! s:cursor_position() abort
+  try
+    normal! `"
+  catch /E20/  " mark not set
+  endtry
+endfunction
 
 " FileType config
 augroup FileTypeOptions

@@ -4,7 +4,6 @@ Plug 'tpope/vim-repeat'                                   " makes '.' command mo
 Plug 'tpope/vim-surround'                                 " makes manipulating with (),[],''... enjoyable
 Plug 'tpope/vim-unimpaired'                               " adds common toggling options, new ] and [ commands, encoding/decoding
 Plug 'tpope/vim-scriptease'                               " adds help commands for vimscripting
-Plug 'zhimsel/vim-stay'                                   " for remembering session/cursor position
 Plug 'neovimhaskell/haskell-vim', {'for': ['haskell']}    " improves haskell syntax and indentation
 Plug 'tbastos/vim-lua', {'for': ['lua']}                  " improves lua syntax highlighting and indentation
 Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']} " improves python indentation
