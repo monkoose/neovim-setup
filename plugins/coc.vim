@@ -24,7 +24,7 @@ vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
 
 augroup CocFiletypeMaps
   autocmd!
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
+  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh,rust
         \ call s:define_mappings()
   autocmd FileType haskell vmap <buffer><silent> K :call CocActionAsync('doHover')<CR>
 augroup END

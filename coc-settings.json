@@ -12,7 +12,7 @@
   "yank.enableCompletion": false,
   "suggest.enablePreselect": false,
   "coc.preferences.previewAutoClose": false,
-  "coc.preferences.formatOnSaveFiletypes": ["svelte"],
+  "coc.preferences.formatOnSaveFiletypes": ["svelte", "rust"],
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.colorSupport": false,
   "snippets.autoTrigger": false,
