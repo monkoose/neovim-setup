@@ -11,7 +11,7 @@ nmap               <M-3>       <Plug>ToggleLocationList
 nmap               gx          <Plug>OpenPath
 noremap!           <C-space>   <C-^>
 nnoremap           <space>q    :pclose<CR>
-nnoremap           <space>a    <C-^>
+nnoremap <silent>  <space>a    :b#<CR>
 nnoremap           <space>d    <C-]>
 nnoremap           <space>y    "+y
 nnoremap           <space>pp   "+p

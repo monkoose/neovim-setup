@@ -64,17 +64,11 @@ let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
 
 " restore cursor position
-augroup CursorPosition
+augroup RestoreView
   autocmd!
-  autocmd BufReadPost * call s:cursor_position()
+  autocmd BufWinLeave ~/** if filereadable(expand('%:p')) | silent! mkview | endif
+  autocmd BufWinEnter ~/** silent! loadview
 augroup END
-
-function! s:cursor_position() abort
-  try
-    normal! `"
-  catch /E20/  " mark not set
-  endtry
-endfunction
 
 " FileType config
 augroup FileTypeOptions
