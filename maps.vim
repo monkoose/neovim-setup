@@ -1,20 +1,19 @@
 set pastetoggle=<F2>
 nmap     <silent>  <F3>        :setlocal spell!<CR>
 nmap     <silent>  <space>/    :nohlsearch<CR>
-nmap               <M-w>       <Plug>WinSwitch
-nmap               <M-f>       <Plug>InsertSemicolon
-nmap               <Esc>       <Plug>CloseFloat
-nmap               <C-n>       <Plug>ScrollFltPvwDownOrNextHunk
-nmap               <C-p>       <Plug>ScrollFltPvwUpOrPrevHunk
-nmap               <M-2>       <Plug>ToggleQuickfix
-nmap               <M-3>       <Plug>ToggleLocationList
-nmap               gx          <Plug>OpenPath
-noremap!           <C-space>   <C-^>
+nmap     <silent>  <M-w>       :call <SID>WindowSwitch()<CR>
+nmap     <silent>  <M-f>       :call <SID>InsertSemiColon()<CR>
+nmap     <silent>  <Esc>       :call <SID>CloseFloatWindow()<CR>
+nmap     <silent>  <C-n>       :call <SID>ScrollDownNextHunk()<CR>
+nmap     <silent>  <C-p>       :call <SID>ScrollUpPrevHunk()<CR>
+nmap     <silent>  <M-2>       :call <SID>ToggleQf()<CR>
+nmap     <silent>  <M-3>       :call <SID>ToggleLocList()<CR>
+nmap     <silent>  gx          :call <SID>OpenPath('<cfile>')<CR>
 nnoremap           <space>q    :pclose<CR>
 nnoremap <silent>  <space>a    :b#<CR>
 nnoremap           <space>d    <C-]>
 nnoremap           <space>y    "+y
-nnoremap           <space>pp   "+p
+nnoremap           <space>p    "+
 nnoremap           <C-j>       <C-d>
 nnoremap           <C-k>       <C-u>
 nnoremap           <C-l>       <space>
@@ -25,10 +24,10 @@ nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
 nnoremap <silent>  <C-space>   :set iminsert=<C-R>=!&iminsert<CR><CR>
 
 vnoremap           <space>y    "+y
-vnoremap           <space>pp   "+p
 vnoremap           <C-j>       <C-d>
 vnoremap           <C-k>       <C-u>
 
+noremap!           <C-space>   <C-^>
 inoremap           <C-p>       <C-k>
 inoremap           <C-j>       <C-n>
 inoremap           <C-k>       <C-p>
@@ -48,8 +47,6 @@ tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 tnoremap <silent>  <M-q>       <C-\><C-n>:close!<CR>
 
-command! SudoWrite write !sudo tee > /dev/null %
-
 " OpenPath() {{{
 function! s:OpenPath(path) abort
   silent! execute '!xdg-open "' .. a:path .. '" &> /dev/null &'
@@ -60,7 +57,6 @@ function! s:OpenPath(path) abort
   echon expand(a:path)
   echohl None
 endfunction
-nnoremap <silent> <Plug>OpenPath :call <SID>OpenPath('<cfile>')<CR>
 "}}}
 " Toggle Location and QuickFix lists {{{
 function! s:ToggleLocList() abort
@@ -93,8 +89,6 @@ function! s:ToggleQf() abort
   endfor
   botright copen
 endfunction
-nnoremap <script><silent> <Plug>ToggleQuickfix :call <SID>ToggleQf()<CR>
-nnoremap <script><silent> <Plug>ToggleLocationList :call <SID>ToggleLocList()<CR>
 "}}}
 " WindowSwitch() {{{
 function! s:WindowSwitch() abort
@@ -103,7 +97,6 @@ function! s:WindowSwitch() abort
       startinsert
     endif
 endfunction
-nnoremap <silent> <Plug>WinSwitch :call <SID>WindowSwitch()<CR>
 "}}}
 " PreviewWindowNr() {{{
 function! s:PreviewWindowNr(winnrs) abort
@@ -135,7 +128,6 @@ function! s:CloseFloatWindow() abort
     execute "normal! \<Esc>"
   endif
 endfunction
-nnoremap <silent> <Plug>CloseFloat :call <SID>CloseFloatWindow()<CR>
 "}}}
 " scroll preview or float windows or jump to git changes {{{
 function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
@@ -155,20 +147,22 @@ function! s:CmdFloatPvwOrCurrWin(cmd, curr_cmd) abort
   endif
 endfunction
 
-let ScrollDownNextHunk = function('s:CmdFloatPvwOrCurrWin', ["normal! 3\<C-e>", "normal ]c"])
-let ScrollUpPrevHunk   = function('s:CmdFloatPvwOrCurrWin', ["normal! 3\<C-y>", "normal [c"])
-nnoremap <silent> <Plug>ScrollFltPvwDownOrNextHunk :call ScrollDownNextHunk()<CR>
-nnoremap <silent> <Plug>ScrollFltPvwUpOrPrevHunk :call ScrollUpPrevHunk()<CR>
+function! s:ScrollDownNextHunk() abort
+  call s:CmdFloatPvwOrCurrWin("normal! 3\<C-e>", "normal ]c")
+endfunction
+
+function! s:ScrollUpPrevHunk() abort
+  call s:CmdFloatPvwOrCurrWin("normal! 3\<C-y>", "normal [c")
+endfunction
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:InsertSemiColon() abort
   if match(getline('.'), ';\_$') == -1
-    execute 'keepp s/\(.*\)/\1;/'
+    execute 'keepp s/\_$/;/'
   else
     execute 'keepp s/;\_$//'
   endif
   normal ``
 endfunction
-nnoremap <silent> <Plug>InsertSemicolon :call <SID>InsertSemiColon()<CR>
 "}}}
 " vim: foldmethod=marker:

@@ -1,7 +1,8 @@
 set termguicolors
 colorscheme boa
 set title
-set synmaxcol=250
+set synmaxcol=500
+syntax sync minlines=100
 set hidden
 set spelllang=en_us,ru_yo
 set pumheight=10
@@ -30,12 +31,11 @@ set listchars=tab:→-,trail:·,extends:⌇,precedes:⌇,nbsp:~
 set fillchars=vert:█,fold:·
 set noruler
 set tabpagemax=20
-set smartindent
-set shiftround
 set splitbelow
 set splitright
 set expandtab
-set tabstop=4
+set smartindent
+set shiftround
 set shiftwidth=2
 set softtabstop=-1
 set nojoinspaces
@@ -66,18 +66,28 @@ let g:loaded_node_provider = 0
 " restore cursor position
 augroup RestoreView
   autocmd!
-  autocmd BufWinLeave ~/** if filereadable(expand('%:p')) | silent! mkview | endif
+  autocmd BufWinLeave ~/** silent! mkview
   autocmd BufWinEnter ~/** silent! loadview
+augroup END
+
+" check for changed files outside of neovim
+augroup CheckTime
+  autocmd!
+  autocmd FocusGained * checktime
+augroup END
+
+" startinsert in terminal window
+augroup TermInsert
+  autocmd!
+  autocmd TermOpen * setlocal nonumber norelativenumber | startinsert
 augroup END
 
 " FileType config
 augroup FileTypeOptions
   autocmd!
-  autocmd FileType svelte syntax sync minlines=200
   autocmd FileType qf       setlocal wrap
   autocmd FileType vim      setlocal iskeyword-=#
-  autocmd FileType python   setlocal complete+=t formatoptions-=t define=^\s*\\(def\\\\|class\\)
   autocmd FileType css,scss setlocal iskeyword+=-
-  autocmd FileType lua      setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd FileType haskell  setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType lua      setlocal shiftwidth=4
+  autocmd FileType haskell  setlocal shiftwidth=4
 augroup END

@@ -39,6 +39,7 @@ augroup HoogleMaps
   autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
 augroup END
 let g:hoogle_fzf_header = ''
+let g:hoogle_count = 100
 
 command! FzfQuickfix call s:quickfix(1)
 command! FzfLocationList call s:quickfix(0)
