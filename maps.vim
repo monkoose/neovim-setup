@@ -1,7 +1,7 @@
 set pastetoggle=<F2>
 nmap     <silent>  <F3>        :setlocal spell!<CR>
 nmap     <silent>  <space>/    :nohlsearch<CR>
-nmap     <silent>  <M-w>       :call <SID>WindowSwitch()<CR>
+nmap               <M-w>       <C-w>w
 nmap     <silent>  <M-f>       :call <SID>InsertSemiColon()<CR>
 nmap     <silent>  <Esc>       :call <SID>CloseFloatWindow()<CR>
 nmap     <silent>  <C-n>       :call <SID>ScrollDownNextHunk()<CR>
@@ -88,14 +88,6 @@ function! s:ToggleQf() abort
     endif
   endfor
   botright copen
-endfunction
-"}}}
-" WindowSwitch() {{{
-function! s:WindowSwitch() abort
-    wincmd w
-    if getwininfo(win_getid())[0].terminal
-      startinsert
-    endif
 endfunction
 "}}}
 " PreviewWindowNr() {{{

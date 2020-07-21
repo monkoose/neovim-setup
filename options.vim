@@ -80,6 +80,7 @@ augroup END
 augroup TermInsert
   autocmd!
   autocmd TermOpen * setlocal nonumber norelativenumber | startinsert
+  autocmd BufEnter term://* startinsert
 augroup END
 
 " FileType config
