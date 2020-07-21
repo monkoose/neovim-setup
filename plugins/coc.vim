@@ -1,7 +1,19 @@
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf'
-" CocInstall coc-vimlsp coc-yank coc-json coc-sh coc-svelte
-" coc-snippets coc-yaml coc-python coc-tsserver coc-html coc-css
+
+let g:coc_global_extensions = [
+      \ 'coc-vimlsp',
+      \ 'coc-yank',
+      \ 'coc-json',
+      \ 'coc-sh',
+      \ 'coc-snippets',
+      \ 'coc-python',
+      \ 'coc-tsserver',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-yaml',
+      \ 'coc-svelte',
+      \ ]
 
 let g:coc_snippet_next = '<M-e>'
 let g:coc_snippet_prev = '<M-r>'
@@ -24,7 +36,7 @@ vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
 
 augroup CocFiletypeMaps
   autocmd!
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh,rust
+  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh
         \ call s:define_mappings()
   autocmd FileType haskell vmap <buffer><silent> K :call CocActionAsync('doHover')<CR>
 augroup END
