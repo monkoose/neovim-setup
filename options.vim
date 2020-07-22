@@ -39,7 +39,7 @@ set shiftround
 set shiftwidth=2
 set softtabstop=-1
 set nojoinspaces
-set completeopt=menuone,longest
+set completeopt=menuone,longest,noinsert,noselect
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc,*/.stack-work/*
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess=filnrxtToOFIc

@@ -16,7 +16,8 @@ nnoremap           <space>y    "+y
 nnoremap           <space>p    "+
 nnoremap           <C-j>       <C-d>
 nnoremap           <C-k>       <C-u>
-nnoremap           <C-l>       <space>
+nnoremap           <C-l>       :bn<CR>
+nnoremap           <C-h>       :bp<CR>
 nnoremap           <M-q>       <C-w>c
 nnoremap           <M-o>       <C-w>o
 nnoremap           yof         :set foldcolumn=<C-R>=!&foldcolumn<CR><CR>
