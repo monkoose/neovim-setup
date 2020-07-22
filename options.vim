@@ -2,7 +2,7 @@ set termguicolors
 colorscheme boa
 set title
 set synmaxcol=500
-syntax sync minlines=100
+syntax sync minlines=200
 set hidden
 set spelllang=en_us,ru_yo
 set pumheight=10
@@ -21,7 +21,7 @@ set updatetime=600
 set undofile
 set showcmd
 set undodir=~/.local/share/nvim/undo-files/
-set viewoptions=cursor,folds,curdir
+set viewoptions=cursor,curdir,folds
 set shada=!,'100,<50,:300,s50,h
 set sessionoptions=buffers,curdir,folds,help,tabpages,winsize,options
 set linebreak
@@ -52,7 +52,7 @@ set iminsert=0
 " set fileencodings=utf-8,cp1251,koi8-r
 " set textwidth=99
 
-" shipped plugins config
+" shipped plugins config {{{
 let g:markdown_folding = 1
 let g:loaded_netrwPlugin = 1
 let g:python_highlight_all = 1
@@ -62,28 +62,28 @@ let g:python3_host_prog = '/usr/bin/python'
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
-
-" restore cursor position
+"}}}
+" restore cursor position {{{
 augroup RestoreView
   autocmd!
   autocmd BufWinLeave ~/** silent! mkview
   autocmd BufWinEnter ~/** silent! loadview
 augroup END
-
-" check for changed files outside of neovim
+"}}}
+" check for changed files outside of neovim {{{
 augroup CheckTime
   autocmd!
   autocmd FocusGained * checktime
 augroup END
-
-" startinsert in terminal window
+"}}}
+" startinsert in terminal window {{{
 augroup TermInsert
   autocmd!
   autocmd TermOpen * setlocal nonumber norelativenumber | startinsert
   autocmd BufEnter term://* startinsert
 augroup END
-
-" FileType config
+"}}}
+" FileType config {{{
 augroup FileTypeOptions
   autocmd!
   autocmd FileType qf       setlocal wrap
@@ -92,3 +92,5 @@ augroup FileTypeOptions
   autocmd FileType lua      setlocal shiftwidth=4
   autocmd FileType haskell  setlocal shiftwidth=4
 augroup END
+"}}}
+" vim: foldmethod=marker

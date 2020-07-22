@@ -59,9 +59,8 @@ function! StatusGitCommit() abort
 endfunction
 
 function! StatusGitGutter() abort
-  let hunks = GitGutterGetHunkSummary()
   let symbols = ['+', '~', '-']
-  let changes = join(map(copy(hunks), "v:val == 0 ? '' : ' ' .. symbols[v:key] .. v:val"), '')
+  let changes = join(map(copy(GitGutterGetHunkSummary()), "v:val == 0 ? '' : ' ' .. symbols[v:key] .. v:val"), '')
   return changes
   " return winwidth(winnr()) > 60 ? changes : ''
 endfunction

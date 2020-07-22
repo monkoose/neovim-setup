@@ -158,4 +158,4 @@ function! s:InsertSemiColon() abort
   normal ``
 endfunction
 "}}}
-" vim: foldmethod=marker:
+" vim: foldmethod=marker
