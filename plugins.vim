@@ -177,9 +177,9 @@ nnoremap    <silent>    <M-`>        :Nuake<CR>
 tnoremap    <silent>    <M-`>        <C-\><C-n>:Nuake<CR>
 " }}}
 " rhysd/reply.vim {{{
-nmap <space>rr :ReplSend<CR>
-vmap <space>rr :ReplSend<CR>
-nmap <space>rR ggVG:ReplSend<CR>``
+nmap <space>rr :ReplSend<CR><Esc>
+vmap <space>rr :ReplSend<CR><Esc>
+nmap <space>rR ggVG:ReplSend<CR><Esc>``
 " }}}
 " kevinhwang91/rnvimr {{{
 let g:rnvimr_enable_ex = 1
