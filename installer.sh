@@ -11,7 +11,7 @@ error() {
 }
 
 program_exists() {
-    command -v "$1" >/dev/null 2>&1 || error "You must have '$1' installed to continue."
+    command -v "$1" &>/dev/null || error "You must have '$1' installed to continue."
 }
 
 variable_set() {
@@ -30,7 +30,6 @@ nvim_repo="https://github.com/monkoose/neovim-setup"
 vimplug_repo="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 echo ""
 msg "Creating directories..."
-mkdir -pv "$install_dir/session"
 mkdir -pv "$install_dir/undo-files"
 mkdir -pv "$install_dir/view"
 mkdir -pv "$config_dir"
