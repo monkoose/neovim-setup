@@ -20,9 +20,9 @@ nnoremap           <C-l>       :bn<CR>
 nnoremap           <C-h>       :bp<CR>
 nnoremap           <M-q>       <C-w>c
 nnoremap           <M-o>       <C-w>o
-nnoremap           yof         :set foldcolumn=<C-R>=!&foldcolumn<CR><CR>
+nnoremap <silent>  yof         :let &foldcolumn = !&foldcolumn<CR>
 nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
-nnoremap <silent>  <C-space>   :set iminsert=<C-R>=!&iminsert<CR><CR>
+nnoremap <silent>  <C-space>   :let &iminsert = !&iminsert<CR>
 
 vnoremap           <space>y    "+y
 vnoremap           <C-j>       <C-d>

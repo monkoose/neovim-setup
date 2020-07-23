@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 undo_dir="$HOME/.local/share/nvim/undo-files"
 view_dir="$HOME/.local/share/nvim/view"
 

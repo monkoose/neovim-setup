@@ -14,7 +14,6 @@ Plug 'othree/html5.vim'                                               " improves
 Plug 'pangloss/vim-javascript'                                        " improves JavaScript syntax highlighting and indentation
 Plug 'honza/vim-snippets'                                             " adds snippets support
 Plug 'wellle/targets.vim'                                             " adds new targets like in( or 2alB
-Plug 'monkoose/fzf-hoogle.vim'                                        " adds hoogle preview
 Plug 'cespare/vim-toml', {'for': ['toml']}                            " adds toml highlighting
 Plug 'evanleck/vim-svelte', {'for': ['svelte']}                       " adds svelte highlighting
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -24,6 +23,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}                       " adds aut
 Plug 'antoinemadec/coc-fzf'                                           " adds fzf support for CocList
 Plug 'Raimondi/delimitMate'                                           " adds auto pairs
 Plug 'monkoose/fzf.nvim'                                              " adds fuzzy finder for multiple sources
+Plug 'monkoose/fzf-hoogle.vim'                                        " adds hoogle preview
 Plug 'Lenovsky/nuake', {'on': 'Nuake'}                                " for better terminal experience
 Plug 'rhysd/reply.vim', {'on': 'Repl'}                                " adds repl
 Plug 'kevinhwang91/rnvimr', {'do': 'make sync', 'on': 'RnvimrToggle'} " adds ranger support in neovim
@@ -131,13 +131,6 @@ nmap <silent>    <space>fq       :FzfQuickfix<CR>
 "nmap <silent>    <space>ft     :FzfBTags<CR>
 "nmap <silent>    <space>fa     :FzfTags<CR>
 
-augroup HoogleMaps
-  autocmd!
-  autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
-augroup END
-let g:hoogle_fzf_header = ''
-let g:hoogle_count = 100
-
 command! FzfQuickfix call s:quickfix(1)
 command! FzfLocationList call s:quickfix(0)
 
@@ -169,6 +162,14 @@ function! s:quickfix(nr) abort
         \ 'options': '--reverse',
         \ }))
 endfunction
+" }}}
+" monkoose/fzf-hoogle.vim {{{
+augroup HoogleMaps
+  autocmd!
+  autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
+augroup END
+let g:hoogle_fzf_header = ''
+let g:hoogle_count = 100
 " }}}
 " Lenovsky/nuake {{{
 let g:nuake_size = 0.40
