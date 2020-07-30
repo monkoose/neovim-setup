@@ -26,7 +26,7 @@ Plug 'monkoose/fzf.nvim'                                              " adds fuz
 Plug 'monkoose/fzf-hoogle.vim'                                        " adds hoogle preview
 Plug 'Lenovsky/nuake', {'on': 'Nuake'}                                " for better terminal experience
 Plug 'rhysd/reply.vim', {'on': 'Repl'}                                " adds repl
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync', 'on': 'RnvimrToggle'} " adds ranger support in neovim
+Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}                    " adds ranger support in neovim
 Plug 'tomtom/tcomment_vim'                                            " adds easy lines commenting
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}                      " for visualizing undo history
 Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}           " adds aligning of text
@@ -207,12 +207,14 @@ vmap    <Enter>    <Plug>(EasyAlign)
 " }}}
 " easymotion/vim-easymotion {{{
 let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_keys = 'fjslwoeighrucmdk'
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_verbose = 0
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ACDEFGHIJKLMNOPRSUVW'
 
-map    <silent>    <space><space>    <Plug>(easymotion-s)
+map <silent> ,              <Plug>(easymotion-s)
+map <silent> <space><space> <Plug>(easymotion-s)
 " }}}
 " tpope/vim-fugitive {{{
 nnoremap    <space>gg    :Gstatus<CR>

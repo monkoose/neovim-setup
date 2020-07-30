@@ -23,10 +23,16 @@ nnoremap           <M-o>       <C-w>o
 nnoremap <silent>  yof         :let &foldcolumn = !&foldcolumn<CR>
 nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
 nnoremap <silent>  <C-space>   :let &iminsert = !&iminsert<CR>
+nnoremap           ;           :
+nnoremap           H           ,
+nnoremap           L           ;
 
 vnoremap           <space>y    "+y
 vnoremap           <C-j>       <C-d>
 vnoremap           <C-k>       <C-u>
+vnoremap           ;           :
+vnoremap           H           ,
+vnoremap           L           ;
 
 noremap!           <C-space>   <C-^>
 inoremap           <C-p>       <C-k>
