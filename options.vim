@@ -49,7 +49,6 @@ set inccommand=split
 set timeoutlen=3000
 set keymap=russian-jcukenwin
 set iminsert=0
-" set fileencodings=utf-8,cp1251,koi8-r
 " set textwidth=99
 
 " shipped plugins config {{{
@@ -86,11 +85,12 @@ augroup END
 " FileType config {{{
 augroup FileTypeOptions
   autocmd!
-  autocmd FileType qf       setlocal wrap
-  autocmd FileType vim      setlocal iskeyword-=#
-  autocmd FileType css,scss setlocal iskeyword+=-
-  autocmd FileType lua      setlocal shiftwidth=4
-  autocmd FileType haskell  setlocal shiftwidth=4
+  autocmd FileType qf        setlocal wrap
+  autocmd FileType vim       setlocal iskeyword-=#
+  autocmd FileType css,scss  setlocal iskeyword+=-
+  autocmd FileType lua       setlocal shiftwidth=4
+  autocmd FileType haskell   setlocal shiftwidth=4
+  autocmd FileType gitcommit setlocal spell | startinsert
 augroup END
 "}}}
 " vim: foldmethod=marker
