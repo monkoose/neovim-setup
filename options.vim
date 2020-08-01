@@ -75,11 +75,11 @@ augroup CheckTime
   autocmd FocusGained * checktime
 augroup END
 "}}}
-" startinsert in terminal window {{{
-augroup TermInsert
+" terminal window autocmd {{{
+augroup TermWindow
   autocmd!
-  autocmd TermOpen * setlocal nonumber norelativenumber | startinsert
-  autocmd BufEnter term://* startinsert
+  autocmd TermOpen * setlocal nonumber norelativenumber
+  autocmd BufEnter term://* if &filetype =~ 'nuake' | startinsert | endif
 augroup END
 "}}}
 " FileType config {{{
