@@ -276,15 +276,14 @@ let g:grammarous#disabled_rules = {
       \ '*': ['DASH_RULE', 'EN_QUOTES', 'WHITESPACE_RULE', 'WORD_CONTAINS_UNDERSCORE', 'UPPERCASE_SENTENCE_START']
       \ }
 
-nmap <space>n [grammarous]
-nmap [grammarous]c :GrammarousCheck<CR>
-nmap [grammarous]r :GrammarousReset<CR>
-nmap [grammarous]f <Plug>(grammarous-fixit)
-nmap [grammarous]F <Plug>(grammarous-fixall)
-nmap [grammarous]D <Plug>(grammarous-disable-rule)
-nmap [grammarous]d <Plug>(grammarous-remove-error)
-nmap [grammarous]n <Plug>(grammarous-move-to-next-error)
-nmap [grammarous]p <Plug>(grammarous-move-to-previous-error)
+nmap <space>nc :GrammarousCheck<CR>
+nmap <space>nr :GrammarousReset<CR>
+nmap <space>nf <Plug>(grammarous-fixit)
+nmap <space>nF <Plug>(grammarous-fixall)
+nmap <space>nD <Plug>(grammarous-disable-rule)
+nmap <space>nd <Plug>(grammarous-remove-error)
+nmap <space>nn <Plug>(grammarous-move-to-next-error)
+nmap <space>np <Plug>(grammarous-move-to-previous-error)
 " }}}
 " rrethy/vim-hexokinase {{{
 let g:Hexokinase_highlighters = ['background']
