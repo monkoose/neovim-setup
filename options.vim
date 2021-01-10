@@ -52,7 +52,7 @@ let g:loaded_node_provider = 0
 " restore cursor position {{{
 augroup RestoreView
   autocmd!
-  autocmd BufWinLeave ~/** silent! mkview
+  autocmd BufWinLeave ~/** if &filetype !~# 'gitcommit' | silent! mkview | endif
   autocmd BufWinEnter ~/** silent! loadview
 augroup END
 "}}}

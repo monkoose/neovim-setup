@@ -16,16 +16,16 @@ nnoremap           <space>y    "+y
 nnoremap           <space>p    "+
 nnoremap           <C-j>       <C-d>
 nnoremap           <C-k>       <C-u>
-nnoremap           <C-l>       :bn<CR>
-nnoremap           <C-h>       :bp<CR>
+nnoremap <silent>  H           :bn<CR>
+nnoremap <silent>  L           :bp<CR>
 nnoremap           <M-q>       <C-w>c
 nnoremap           <M-o>       <C-w>o
 nnoremap <silent>  yof         :let &foldcolumn = !&foldcolumn<CR>
 nnoremap <silent>  yoy         :let &cc = &cc == '' ? 100 : ''<CR>
 nnoremap <silent>  <C-space>   :let &iminsert = !&iminsert<CR>
 nnoremap           ;           :
-nnoremap           H           ,
-nnoremap           L           ;
+nnoremap           <C-h>       ,
+nnoremap           <C-l>       ;
 
 vnoremap           <space>y    "+y
 vnoremap           <C-j>       <C-d>
@@ -156,12 +156,13 @@ endfunction
 "}}}
 " insert ; at the end of a line if there is none {{{
 function! s:InsertSemiColon() abort
+  let view = winsaveview()
   if match(getline('.'), ';\_$') == -1
     execute 'keepp s/\_$/;/'
   else
     execute 'keepp s/;\_$//'
   endif
-  normal ``
+  call winrestview(view)
 endfunction
 "}}}
 " vim: foldmethod=marker
