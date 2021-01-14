@@ -1,7 +1,7 @@
-set statusline=%{MyStatusLine()}
+set statusline=%{InitializeSL()}
 
 let s:git       = "%1*%{StatusGitBranch()}%*%4*%{StatusGitCommit()}%*%3*%{StatusGitGutter()}%*"
-let s:refresh   = "%{RefreshMyStatusLine(&modified, GetStatuslineMod())}"
+let s:refresh   = "%{RefreshSL(&modified)}"
 let s:spell     = "%5*%{&spell ? '  SPELL ' : ''}%*"
 let s:lncol     = "%< %-9(%3*%l%*·%4*%c%V%*%) "
 let s:tail      = " %=%Y  %4*%P%* "
@@ -11,16 +11,21 @@ let s:ro        = "%6*%{&ro ? '' : ''}%*  "
 let s:iminsert  = "%6*%{StatusIminsert()}%*"
 
 " session - %{fnamemodify(v:this_session, ':t')}
-function! MyStatusLine() abort
+function! InitializeSL() abort
   let statusline = s:iminsert .. s:fname .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
   call setwinvar(winnr(), '&statusline', statusline)
   return ''
 endfunction
 
-function! RefreshMyStatusLine(mod, stlmod) abort
-  if a:mod != a:stlmod
+function! RefreshSL(mod) abort
+  let slmod = getwinvar(winnr(), 'statusline_mod', 0)
+  if a:mod != slmod
     let filename = a:mod ? s:fname_mod : s:fname
-    let w:statusline_mod = a:stlmod ? 0 : 1
+    if slmod
+      call setwinvar(winnr(), 'statusline_mod', 0)
+    else
+      call setwinvar(winnr(), 'statusline_mod', 1)
+    endif
     let statusline = s:iminsert .. filename .. s:ro .. s:git .. s:spell .. s:tail .. s:refresh
     call setwinvar(winnr(), '&statusline', statusline)
   endif
@@ -39,15 +44,6 @@ function! StatusGitBranch() abort
     return ''
   endif
   return ' ' .. FugitiveHead(7, dir)
-endfunction
-
-function! GetStatuslineMod() abort
-  try
-    let statusline_mod = nvim_win_get_var(win_getid(), "statusline_mod")
-    return statusline_mod
-  catch /E5555/
-    return 0
-  endtry
 endfunction
 
 function! StatusGitCommit() abort

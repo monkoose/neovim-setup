@@ -76,8 +76,7 @@ augroup FileTypeOptions
   autocmd FileType qf        setlocal wrap
   autocmd FileType vim       setlocal iskeyword-=#
   autocmd FileType css,scss  setlocal iskeyword+=-
-  autocmd FileType lua       setlocal shiftwidth=4
-  autocmd FileType haskell   setlocal shiftwidth=4
+  autocmd FileType lua,haskell       setlocal shiftwidth=4
   autocmd FileType gitcommit setlocal spell | startinsert
 augroup END
 "}}}
