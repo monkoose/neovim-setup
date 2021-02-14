@@ -10,19 +10,16 @@ set nowrap
 set number relativenumber
 set ignorecase smartcase
 set scrolloff=5 sidescrolloff=5
-set history=2000
+set history=300
 set undolevels=300
 set updatetime=600
 set noswapfile undofile undodir=~/.local/share/nvim/undo-files/
-set shada=!,'100,<50,:300,s50,h
 set viewoptions=cursor,curdir,folds
 set sessionoptions=buffers,curdir,folds,help,tabpages,winsize,options
-set showcmd
 set linebreak
 set showbreak=└
 set list listchars=tab:→-,trail:·,extends:⌇,precedes:⌇,nbsp:~
 set fillchars=vert:█,fold:·
-set noruler
 set tabpagemax=20
 set splitbelow splitright
 set expandtab smartindent shiftround shiftwidth=2 softtabstop=-1
@@ -34,32 +31,39 @@ set shortmess=filnrxtToOFIc
 set diffopt=filler,vertical
 set guicursor=
 set inccommand=split
-set timeoutlen=3000
 set keymap=russian-jcukenwin iminsert=0
-set grepprg=rg\ --vimgrep
-set grepformat=%f:%l:%c:%m
+set grepprg=rg\ --vimgrep grepformat=%f:%l:%c:%m
 " set textwidth=99
 
 " shipped plugins config {{{
 let g:markdown_folding = 1
 let g:loaded_netrwPlugin = 1
-let g:python_highlight_all = 1
 let g:loaded_2html_plugin = 1
 let g:loaded_tutor_mode_plugin = 1
+let g:loaded_zipPlugin = 1
+let g:loaded_tarPlugin = 1
+let g:python_highlight_all = 1
+let g:loaded_gzip = 1
 let g:python3_host_prog = '/usr/bin/python'
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
 "}}}
+" highlight yanked text {{{
 augroup HighlightYank
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="CocHoverRange", timeout=250}
 augroup END
+"}}}
+" Diff current state of the buffer with the file it is loaded from
+command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 " restore cursor position {{{
 augroup RestoreView
   autocmd!
-  autocmd BufWinLeave ~/** if &filetype !~# 'gitcommit' | silent! mkview | endif
-  autocmd BufWinEnter ~/** silent! loadview
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
 augroup END
 "}}}
 " check for changed files outside of neovim {{{
@@ -72,7 +76,6 @@ augroup END
 augroup TermWindow
   autocmd!
   autocmd TermOpen * setlocal nonumber norelativenumber
-  autocmd BufEnter term://* if &filetype =~ 'nuake' | startinsert | endif
 augroup END
 "}}}
 " FileType config {{{

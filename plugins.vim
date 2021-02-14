@@ -16,7 +16,6 @@ Plug 'honza/vim-snippets'                                             " adds sni
 Plug 'wellle/targets.vim'                                             " adds new targets like in( or 2alB
 Plug 'cespare/vim-toml', {'for': ['toml']}                            " adds toml highlighting
 Plug 'evanleck/vim-svelte', {'for': ['svelte']}                       " adds svelte highlighting
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " PLUGINS WITH CUSTOM CONFIG
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                       " adds autocompletion and langserver
@@ -55,20 +54,22 @@ let g:coc_global_extensions = [
 
 let g:coc_snippet_next = '<M-e>'
 let g:coc_snippet_prev = '<M-r>'
-inoremap <silent><expr>   <M-e>       pumvisible() ? coc#_select_confirm() : coc#refresh()
-nmap     <silent>         <space>kk   :CocRestart<CR>
+inoremap <silent><expr>   <M-f>       pumvisible() ? coc#_select_confirm() : coc#refresh()
+inoremap <silent><expr>   <C-j>       pumvisible() ? "\<C-n>" : coc#refresh()
+inoremap <silent><expr>   <C-k>       pumvisible() ? "\<C-p>" : coc#refresh()
+nmap     <silent>         <space>kk   <Cmd>CocRestart<CR>
 nmap     <silent>         <space>D    <Plug>(coc-declaration)
 nmap     <silent>         <space>kr   <Plug>(coc-references)
 nmap     <silent>         <space>kR   <Plug>(coc-rename)
-nmap     <silent>         <space>ka   :CocFzfList actions<CR>
-nmap     <silent>         <space>kD   :CocFzfList diagnostics<CR>
-nmap     <silent>         <space>kd   :CocFzfList diagnostics --current-buf<CR>
-nmap     <silent>         <space>ky   :CocFzfList yank<CR>
-nmap     <silent>         <space>ks   :CocFzfList symbols<CR>
+nmap     <silent>         <space>ka   <Cmd>CocFzfList actions<CR>
+nmap     <silent>         <space>kD   <Cmd>CocFzfList diagnostics<CR>
+nmap     <silent>         <space>kd   <Cmd>CocFzfList diagnostics --current-buf<CR>
+nmap     <silent>         <space>ky   <Cmd>CocFzfList yank<CR>
+nmap     <silent>         <space>ks   <Cmd>CocFzfList symbols<CR>
 nmap     <silent>         <space>kf   <Plug>(coc-format)
 nmap     <silent>         <space>ki   <Plug>(coc-diagnostic-info)
-nmap     <silent>         <space>ko   :CocFzfList outline<CR>
-nmap     <silent>         <space>kl   :CocFzfList<CR>
+nmap     <silent>         <space>ko   <Cmd>CocFzfList outline<CR>
+nmap     <silent>         <space>kl   <Cmd>CocFzfList<CR>
 vmap     <silent>         <space>ka   <Plug>(coc-codeaction-selected)
 vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
 
@@ -76,11 +77,11 @@ augroup CocFiletypeMaps
   autocmd!
   autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh,c,lua
         \ call s:define_coc_mappings()
-  autocmd FileType haskell vmap <buffer><silent> K :call CocActionAsync('doHover')<CR>
+  autocmd FileType haskell vmap <buffer><silent> K <Cmd>call CocActionAsync('doHover')<CR>
 augroup END
 
 function! s:define_coc_mappings() abort
-  nnoremap <buffer><silent> K        :call CocActionAsync('doHover')<CR>
+  nnoremap <buffer><silent> K        <Cmd>call CocActionAsync('doHover')<CR>
   nmap     <buffer><silent> <space>d <Plug>(coc-definition)
   nmap     <buffer>         <space>l <Plug>(coc-diagnostic-next)
   nmap     <buffer>         <space>L <Plug>(coc-diagnostic-prev)
@@ -114,22 +115,22 @@ command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, '
 imap <c-x><c-k> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 imap <c-x><c-f> <plug>(fzf-complete-file-rg)
-nmap <silent>    <space>;        :FzfBuffers<CR>
-nmap <silent>    <space>ff       :FzfFiles<CR>
-nmap <silent>    <space>fg       :FzfGFiles?<CR>
-nmap <silent>    <space>fc       :FzfCommits<CR>
-nmap <silent>    <space>fb       :FzfBCommits<CR>
-nmap <silent>    <space>fm       :FzfHistory<CR>
-nmap <silent>    <space>fk       :FzfMaps<CR>
-nmap <silent>    <space>ss       :FzfRg<CR>
-nmap <silent>    <space>sS       :FzfRgFull<CR>
-nmap <silent>    <space>sb       :FzfBLines<CR>
-nmap <silent>    <space>sl       :FzfLines<CR>
-nmap <silent>    <space>sw       :FzfRg <c-r>=expand("<cword>")<CR><CR>
-nmap <silent>    <space>fl       :FzfLocationList<CR>
-nmap <silent>    <space>fq       :FzfQuickfix<CR>
-"nmap <silent>    <space>ft     :FzfBTags<CR>
-"nmap <silent>    <space>fa     :FzfTags<CR>
+nmap <silent>    <space>;        <Cmd>FzfBuffers<CR>
+nmap <silent>    <space>ff       <Cmd>FzfFiles<CR>
+nmap <silent>    <space>fg       <Cmd>FzfGFiles?<CR>
+nmap <silent>    <space>fc       <Cmd>FzfCommits<CR>
+nmap <silent>    <space>fb       <Cmd>FzfBCommits<CR>
+nmap <silent>    <space>fm       <Cmd>FzfHistory<CR>
+nmap <silent>    <space>fk       <Cmd>FzfMaps<CR>
+nmap <silent>    <space>ss       <Cmd>FzfRg<CR>
+nmap <silent>    <space>sS       <Cmd>FzfRgFull<CR>
+nmap <silent>    <space>sb       <Cmd>FzfBLines<CR>
+nmap <silent>    <space>sl       <Cmd>FzfLines<CR>
+nmap <silent>    <space>sw       <Cmd>FzfRg <C-r><C-w><CR>
+nmap <silent>    <space>fl       <Cmd>FzfLocationList<CR>
+nmap <silent>    <space>fq       <Cmd>FzfQuickfix<CR>
+"nmap <silent>    <space>ft     <Cmd>FzfBTags<CR>
+"nmap <silent>    <space>fa     <Cmd>FzfTags<CR>
 
 command! FzfQuickfix call s:quickfix(1)
 command! FzfLocationList call s:quickfix(0)
@@ -166,7 +167,7 @@ endfunction
 " monkoose/fzf-hoogle.vim {{{
 augroup HoogleMaps
   autocmd!
-  autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
+  autocmd FileType haskell nnoremap <buffer>   <space>hh <Cmd>Hoogle <c-r>=expand("<cword>")<CR><CR>
 augroup END
 let g:hoogle_fzf_header = ''
 let g:hoogle_fzf_preview = 'down:50%:wrap'
@@ -175,13 +176,13 @@ let g:hoogle_count = 100
 " Lenovsky/nuake {{{
 let g:nuake_size = 0.40
 
-nnoremap    <silent>    <M-`>        :Nuake<CR>
+nnoremap    <silent>    <M-`>        <Cmd>Nuake<CR>
 tnoremap    <silent>    <M-`>        <C-\><C-n>:Nuake<CR>
 " }}}
 " rhysd/reply.vim {{{
-nmap <space>rr :ReplSend<CR><Esc>
-vmap <space>rr :ReplSend<CR><Esc>
-nmap <space>rR ggVG:ReplSend<CR><Esc>``
+nmap <space>rr <Cmd>ReplSend<CR><Esc>
+vmap <space>rr <Cmd>ReplSend<CR><Esc>
+nmap <space>rR ggVG<Cmd>ReplSend<CR><Esc>``
 " }}}
 " kevinhwang91/rnvimr {{{
 let g:rnvimr_enable_ex = 1
@@ -189,19 +190,19 @@ let g:rnvimr_enable_bw = 1
 let g:rnvimr_enable_picker = 1
 let g:rnvimr_hide_gitignore = 1
 
-nmap        <silent>    <M-1>    :RnvimrToggle<CR>
-tnoremap    <silent>    <M-1>    <C-\><C-n>:RnvimrToggle<CR>
+nmap        <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
+tnoremap    <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
 " }}}
 " tomtom/tcomment_vim {{{
 let g:tcomment#filetype#guess_svelte = 1
-vnoremap gb :TCommentBlock<CR>
+vnoremap gb <Cmd>TCommentBlock<CR>
 " }}}
 " mbbill/undotree {{{
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout       = 2
 let g:undotree_ShortIndicators    = 1
 let g:undotree_HelpLine           = 0
-nmap    <silent>    <M-4>    :UndotreeToggle<CR>
+nmap    <silent>    <M-4>    <Cmd>UndotreeToggle<CR>
 " }}}
 " junegunn/vim-easy-align {{{
 vmap    <Enter>    <Plug>(EasyAlign)
@@ -218,11 +219,11 @@ map <silent> ,              <Plug>(easymotion-s)
 map <silent> <space><space> <Plug>(easymotion-s)
 " }}}
 " tpope/vim-fugitive {{{
-nnoremap    <space>gg    :Gstatus<CR>
-nnoremap    <space>gb    :Gblame<CR>
-nnoremap    <space>gc    :Gcommit<CR>
-nnoremap    <space>gd    :Gdiff<CR>
-nnoremap    <space>ge    :Gedit<CR>
+nnoremap    <space>gg    <Cmd>Gstatus<CR>
+nnoremap    <space>gb    <Cmd>Gblame<CR>
+nnoremap    <space>gc    <Cmd>Gcommit<CR>
+nnoremap    <space>gd    <Cmd>Gdiff<CR>
+nnoremap    <space>ge    <Cmd>Gedit<CR>
 " }}}
 " lambdalisue/vim-gista {{{
 let g:gista#client#default_username = "monkoose"
@@ -230,8 +231,8 @@ let g:gista#command#list#enable_default_mappings = 0
 let g:gista#command#commits#enable_default_mappings = 0
 let g:gista#command#list#show_status_string_in_prologue = 0
 let g:gista#command#commits#show_status_string_in_prologue = 0
-nnoremap    <space>gl     :Gista list<CR>
-nnoremap    <space>gp     :Gista post -P -d=""<Left>
+nnoremap    <space>gl     <Cmd>Gista list<CR>
+nnoremap    <space>gp     <Cmd>Gista post -P -d=""<Left>
 
 augroup GistaBuffer
   autocmd!
@@ -272,7 +273,7 @@ augroup GitGutterUpdate
 augroup END
 " }}}
 " rrethy/vim-hexokinase {{{
-let g:Hexokinase_highlighters = ['background']
+let g:Hexokinase_highlighters = ['virtual']
 let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'typescript', 'vim', 'svelte']
 " }}}
 " vim: foldmethod=marker

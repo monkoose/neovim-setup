@@ -7,7 +7,7 @@
   "diagnostic.enableMessage": "jump",
   "suggest.minTriggerInputLength": 2,
   "coc.preferences.previewAutoClose": false,
-  "coc.preferences.formatOnSaveFiletypes": ["svelte", "rust"],
+  "coc.preferences.formatOnSaveFiletypes": ["svelte"],
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.colorSupport": false,
   "snippets.autoTrigger": false,
@@ -26,25 +26,6 @@
       "command": "/usr/bin/lua-language-server",
       "args": ["-E", "-e", "LANG=en", "/usr/share/lua-language-server/main.lua"],
       "filetypes": ["lua"]
-    },
-    "haskell": {
-      "command": "haskell-language-server-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": [
-        "*.cabal",
-        "stack.yaml",
-        "cabal.project",
-        "package.yaml"
-      ],
-      "filetypes": [
-        "hs",
-        "lhs",
-        "haskell"
-      ],
-      "initializationOptions": {
-        "languageServerHaskell": {
-        }
-      }
     }
   },
   "python.jediEnabled": false
