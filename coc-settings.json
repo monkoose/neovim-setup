@@ -6,8 +6,6 @@
   "diagnostic.maxWindowHeight": 20,
   "diagnostic.enableMessage": "jump",
   "suggest.minTriggerInputLength": 2,
-  "yank.highlight.duration": 400,
-  "yank.enableCompletion": false,
   "coc.preferences.previewAutoClose": false,
   "coc.preferences.formatOnSaveFiletypes": ["svelte", "rust"],
   "coc.preferences.extensionUpdateCheck": "never",

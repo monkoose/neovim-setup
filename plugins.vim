@@ -41,7 +41,6 @@ call plug#end()
 " neoclide/coc.nvim antoinemadec/coc-fzf {{{
 let g:coc_global_extensions = [
       \ 'coc-vimlsp',
-      \ 'coc-yank',
       \ 'coc-json',
       \ 'coc-sh',
       \ 'coc-snippets',
@@ -99,17 +98,18 @@ augroup END
 " monkoose/fzf.nvim {{{
 let s:fzf_big_float = 'call fzf#floating(36, 140)'
 let s:fzf_defaults = [
-      \ '--bind="alt-t:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' .
-          \ 'ctrl-r:clear-screen,alt-p:next-history,alt-n:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
+      \ '--bind="alt-t:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
+          \ 'ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
       \ '--color=hl:#608bbf,fg+:#b8af96,hl+:#608bbf,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
-      \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact'
+      \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
       \ ]
+let s:preview_window = '--preview-window down:60%'
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
 let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'
 let g:fzf_command_prefix = 'Fzf'
-command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': '--preview-window up:60%', 'window': s:fzf_big_float})
-command! FzfCommits call fzf#vim#commits({'options': '--preview-window up:60%', 'window': s:fzf_big_float})
-command! FzfBCommits call fzf#vim#buffer_commits({'options': '--preview-window up:60%', 'window': s:fzf_big_float})
+command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
+command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window': s:fzf_big_float})
+command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
 
 imap <c-x><c-k> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
@@ -139,12 +139,12 @@ function! s:open_quickfix_item(e) abort
   let filename = fnameescape(split(line, ':\d\+:')[0])
   let linenr = matchstr(line, ':\d\+:')[1:-2]
   let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-  exe 'e ' . filename
+  exe 'edit ' .. filename
   call cursor(linenr, colum)
 endfunction
 
 function! s:quickfix_to_grep(v) abort
-  return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
+  return bufname(a:v.bufnr) .. ':' .. a:v.lnum .. ':' .. a:v.col .. ':' .. a:v.text
 endfunction
 
 function! s:quickfix_list(nr) abort
@@ -169,6 +169,7 @@ augroup HoogleMaps
   autocmd FileType haskell nnoremap <buffer>   <space>hh :Hoogle <c-r>=expand("<cword>")<CR><CR>
 augroup END
 let g:hoogle_fzf_header = ''
+let g:hoogle_fzf_preview = 'down:50%:wrap'
 let g:hoogle_count = 100
 " }}}
 " Lenovsky/nuake {{{

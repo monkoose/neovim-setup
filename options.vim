@@ -36,6 +36,8 @@ set guicursor=
 set inccommand=split
 set timeoutlen=3000
 set keymap=russian-jcukenwin iminsert=0
+set grepprg=rg\ --vimgrep
+set grepformat=%f:%l:%c:%m
 " set textwidth=99
 
 " shipped plugins config {{{
@@ -49,6 +51,10 @@ let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0
 "}}}
+augroup HighlightYank
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="CocHoverRange", timeout=250}
+augroup END
 " restore cursor position {{{
 augroup RestoreView
   autocmd!

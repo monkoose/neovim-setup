@@ -32,10 +32,9 @@ function! RefreshSL(mod) abort
   return ''
 endfunction
 
-" trailing whitespace is required in statusline=
 augroup SetStatusLine
   autocmd!
-  autocmd FileType fugitiveblame setlocal statusline=%<\ %(%l/%L%)\ %=%P\ 
+  autocmd FileType fugitiveblame let &l:statusline='%< %(%l/%L%) %=%P '
 augroup END
 
 function! StatusGitBranch() abort
