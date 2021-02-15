@@ -13,6 +13,7 @@ set scrolloff=5 sidescrolloff=5
 set history=300
 set undolevels=300
 set updatetime=600
+" find ~/.local/share/nvim/undo-files -type f -mtime +30 | xargs -r rm
 set noswapfile undofile undodir=~/.local/share/nvim/undo-files/
 set viewoptions=cursor,curdir,folds
 set sessionoptions=buffers,curdir,folds,help,tabpages,winsize,options

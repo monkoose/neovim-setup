@@ -31,7 +31,6 @@ vimplug_repo="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vi
 echo ""
 msg "Creating directories..."
 mkdir -pv "$install_dir/undo-files"
-mkdir -pv "$install_dir/view"
 mkdir -pv "$config_dir"
 echo ""
 msg "Cloning repo..."

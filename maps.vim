@@ -55,6 +55,8 @@ tnoremap           <M-w>       <C-\><C-n><C-w>w
 tnoremap <silent>  <M-q>       <C-\><C-n>:close!<CR>
 
 " TTime count command {{{
+" usage :TTime `times to execute` `any vim command`
+" example :TTime 300 call str2nr('3')
 function! s:Timer(arg) abort
   let time = reltime()
   let [times; cmd] = split(a:arg)
