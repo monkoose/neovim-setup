@@ -30,6 +30,20 @@ require'lspconfig'.sumneko_lua.setup{
   }
 }
 
+-- nvim-lsp-diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = {
+      spacing = 6
+    },
+    signs = false,
+    underline = {
+      severity_limit = "Warning",
+    },
+    severity_sort = true,
+  }
+)
+
 -- nvim-compe
 require'compe'.setup {
   preselect = "disable";
@@ -43,3 +57,6 @@ require'compe'.setup {
     vsnip = true;
   };
 }
+
+-- nvim-fzf
+require("fzf").default_window_options = { border = false }

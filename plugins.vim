@@ -34,6 +34,8 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'monkoose/fzf.nvim'
+Plug 'vijaymarupudi/nvim-fzf'
+Plug 'monkoose/nvim-fzf-providers'
 call plug#end()
 
 " PLUGINS CONFIG
@@ -114,11 +116,14 @@ command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window':
 command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfFiles call fzf#vim#files(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 
+nnoremap <silent>  <space>ff  <Cmd>lua require("fzf-providers").files('')<CR>
+nnoremap <silent>  <space>fF  <Cmd>lua require("fzf-providers").files('', true)<CR>
+
 imap <c-x><c-k> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 imap <c-x><c-f> <plug>(fzf-complete-file-rg)
 nmap <silent>    <space>;        <Cmd>FzfBuffers<CR>
-nmap <silent>    <space>ff       <Cmd>FzfFiles<CR>
+" nmap <silent>    <space>ff       <Cmd>FzfFiles<CR>
 nmap <silent>    <space>gs       <Cmd>FzfGFiles?<CR>
 nmap <silent>    <space>gc       <Cmd>FzfCommits<CR>
 nmap <silent>    <space>gb       <Cmd>FzfBCommits<CR>
