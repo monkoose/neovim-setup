@@ -98,20 +98,21 @@ augroup END
 "}}}
 " monkoose/fzf.nvim {{{
 let s:fzf_defaults = [
-      \ '--bind="alt-t:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
+      \ '--bind="ctrl-/:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
           \ 'ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
       \ '--color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
       \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
       \ ]
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
-let s:fzf_big_float = 'call fzf#floating(36, 140)'
-let s:preview_window = '--preview-window down:60%'
+let s:fzf_big_float = 'call fzf#floating(33, 140)'
+let s:preview_window = '--preview-window down:65%,border-sharp'
 let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'
 let g:fzf_command_prefix = 'Fzf'
 
 command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
+command! FzfFiles call fzf#vim#files(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 
 imap <c-x><c-k> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
