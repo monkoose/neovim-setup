@@ -1,91 +1,91 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'monkoose/boa.vim'                                               " adds colorscheme
-Plug 'tpope/vim-repeat'                                               " makes '.' command more usable
-Plug 'tpope/vim-surround'                                             " makes manipulating with (),[],''... enjoyable
-Plug 'tpope/vim-unimpaired'                                           " adds common toggling options, new ] and [ commands, encoding/decoding
-Plug 'tpope/vim-scriptease'                                           " adds help commands for vimscripting
-Plug 'tpope/vim-characterize'                                         " improves 'ga'
-Plug 'neovimhaskell/haskell-vim', {'for': ['haskell']}                " improves haskell syntax and indentation
-Plug 'tbastos/vim-lua', {'for': ['lua']}                              " improves lua syntax highlighting and indentation
-Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}             " improves python indentation
-Plug 'hail2u/vim-css3-syntax'                                         " improves CSS syntax highlighting
-Plug 'cakebaker/scss-syntax.vim'                                      " add scss syntax highlighting
-Plug 'othree/html5.vim'                                               " improves HTML syntax highlighting
-Plug 'pangloss/vim-javascript'                                        " improves JavaScript syntax highlighting and indentation
-Plug 'honza/vim-snippets'                                             " adds snippets support
-Plug 'wellle/targets.vim'                                             " adds new targets like in( or 2alB
-Plug 'cespare/vim-toml', {'for': ['toml']}                            " adds toml highlighting
-Plug 'evanleck/vim-svelte', {'for': ['svelte']}                       " adds svelte highlighting
+Plug 'monkoose/boa.vim'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-characterize'
+Plug 'tbastos/vim-lua', {'for': ['lua']}
+Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'wellle/targets.vim'
+Plug 'cespare/vim-toml', {'for': ['toml']}
+Plug 'evanleck/vim-svelte', {'for': ['svelte']}
+Plug 'rust-lang/rust.vim', {'for': ['rust']}
 
 " PLUGINS WITH CUSTOM CONFIG
-Plug 'neoclide/coc.nvim', {'branch': 'release'}                       " adds autocompletion and langserver
-Plug 'antoinemadec/coc-fzf'                                           " adds fzf support for CocList
-Plug 'Raimondi/delimitMate'                                           " adds auto pairs
-Plug 'monkoose/fzf.nvim'                                              " adds fuzzy finder for multiple sources
-Plug 'monkoose/fzf-hoogle.vim'                                        " adds hoogle preview
-Plug 'Lenovsky/nuake', {'on': 'Nuake'}                                " for better terminal experience
-Plug 'rhysd/reply.vim', {'on': 'Repl'}                                " adds repl
-Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}                    " adds ranger support in neovim
-Plug 'tomtom/tcomment_vim'                                            " adds easy lines commenting
-Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}                      " for visualizing undo history
-Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}           " adds aligning of text
-Plug 'easymotion/vim-easymotion'                                      " for easier jumps to any position on the screen
-Plug 'tpope/vim-fugitive'                                             " adds git support inside vim
-Plug 'lambdalisue/vim-gista', {'on': 'Gista'}                         " adds gist support
-Plug 'airblade/vim-gitgutter'                                         " add git hunks and signs
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }             " show colors preview
+Plug 'Raimondi/delimitMate'
+Plug 'Lenovsky/nuake', {'on': 'Nuake'}
+Plug 'rhysd/reply.vim', {'on': 'Repl'}
+Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}
+Plug 'tomtom/tcomment_vim'
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
+Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
+Plug 'phaazon/hop.nvim'
+Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/vim-gista', {'on': 'Gista'}
+Plug 'airblade/vim-gitgutter'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'monkoose/fzf.nvim'
 call plug#end()
 
 " PLUGINS CONFIG
-" neoclide/coc.nvim antoinemadec/coc-fzf {{{
-let g:coc_global_extensions = [
-      \ 'coc-vimlsp',
-      \ 'coc-json',
-      \ 'coc-sh',
-      \ 'coc-snippets',
-      \ 'coc-python',
-      \ 'coc-tsserver',
-      \ 'coc-html',
-      \ 'coc-css',
-      \ 'coc-yaml',
-      \ 'coc-svelte',
-      \ 'coc-clangd',
-      \ ]
+" lsp {{{
+imap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-i>"
+smap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-i>"
+imap <expr> <M-i>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : ''
+smap <expr> <M-i>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : ''
+inoremap <silent><expr>   <CR>        compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
+inoremap <silent><expr>   <C-l>       compe#confirm()
+inoremap <silent><expr>   <C-j>       pumvisible() ? "\<C-n>" : compe#complete()
+inoremap <silent><expr>   <C-k>       pumvisible() ? "\<C-p>" : compe#complete()
+inoremap <silent><expr>   <C-e>       compe#close('<C-e>')
+inoremap <silent><expr>   <C-n>       pumvisible() ? compe#scroll({ 'delta': +4 }) : "\<C-n>"
+inoremap <silent><expr>   <C-p>       pumvisible() ? compe#scroll({ 'delta': -4 }) : "\<C-k>"
 
-let g:coc_snippet_next = '<M-e>'
-let g:coc_snippet_prev = '<M-r>'
-inoremap <silent><expr>   <M-f>       pumvisible() ? coc#_select_confirm() : coc#refresh()
-inoremap <silent><expr>   <C-j>       pumvisible() ? "\<C-n>" : coc#refresh()
-inoremap <silent><expr>   <C-k>       pumvisible() ? "\<C-p>" : coc#refresh()
-nmap     <silent>         <space>kk   <Cmd>CocRestart<CR>
-nmap     <silent>         <space>D    <Plug>(coc-declaration)
-nmap     <silent>         <space>kr   <Plug>(coc-references)
-nmap     <silent>         <space>kR   <Plug>(coc-rename)
-nmap     <silent>         <space>ka   <Cmd>CocFzfList actions<CR>
-nmap     <silent>         <space>kD   <Cmd>CocFzfList diagnostics<CR>
-nmap     <silent>         <space>kd   <Cmd>CocFzfList diagnostics --current-buf<CR>
-nmap     <silent>         <space>ky   <Cmd>CocFzfList yank<CR>
-nmap     <silent>         <space>ks   <Cmd>CocFzfList symbols<CR>
-nmap     <silent>         <space>kf   <Plug>(coc-format)
-nmap     <silent>         <space>ki   <Plug>(coc-diagnostic-info)
-nmap     <silent>         <space>ko   <Cmd>CocFzfList outline<CR>
-nmap     <silent>         <space>kl   <Cmd>CocFzfList<CR>
-vmap     <silent>         <space>ka   <Plug>(coc-codeaction-selected)
-vmap     <silent>         <space>kf   <Plug>(coc-format-selected)
+nmap     <silent>         <space>kk   <Cmd>LspRestart<CR>
+nmap     <silent>         <space>D    <Cmd>lua vim.lsp.buf.declaration()<CR>
+nmap     <silent>         <space>kt   <Cmd>lua vim.lsp.buf.type_definition()<CR>
+nmap     <silent>         <space>kr   <Cmd>lua vim.lsp.buf.references()<CR>
+nmap     <silent>         <space>kR   <Cmd>lua vim.lsp.buf.rename()<CR>
+nmap     <silent>         <space>kd   <Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nmap     <silent>         <space>kf   <Cmd>lua vim.lsp.buf.formatting()<CR>
+vmap     <silent>         <space>kf   <Cmd>lua vim.lsp.buf.range_formatting()<CR>
+nmap     <silent>         <space>ki   <Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nmap     <silent>         <space>ka   <Cmd>lua vim.lsp.buf.code_action()<CR>
+nmap     <silent>         <space>l    <Cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nmap     <silent>         <space>L    <Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nmap     <silent>         <space>ks   <Cmd>lua vim.lsp.buf.document_symbol()<CR>
 
-augroup CocFiletypeMaps
+augroup LspFiletypeMaps
   autocmd!
-  autocmd FileType css,scss,javascript,typescript,html,python,haskell,json,yaml,vim,svelte,sh,c,lua
-        \ call s:define_coc_mappings()
-  autocmd FileType haskell vmap <buffer><silent> K <Cmd>call CocActionAsync('doHover')<CR>
+  autocmd FileType css,scss,javascript,typescript,html,python,json,vim,svelte,sh,c,lua,rust
+        \ call s:define_lsp_mappings()
 augroup END
 
-function! s:define_coc_mappings() abort
-  nnoremap <buffer><silent> K        <Cmd>call CocActionAsync('doHover')<CR>
-  nmap     <buffer><silent> <space>d <Plug>(coc-definition)
-  nmap     <buffer>         <space>l <Plug>(coc-diagnostic-next)
-  nmap     <buffer>         <space>L <Plug>(coc-diagnostic-prev)
+function! s:define_lsp_mappings() abort
+  nnoremap <buffer><silent> K         <Cmd>lua vim.lsp.buf.hover()<CR>
+  nmap     <buffer><silent> <space>d  <Cmd>lua vim.lsp.buf.definition()<CR>
 endfunction
+"}}}
+" hrsh7th/nvim-compe {{{
+let g:loaded_compe_emoji = v:false
+let g:loaded_compe_luasnip = v:false
+let g:loaded_compe_omni = v:false
+let g:loaded_compe_spell = v:false
+let g:loaded_compe_snippets_nvim = v:false
+let g:loaded_compe_tags = v:false
+let g:loaded_compe_treesitter = v:false
+let g:loaded_compe_vim_lsc = v:false
+let g:loaded_compe_vim_lsp = v:false
+let g:loaded_compe_ultisnips = v:false
 "}}}
 " Raimondi/delimitMate {{{
 let g:delimitMate_expand_cr    = 1
@@ -97,17 +97,18 @@ augroup DelimitMatePython
 augroup END
 "}}}
 " monkoose/fzf.nvim {{{
-let s:fzf_big_float = 'call fzf#floating(36, 140)'
 let s:fzf_defaults = [
       \ '--bind="alt-t:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
           \ 'ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
-      \ '--color=hl:#608bbf,fg+:#b8af96,hl+:#608bbf,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
+      \ '--color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
       \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
       \ ]
-let s:preview_window = '--preview-window down:60%'
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
+let s:fzf_big_float = 'call fzf#floating(36, 140)'
+let s:preview_window = '--preview-window down:60%'
 let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'
 let g:fzf_command_prefix = 'Fzf'
+
 command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
@@ -117,16 +118,16 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 imap <c-x><c-f> <plug>(fzf-complete-file-rg)
 nmap <silent>    <space>;        <Cmd>FzfBuffers<CR>
 nmap <silent>    <space>ff       <Cmd>FzfFiles<CR>
-nmap <silent>    <space>fg       <Cmd>FzfGFiles?<CR>
-nmap <silent>    <space>fc       <Cmd>FzfCommits<CR>
-nmap <silent>    <space>fb       <Cmd>FzfBCommits<CR>
-nmap <silent>    <space>fm       <Cmd>FzfHistory<CR>
+nmap <silent>    <space>gs       <Cmd>FzfGFiles?<CR>
+nmap <silent>    <space>gc       <Cmd>FzfCommits<CR>
+nmap <silent>    <space>gb       <Cmd>FzfBCommits<CR>
+nmap <silent>    <space>fo       <Cmd>FzfHistory<CR>
 nmap <silent>    <space>fk       <Cmd>FzfMaps<CR>
 nmap <silent>    <space>ss       <Cmd>FzfRg<CR>
 nmap <silent>    <space>sS       <Cmd>FzfRgFull<CR>
 nmap <silent>    <space>sb       <Cmd>FzfBLines<CR>
 nmap <silent>    <space>sl       <Cmd>FzfLines<CR>
-nmap <silent>    <space>sw       <Cmd>FzfRg <C-r><C-w><CR>
+nmap <silent>    <space>sw       :<C-u>FzfRg <C-r><C-w><CR>
 nmap <silent>    <space>fl       <Cmd>FzfLocationList<CR>
 nmap <silent>    <space>fq       <Cmd>FzfQuickfix<CR>
 "nmap <silent>    <space>ft     <Cmd>FzfBTags<CR>
@@ -163,16 +164,7 @@ function! s:quickfix(nr) abort
         \ 'options': '--reverse',
         \ }))
 endfunction
-" }}}
-" monkoose/fzf-hoogle.vim {{{
-augroup HoogleMaps
-  autocmd!
-  autocmd FileType haskell nnoremap <buffer>   <space>hh <Cmd>Hoogle <c-r>=expand("<cword>")<CR><CR>
-augroup END
-let g:hoogle_fzf_header = ''
-let g:hoogle_fzf_preview = 'down:50%:wrap'
-let g:hoogle_count = 100
-" }}}
+"}}}
 " Lenovsky/nuake {{{
 let g:nuake_size = 0.40
 
@@ -207,21 +199,14 @@ nmap    <silent>    <M-4>    <Cmd>UndotreeToggle<CR>
 " junegunn/vim-easy-align {{{
 vmap    <Enter>    <Plug>(EasyAlign)
 " }}}
-" easymotion/vim-easymotion {{{
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_verbose = 0
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ACDEFGHIJKLMNOPRSUVW'
-
-map <silent> ,              <Plug>(easymotion-s)
-map <silent> <space><space> <Plug>(easymotion-s)
+" phaazon/hop.nvim {{{
+map <silent> ,              <Cmd>HopChar1<CR>
+map <silent> <space><space> <Cmd>HopChar1<CR>
 " }}}
 " tpope/vim-fugitive {{{
 nnoremap    <space>gg    <Cmd>Gstatus<CR>
-nnoremap    <space>gb    <Cmd>Gblame<CR>
-nnoremap    <space>gc    <Cmd>Gcommit<CR>
+nnoremap    <space>gB    <Cmd>Gblame<CR>
+nnoremap    <space>gC    <Cmd>Gcommit<CR>
 nnoremap    <space>gd    <Cmd>Gdiff<CR>
 nnoremap    <space>ge    <Cmd>Gedit<CR>
 " }}}
@@ -264,8 +249,8 @@ endfunction
 let g:gitgutter_sign_modified_removed  = '≃'
 
 nmap  <silent>   <space>gi <Plug>(GitGutterPreviewHunk)
-nmap  <silent>   <space>guu <Plug>(GitGutterUndoHunk)
-nmap  <silent>   <space>gss <Plug>(GitGutterStageHunk)
+nmap  <silent>   <space>gU <Plug>(GitGutterUndoHunk)
+nmap  <silent>   <space>gS <Plug>(GitGutterStageHunk)
 
 augroup GitGutterUpdate
   autocmd!

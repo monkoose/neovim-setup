@@ -33,14 +33,13 @@ vnoremap           <space>y    "+y
 vnoremap           <C-j>       <C-d>
 vnoremap           <C-k>       <C-u>
 vnoremap           ;           :
-vnoremap           H           ,
-vnoremap           L           ;
+vnoremap           <C-h>       ,
+vnoremap           <C-l>       ;
 
 noremap!           <C-space>   <C-^>
-inoremap           <C-p>       <C-k>
-inoremap           <C-l>       <DEL>
 inoremap           <M-h>       <Left>
 inoremap           <M-l>       <Right>
+inoremap           <M-f>       <DEL>
 
 cnoremap           <C-n>       <Down>
 cnoremap           <C-p>       <Up>

@@ -25,7 +25,7 @@ set tabpagemax=20
 set splitbelow splitright
 set expandtab smartindent shiftround shiftwidth=2 softtabstop=-1
 set nojoinspaces
-set completeopt=menuone,longest,noinsert,noselect
+set completeopt=menuone,noselect
 set wildignore+=*/.git/*,*/__pycache__/*,*.pyc
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set shortmess=filnrxtToOFIc
@@ -86,7 +86,7 @@ augroup FileTypeOptions
   autocmd FileType qf        setlocal wrap
   autocmd FileType vim       setlocal iskeyword-=#
   autocmd FileType css,scss  setlocal iskeyword+=-
-  autocmd FileType lua,haskell       setlocal shiftwidth=4
+  autocmd FileType haskell,d       setlocal shiftwidth=4
   autocmd FileType gitcommit setlocal spell | startinsert
 augroup END
 "}}}
