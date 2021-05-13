@@ -215,7 +215,7 @@ nnoremap    <space>gB    <Cmd>Git blame<CR>
 nnoremap    <space>gC    <Cmd>Git commit<CR>
 nnoremap    <space>gd    <Cmd>Gdiff<CR>
 nnoremap    <space>ge    <Cmd>Gedit<CR>
-nnoremap    <space>gP    <Cmd>Git push<CR>
+nnoremap    <space>gp    <Cmd>Git push<CR>
 " }}}
 " lambdalisue/vim-gista {{{
 let g:gista#client#default_username = "monkoose"
