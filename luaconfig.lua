@@ -60,4 +60,3 @@ require"compe".setup {
 
 -- nvim-fzf
 require("fzf").default_window_options = { border = false }
-require"fzf-providers".setup {}
