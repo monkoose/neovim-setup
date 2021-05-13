@@ -53,7 +53,7 @@ let g:loaded_node_provider = 0
 " highlight yanked text {{{
 augroup HighlightYank
   autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="CocHoverRange", timeout=250}
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="YankedText", timeout=250}
 augroup END
 "}}}
 " Diff current state of the buffer with the file it is loaded from
