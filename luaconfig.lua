@@ -1,11 +1,11 @@
 -- hop.nvim
-require'hop'.setup {
-  keys = 'fjdkhgslioewurmc',
+require"hop".setup {
+  keys = "fjdkhgslioewurmc",
   jump_on_sole_occurrence = false
 }
 
 -- nvim-lspconfig
-local nvim_lsp = require('lspconfig')
+local nvim_lsp = require("lspconfig")
 -- html, css
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -23,10 +23,10 @@ nvim_lsp.vimls.setup{}
 nvim_lsp.svelte.setup{}
 nvim_lsp.bashls.setup{}
 nvim_lsp.clangd.setup{}
-require'lspconfig'.sumneko_lua.setup{
+require"lspconfig".sumneko_lua.setup{
   cmd = { "lua-language-server" },
   settings = {
-    Lua = { diagnostics = { globals = { 'vim' } } }
+    Lua = { diagnostics = { globals = { "vim" } } }
   }
 }
 
@@ -45,7 +45,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 -- nvim-compe
-require'compe'.setup {
+require"compe".setup {
   preselect = "disable";
 
   source = {
@@ -60,3 +60,4 @@ require'compe'.setup {
 
 -- nvim-fzf
 require("fzf").default_window_options = { border = false }
+require"fzf-providers".setup {}

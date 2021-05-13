@@ -88,6 +88,7 @@ augroup FileTypeOptions
   autocmd FileType css,scss  setlocal iskeyword+=-
   autocmd FileType haskell,d       setlocal shiftwidth=4
   autocmd FileType gitcommit setlocal spell | startinsert
+  autocmd FileType fugitive nmap <buffer> <C-l> =
 augroup END
 "}}}
 " vim: foldmethod=marker

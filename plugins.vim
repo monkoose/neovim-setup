@@ -102,8 +102,8 @@ augroup END
 let s:fzf_defaults = [
       \ '--bind="ctrl-/:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
           \ 'ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
-      \ '--color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#272e22,pointer:#d35b4b,prompt:#c57c41,marker:#b2809f,info:#70a17c',
-      \ '--layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
+      \ '--color=hl:#f158a6,fg+:#b8af96,hl+:#f158a6,bg+:#3b312b,border:#40362f,gutter:#21261d,pointer:#d3c94b,prompt:#c57c41,marker:#d24b98,info:#70a17c',
+      \ '--pointer=● --marker=▶ --layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
       \ ]
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
 let s:fzf_big_float = 'call fzf#floating(33, 140)'
@@ -210,11 +210,12 @@ map <silent> ,              <Cmd>HopChar1<CR>
 map <silent> <space><space> <Cmd>HopChar1<CR>
 " }}}
 " tpope/vim-fugitive {{{
-nnoremap    <space>gg    <Cmd>Gstatus<CR>
-nnoremap    <space>gB    <Cmd>Gblame<CR>
-nnoremap    <space>gC    <Cmd>Gcommit<CR>
+nnoremap    <space>gg    <Cmd>Git<CR>
+nnoremap    <space>gB    <Cmd>Git blame<CR>
+nnoremap    <space>gC    <Cmd>Git commit<CR>
 nnoremap    <space>gd    <Cmd>Gdiff<CR>
 nnoremap    <space>ge    <Cmd>Gedit<CR>
+nnoremap    <space>gP    <Cmd>Git push<CR>
 " }}}
 " lambdalisue/vim-gista {{{
 let g:gista#client#default_username = "monkoose"
@@ -223,7 +224,7 @@ let g:gista#command#commits#enable_default_mappings = 0
 let g:gista#command#list#show_status_string_in_prologue = 0
 let g:gista#command#commits#show_status_string_in_prologue = 0
 nnoremap    <space>gl     <Cmd>Gista list<CR>
-nnoremap    <space>gp     <Cmd>Gista post -P -d=""<Left>
+nnoremap    <space>gP     :<C-u>Gista post -P -d=""<Left>
 
 augroup GistaBuffer
   autocmd!
