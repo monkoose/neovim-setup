@@ -116,24 +116,22 @@ command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window':
 command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
 command! FzfFiles call fzf#vim#files(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 
-nnoremap <silent>  <space>ff  <Cmd>lua require("fzf-providers").files('')<CR>
-nnoremap <silent>  <space>fF  <Cmd>lua require("fzf-providers").files('', true)<CR>
+nnoremap <silent>  <space>ff  <Cmd>lua require("fzf-providers").files{}<CR>
+nnoremap <silent>  <space>fF  <Cmd>lua require("fzf-providers").files{ hidden = true }<CR>
+nnoremap <silent>  <space>ss  <Cmd>lua require("fzf-providers").grep{ interactive = true }<CR>
+nnoremap <silent>  <space>sS  <Cmd>lua require("fzf-providers").grep{}<CR>
+nnoremap <silent>  <space>sw  <Cmd>lua require("fzf-providers").grep{ pattern = vim.fn.expand('<cword>') }<CR>
+nnoremap <silent>  <space>sb  <Cmd>lua require("fzf-providers").grep{ buffer = true }<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-file)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 imap <c-x><c-f> <plug>(fzf-complete-file-rg)
 nmap <silent>    <space>;        <Cmd>FzfBuffers<CR>
-" nmap <silent>    <space>ff       <Cmd>FzfFiles<CR>
 nmap <silent>    <space>gs       <Cmd>FzfGFiles?<CR>
 nmap <silent>    <space>gc       <Cmd>FzfCommits<CR>
 nmap <silent>    <space>gb       <Cmd>FzfBCommits<CR>
 nmap <silent>    <space>fo       <Cmd>FzfHistory<CR>
 nmap <silent>    <space>fk       <Cmd>FzfMaps<CR>
-nmap <silent>    <space>ss       <Cmd>FzfRg<CR>
-nmap <silent>    <space>sS       <Cmd>FzfRgFull<CR>
-nmap <silent>    <space>sb       <Cmd>FzfBLines<CR>
-nmap <silent>    <space>sl       <Cmd>FzfLines<CR>
-nmap <silent>    <space>sw       :<C-u>FzfRg <C-r><C-w><CR>
 nmap <silent>    <space>fl       <Cmd>FzfLocationList<CR>
 nmap <silent>    <space>fq       <Cmd>FzfQuickfix<CR>
 "nmap <silent>    <space>ft     <Cmd>FzfBTags<CR>

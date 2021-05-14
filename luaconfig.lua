@@ -60,3 +60,9 @@ require"compe".setup {
 
 -- nvim-fzf
 require("fzf").default_window_options = { border = false }
+
+-- pretty print wrapper for lua tables
+function _G.pretty_print(...)
+  local objects = vim.tbl_map(vim.inspect, {...})
+  print(unpack(objects))
+end
