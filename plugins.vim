@@ -30,15 +30,14 @@ Plug 'lambdalisue/vim-gista', {'on': 'Gista'}
 Plug 'airblade/vim-gitgutter'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'rafamadriz/friendly-snippets'
-Plug 'monkoose/fzf.nvim'
+Plug 'hrsh7th/nvim-compe'
 Plug 'vijaymarupudi/nvim-fzf'
 Plug 'monkoose/nvim-fzf-providers'
 call plug#end()
 
-" PLUGINS CONFIG
+" PLUGINS CONFIGS
 " lsp {{{
 imap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-i>"
 smap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-i>"
@@ -77,7 +76,7 @@ function! s:define_lsp_mappings() abort
   nmap     <buffer><silent> <space>d  <Cmd>lua vim.lsp.buf.definition()<CR>
 endfunction
 "}}}
-" hrsh7th/nvim-compe {{{
+" nvim-compe {{{
 let g:loaded_compe_emoji = v:false
 let g:loaded_compe_luasnip = v:false
 let g:loaded_compe_omni = v:false
@@ -89,7 +88,7 @@ let g:loaded_compe_vim_lsc = v:false
 let g:loaded_compe_vim_lsp = v:false
 let g:loaded_compe_ultisnips = v:false
 "}}}
-" Raimondi/delimitMate {{{
+" delimitMate {{{
 let g:delimitMate_expand_cr    = 1
 let g:delimitMate_expand_space = 1
 
@@ -98,7 +97,7 @@ augroup DelimitMatePython
   autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
 augroup END
 "}}}
-" monkoose/fzf.nvim {{{
+" nvim-fzf + nvim-fzf-providers {{{
 let s:fzf_defaults = [
       \ '--bind="ctrl-/:toggle-preview,alt-i:toggle-all,ctrl-n:preview-page-down,ctrl-p:preview-page-up,ctrl-l:accept,' ..
           \ 'ctrl-r:clear-screen,alt-k:next-history,alt-j:previous-history,ctrl-alt-j:page-down,ctrl-alt-k:page-up"',
@@ -106,15 +105,6 @@ let s:fzf_defaults = [
       \ '--pointer=● --marker=▶ --layout=reverse --tabstop=2 --info=inline --margin=1,3 --exact --header='
       \ ]
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
-let s:fzf_big_float = 'call fzf#floating(33, 140)'
-let s:preview_window = '--preview-window down:65%,border-sharp'
-let g:fzf_history_dir = '~/.local/share/nvim/fzf-history'
-let g:fzf_command_prefix = 'Fzf'
-
-command! -nargs=* FzfGFiles call fzf#vim#gitfiles(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
-command! FzfCommits call fzf#vim#commits({'options': s:preview_window, 'window': s:fzf_big_float})
-command! FzfBCommits call fzf#vim#buffer_commits({'options': s:preview_window, 'window': s:fzf_big_float})
-command! FzfFiles call fzf#vim#files(<q-args>, {'options': s:preview_window, 'window': s:fzf_big_float})
 
 nnoremap <silent>  <space>ff  <Cmd>lua require("fzf-providers").files{}<CR>
 nnoremap <silent>  <space>fF  <Cmd>lua require("fzf-providers").files{ hidden = true }<CR>
@@ -122,65 +112,21 @@ nnoremap <silent>  <space>ss  <Cmd>lua require("fzf-providers").grep{ interactiv
 nnoremap <silent>  <space>sS  <Cmd>lua require("fzf-providers").grep{}<CR>
 nnoremap <silent>  <space>sw  <Cmd>lua require("fzf-providers").grep{ pattern = vim.fn.expand('<cword>') }<CR>
 nnoremap <silent>  <space>sb  <Cmd>lua require("fzf-providers").grep{ buffer = true }<CR>
+nnoremap <silent>  <space>;   <Cmd>lua require("fzf-providers").buffers{}<CR>
 
-imap <c-x><c-k> <plug>(fzf-complete-file)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-imap <c-x><c-f> <plug>(fzf-complete-file-rg)
-nmap <silent>    <space>;        <Cmd>FzfBuffers<CR>
-nmap <silent>    <space>gs       <Cmd>FzfGFiles?<CR>
-nmap <silent>    <space>gc       <Cmd>FzfCommits<CR>
-nmap <silent>    <space>gb       <Cmd>FzfBCommits<CR>
-nmap <silent>    <space>fo       <Cmd>FzfHistory<CR>
-nmap <silent>    <space>fk       <Cmd>FzfMaps<CR>
-nmap <silent>    <space>fl       <Cmd>FzfLocationList<CR>
-nmap <silent>    <space>fq       <Cmd>FzfQuickfix<CR>
-"nmap <silent>    <space>ft     <Cmd>FzfBTags<CR>
-"nmap <silent>    <space>fa     <Cmd>FzfTags<CR>
-
-command! FzfQuickfix call s:quickfix(1)
-command! FzfLocationList call s:quickfix(0)
-
-function! s:open_quickfix_item(e) abort
-  let line = a:e
-  let filename = fnameescape(split(line, ':\d\+:')[0])
-  let linenr = matchstr(line, ':\d\+:')[1:-2]
-  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-  exe 'edit ' .. filename
-  call cursor(linenr, colum)
-endfunction
-
-function! s:quickfix_to_grep(v) abort
-  return bufname(a:v.bufnr) .. ':' .. a:v.lnum .. ':' .. a:v.col .. ':' .. a:v.text
-endfunction
-
-function! s:quickfix_list(nr) abort
-  if a:nr == 1
-    return map(getqflist(), 's:quickfix_to_grep(v:val)')
-  else
-    return map(getloclist(0), 's:quickfix_to_grep(v:val)')
-  endif
-endfunction
-
-function! s:quickfix(nr) abort
-  call fzf#run(fzf#wrap('quickfix', {
-        \ 'source':  reverse(s:quickfix_list(a:nr)),
-        \ 'sink':    function('s:open_quickfix_item'),
-        \ 'options': '--reverse',
-        \ }))
-endfunction
 "}}}
-" Lenovsky/nuake {{{
+" nuake {{{
 let g:nuake_size = 0.40
 
 nnoremap    <silent>    <M-`>        <Cmd>Nuake<CR>
 tnoremap    <silent>    <M-`>        <C-\><C-n>:Nuake<CR>
 " }}}
-" rhysd/reply.vim {{{
+" reply.vim {{{
 nmap <space>rr <Cmd>ReplSend<CR><Esc>
 vmap <space>rr <Cmd>ReplSend<CR><Esc>
 nmap <space>rR ggVG<Cmd>ReplSend<CR><Esc>``
 " }}}
-" kevinhwang91/rnvimr {{{
+" rnvimr {{{
 let g:rnvimr_enable_ex = 1
 let g:rnvimr_enable_bw = 1
 let g:rnvimr_enable_picker = 1
@@ -189,25 +135,25 @@ let g:rnvimr_hide_gitignore = 1
 nmap        <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
 tnoremap    <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
 " }}}
-" tomtom/tcomment_vim {{{
+" tcomment_vim {{{
 let g:tcomment#filetype#guess_svelte = 1
 vnoremap gb <Cmd>TCommentBlock<CR>
 " }}}
-" mbbill/undotree {{{
+" undotree {{{
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_WindowLayout       = 2
 let g:undotree_ShortIndicators    = 1
 let g:undotree_HelpLine           = 0
 nmap    <silent>    <M-4>    <Cmd>UndotreeToggle<CR>
 " }}}
-" junegunn/vim-easy-align {{{
+" vim-easy-align {{{
 vmap    <Enter>    <Plug>(EasyAlign)
 " }}}
-" phaazon/hop.nvim {{{
+" hop.nvim {{{
 map <silent> ,              <Cmd>HopChar1<CR>
 map <silent> <space><space> <Cmd>HopChar1<CR>
 " }}}
-" tpope/vim-fugitive {{{
+" vim-fugitive {{{
 nnoremap    <space>gg    <Cmd>Git<CR>
 nnoremap    <space>gB    <Cmd>Git blame<CR>
 nnoremap    <space>gC    <Cmd>Git commit<CR>
@@ -215,7 +161,7 @@ nnoremap    <space>gd    <Cmd>Gdiff<CR>
 nnoremap    <space>ge    <Cmd>Gedit<CR>
 nnoremap    <space>gp    <Cmd>Git push<CR>
 " }}}
-" lambdalisue/vim-gista {{{
+" vim-gista {{{
 let g:gista#client#default_username = "monkoose"
 let g:gista#command#list#enable_default_mappings = 0
 let g:gista#command#commits#enable_default_mappings = 0
@@ -250,7 +196,7 @@ function! s:define_gista_mappings() abort
   map <buffer> cc <Plug>(gista-commits)
 endfunction
 " }}}
-" airblade/vim-gitgutter {{{
+" vim-gitgutter {{{
 let g:gitgutter_sign_modified_removed  = '≃'
 
 nmap  <silent>   <space>gi <Plug>(GitGutterPreviewHunk)
@@ -262,7 +208,7 @@ augroup GitGutterUpdate
   autocmd BufWritePost * GitGutter
 augroup END
 " }}}
-" rrethy/vim-hexokinase {{{
+" vim-hexokinase {{{
 let g:Hexokinase_highlighters = ['virtual']
 let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'typescript', 'vim', 'svelte']
 " }}}

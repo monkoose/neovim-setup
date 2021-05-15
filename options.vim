@@ -37,6 +37,7 @@ set grepprg=rg\ --vimgrep grepformat=%f:%l:%c:%m
 " set textwidth=99
 
 " shipped plugins config {{{
+let g:loaded_fzf = 1
 let g:markdown_folding = 1
 let g:loaded_netrwPlugin = 1
 let g:loaded_2html_plugin = 1
