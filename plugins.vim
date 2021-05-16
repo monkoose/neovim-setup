@@ -5,7 +5,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-characterize'
-Plug 'tbastos/vim-lua', {'for': ['lua']}
+Plug 'drmingdrmer/vim-indent-lua', {'for': ['lua']}
 Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
@@ -107,7 +107,6 @@ let s:fzf_defaults = [
 let $FZF_DEFAULT_OPTS = join(s:fzf_defaults, " ")
 
 nnoremap <silent>  <space>ff  <Cmd>lua require("fzf-providers").files{}<CR>
-nnoremap <silent>  <space>fF  <Cmd>lua require("fzf-providers").files{ hidden = true }<CR>
 nnoremap <silent>  <space>ss  <Cmd>lua require("fzf-providers").grep{ interactive = true }<CR>
 nnoremap <silent>  <space>sS  <Cmd>lua require("fzf-providers").grep{}<CR>
 nnoremap <silent>  <space>sw  <Cmd>lua require("fzf-providers").grep{ pattern = vim.fn.expand('<cword>') }<CR>
