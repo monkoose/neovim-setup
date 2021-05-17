@@ -1,16 +1,17 @@
 set pastetoggle=<F2>
 map Q gq
 inoremap <C-u> <C-g>u<C-u>
-nmap     <silent>  <F3>        <Cmd>setlocal spell!<CR>
-nmap     <silent>  <space>/    <Cmd>nohlsearch<CR>
-nmap               <M-w>       <C-w>w
-nmap     <silent>  <M-f>       <Cmd>call <SID>InsertSemiColon()<CR>
-nmap     <silent>  <Esc>       <Cmd>call <SID>CloseFloatWindow()<CR>
-nmap     <silent>  <C-n>       <Cmd>call <SID>ScrollDownNextHunk()<CR>
-nmap     <silent>  <C-p>       <Cmd>call <SID>ScrollUpPrevHunk()<CR>
-nmap     <silent>  <M-2>       <Cmd>call <SID>ToggleQf()<CR>
-nmap     <silent>  <M-3>       <Cmd>call <SID>ToggleLocList()<CR>
-nmap     <silent>  gx          <Cmd>call <SID>OpenPath('<cfile>')<CR>
+nnoremap <silent>  <F3>        <Cmd>setlocal spell!<CR>
+nnoremap <silent>  <space>/    <Cmd>nohlsearch<CR>
+nnoremap           <M-w>       <C-w>w
+nnoremap <silent>  <M-f>       <Cmd>call <SID>InsertSemiColon()<CR>
+nnoremap <silent>  <Esc>       <Cmd>call <SID>CloseFloatWindow()<CR>
+nnoremap <silent>  <C-n>       <Cmd>call <SID>ScrollDownNextHunk()<CR>
+nnoremap <silent>  <C-p>       <Cmd>call <SID>ScrollUpPrevHunk()<CR>
+nnoremap <silent>  <M-2>       <Cmd>call <SID>ToggleQf()<CR>
+nnoremap <silent>  <M-3>       <Cmd>call <SID>ToggleLocList()<CR>
+nnoremap <silent>  gx          <Cmd>call <SID>OpenPath('<cfile>')<CR>
+nnoremap <silent>  zS          <Cmd>call <SID>SynNames()<CR>
 nnoremap           <space>q    <Cmd>pclose<CR>
 nnoremap <silent>  <space>a    <Cmd>b#<CR>
 nnoremap           <space>d    <C-]>
@@ -53,6 +54,12 @@ tnoremap           <C-]>       <C-\><C-n>
 tnoremap           <M-w>       <C-\><C-n><C-w>w
 tnoremap <silent>  <M-q>       <C-\><C-n>:close!<CR>
 
+" Show syntax names {{{
+function! s:SynNames() abort
+  let synlist = reverse(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")'))
+  echo ' ' .. join(synlist, ' ')
+endfunction
+"}}}
 " TTime count command {{{
 " usage :TTime `times to execute` `any vim command`
 " example :TTime 300 call str2nr('3')

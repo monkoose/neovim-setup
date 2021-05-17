@@ -3,7 +3,6 @@ Plug 'monkoose/boa.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-characterize'
 Plug 'drmingdrmer/vim-indent-lua', {'for': ['lua']}
 Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
@@ -112,6 +111,8 @@ nnoremap <silent>  <space>sS  <Cmd>lua require("fzf-providers").grep{}<CR>
 nnoremap <silent>  <space>sw  <Cmd>lua require("fzf-providers").grep{ pattern = vim.fn.expand('<cword>') }<CR>
 nnoremap <silent>  <space>sb  <Cmd>lua require("fzf-providers").grep{ buffer = true }<CR>
 nnoremap <silent>  <space>;   <Cmd>lua require("fzf-providers").buffers{}<CR>
+nnoremap <silent>  <space>gc  <Cmd>lua require("fzf-providers").commits{}<CR>
+nnoremap <silent>  <space>gC  <Cmd>lua require("fzf-providers").commits{ buffer = true }<CR>
 
 "}}}
 " nuake {{{
@@ -154,9 +155,8 @@ map <silent> <space><space> <Cmd>HopChar1<CR>
 " }}}
 " vim-fugitive {{{
 nnoremap    <space>gg    <Cmd>Git<CR>
-nnoremap    <space>gB    <Cmd>Git blame<CR>
-nnoremap    <space>gC    <Cmd>Git commit<CR>
-nnoremap    <space>gd    <Cmd>Gdiff<CR>
+nnoremap    <space>gb    <Cmd>Git blame<CR>
+nnoremap    <space>gd    <Cmd>Gdiffsplit<CR>
 nnoremap    <space>ge    <Cmd>Gedit<CR>
 nnoremap    <space>gp    <Cmd>Git push<CR>
 " }}}
