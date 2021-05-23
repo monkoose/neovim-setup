@@ -60,12 +60,15 @@ augroup END
 " Diff current state of the buffer with the file it is loaded from
 command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 " restore cursor position {{{
+function! s:RestoreBufView() abort
+  if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    exe "normal! g`\""
+  endif
+endfunction
+
 augroup RestoreView
   autocmd!
-  autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-    \ |   exe "normal! g`\""
-    \ | endif
+  autocmd BufReadPost * call s:RestoreBufView()
 augroup END
 "}}}
 " check for changed files outside of neovim {{{

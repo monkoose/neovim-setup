@@ -23,7 +23,8 @@ Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}
 Plug 'tomtom/tcomment_vim'
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
-Plug 'phaazon/hop.nvim'
+" Plug 'phaazon/hop.nvim'
+Plug 'monkoose/hop.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'lambdalisue/vim-gista', {'on': 'Gista'}
 Plug 'airblade/vim-gitgutter'
@@ -63,6 +64,7 @@ nmap     <silent>         <space>ka   <Cmd>lua vim.lsp.buf.code_action()<CR>
 nmap     <silent>         <space>l    <Cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nmap     <silent>         <space>L    <Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nmap     <silent>         <space>ks   <Cmd>lua vim.lsp.buf.document_symbol()<CR>
+nmap     <silent>         <space>kS   <Cmd>lua vim.lsp.buf.workspace_symbol("")<CR>
 
 augroup LspFiletypeMaps
   autocmd!
@@ -150,8 +152,8 @@ nmap    <silent>    <M-4>    <Cmd>UndotreeToggle<CR>
 vmap    <Enter>    <Plug>(EasyAlign)
 " }}}
 " hop.nvim {{{
-map <silent> ,              <Cmd>HopChar1<CR>
-map <silent> <space><space> <Cmd>HopChar1<CR>
+map <silent> ,              <Cmd>lua require('hop').hint_char(1)<CR>
+map <silent> <space><space> <Cmd>lua require('hop').hint_char(1)<CR>
 " }}}
 " vim-fugitive {{{
 nnoremap    <space>gg    <Cmd>Git<CR>
