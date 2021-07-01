@@ -24,6 +24,32 @@ nvim_lsp.vimls.setup{}
 nvim_lsp.svelte.setup{}
 nvim_lsp.bashls.setup{}
 nvim_lsp.clangd.setup{}
+nvim_lsp.hls.setup{}
+
+-- lua
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+require'lspconfig'.sumneko_lua.setup {
+  cmd = { "lua-language-server" };
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        path = runtime_path,
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true)
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 
 require'lspconfig'.sumneko_lua.setup {
   cmd = { "lua-language-server" };
@@ -65,7 +91,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 -- nvim-compe
 require"compe".setup {
-  preselect = "disable";
+  preselect = "disable",
 
   source = {
     path = true;
@@ -74,7 +100,7 @@ require"compe".setup {
     nvim_lsp = true;
     nvim_lua = true;
     vsnip = true;
-  };
+  }
 }
 
 -- nvim-fzf

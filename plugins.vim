@@ -4,23 +4,25 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
 Plug 'drmingdrmer/vim-indent-lua', {'for': ['lua']}
 Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 Plug 'hail2u/vim-css3-syntax'
+Plug 'neovimhaskell/haskell-vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'wellle/targets.vim'
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'evanleck/vim-svelte', {'for': ['svelte']}
-Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'Olical/aniseed', { 'tag': 'v3.19.0' }
+Plug 'Olical/conjure', {'tag': 'v4.21.0'}
+Plug 'monkoose/stargate'
 
 " PLUGINS WITH CUSTOM CONFIG
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
 Plug 'Lenovsky/nuake', {'on': 'Nuake'}
-Plug 'rhysd/reply.vim', {'on': 'Repl'}
 Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}
-Plug 'tomtom/tcomment_vim'
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
 " Plug 'phaazon/hop.nvim'
@@ -43,7 +45,7 @@ imap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-
 smap <expr> <C-i>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : "\<C-i>"
 imap <expr> <M-i>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : ''
 smap <expr> <M-i>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : ''
-inoremap <silent><expr>   <CR>        compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
+inoremap <silent><expr>   <CR>        compe#confirm('<CR>')
 inoremap <silent><expr>   <C-l>       compe#confirm()
 inoremap <silent><expr>   <C-j>       pumvisible() ? "\<C-n>" : compe#complete()
 inoremap <silent><expr>   <C-k>       pumvisible() ? "\<C-p>" : compe#complete()
@@ -68,7 +70,7 @@ nmap     <silent>         <space>kS   <Cmd>lua vim.lsp.buf.workspace_symbol("")<
 
 augroup LspFiletypeMaps
   autocmd!
-  autocmd FileType css,scss,javascript,typescript,html,python,json,vim,svelte,sh,c,lua,rust
+  autocmd FileType css,scss,javascript,typescript,html,python,json,vim,svelte,sh,c,lua,rust,haskell
         \ call s:define_lsp_mappings()
 augroup END
 
@@ -77,26 +79,14 @@ function! s:define_lsp_mappings() abort
   nmap     <buffer><silent> <space>d  <Cmd>lua vim.lsp.buf.definition()<CR>
 endfunction
 "}}}
-" nvim-compe {{{
-let g:loaded_compe_emoji = v:false
-let g:loaded_compe_luasnip = v:false
-let g:loaded_compe_omni = v:false
-let g:loaded_compe_spell = v:false
-let g:loaded_compe_snippets_nvim = v:false
-let g:loaded_compe_tags = v:false
-let g:loaded_compe_treesitter = v:false
-let g:loaded_compe_vim_lsc = v:false
-let g:loaded_compe_vim_lsp = v:false
-let g:loaded_compe_ultisnips = v:false
-"}}}
 " delimitMate {{{
-let g:delimitMate_expand_cr    = 1
-let g:delimitMate_expand_space = 1
-
-augroup DelimitMatePython
-  autocmd!
-  autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
-augroup END
+" let g:delimitMate_expand_cr    = 1
+" let g:delimitMate_expand_space = 1
+"
+" augroup DelimitMatePython
+"   autocmd!
+"   autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
+" augroup END
 "}}}
 " nvim-fzf + nvim-fzf-providers {{{
 let s:fzf_defaults = [
@@ -121,12 +111,17 @@ nnoremap <silent>  <space>gC  <Cmd>lua require("fzf-providers").commits{ buffer 
 let g:nuake_size = 0.40
 
 nnoremap    <silent>    <M-`>        <Cmd>Nuake<CR>
-tnoremap    <silent>    <M-`>        <C-\><C-n>:Nuake<CR>
+tnoremap    <silent>    <M-`>        <Cmd>Nuake<CR>
 " }}}
-" reply.vim {{{
-nmap <space>rr <Cmd>ReplSend<CR><Esc>
-vmap <space>rr <Cmd>ReplSend<CR><Esc>
-nmap <space>rR ggVG<Cmd>ReplSend<CR><Esc>``
+" conjure {{{
+let g:conjure#mapping#prefix = '<space>'
+let g:conjure#mapping#log_split = 'cs'
+let g:conjure#mapping#log_vsplit = 'cv'
+let g:conjure#mapping#log_tab = 'ct'
+let g:conjure#mapping#log_reset_soft = 'cr'
+let g:conjure#mapping#log_reset_hard = 'cR'
+let g:conjure#mapping#log_close_visible = 'cq'
+let g:conjure#log#hud#passive_close_delay = 1000
 " }}}
 " rnvimr {{{
 let g:rnvimr_enable_ex = 1
@@ -136,10 +131,6 @@ let g:rnvimr_hide_gitignore = 1
 
 nmap        <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
 tnoremap    <silent>    <M-1>    <Cmd>RnvimrToggle<CR>
-" }}}
-" tcomment_vim {{{
-let g:tcomment#filetype#guess_svelte = 1
-vnoremap gb <Cmd>TCommentBlock<CR>
 " }}}
 " undotree {{{
 let g:undotree_SetFocusWhenToggle = 1
@@ -152,8 +143,8 @@ nmap    <silent>    <M-4>    <Cmd>UndotreeToggle<CR>
 vmap    <Enter>    <Plug>(EasyAlign)
 " }}}
 " hop.nvim {{{
-map <silent> ,              <Cmd>lua require('hop').hint_char(1)<CR>
-map <silent> <space><space> <Cmd>lua require('hop').hint_char(1)<CR>
+map <silent> ,              <Cmd>lua require('hop').hint_char1()<CR>
+map <silent> <space><space> <Cmd>lua require('hop').hint_char1()<CR>
 " }}}
 " vim-fugitive {{{
 nnoremap    <space>gg    <Cmd>Git<CR>

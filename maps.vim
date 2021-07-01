@@ -10,7 +10,7 @@ nnoremap <silent>  <C-n>       <Cmd>call <SID>ScrollDownNextHunk()<CR>
 nnoremap <silent>  <C-p>       <Cmd>call <SID>ScrollUpPrevHunk()<CR>
 nnoremap <silent>  <M-2>       <Cmd>call <SID>ToggleQf()<CR>
 nnoremap <silent>  <M-3>       <Cmd>call <SID>ToggleLocList()<CR>
-nnoremap <silent>  gx          <Cmd>call <SID>OpenPath('<cfile>')<CR>
+nnoremap <silent>  gx          <Cmd>call <SID>OpenPath(expand('<cfile>'))<CR>
 nnoremap <silent>  zS          <Cmd>call <SID>SynNames()<CR>
 nnoremap           <space>q    <Cmd>pclose<CR>
 nnoremap <silent>  <space>a    <Cmd>b#<CR>
@@ -64,16 +64,16 @@ endfunction
 " usage :TTime `times to execute` `any vim command`
 " example :TTime 300 call str2nr('3')
 function! s:Timer(arg) abort
-  let time = reltime()
   let [times; cmd] = split(a:arg)
   let cmd = join(cmd)
+  let time = reltime()
   try
     for i in range(times)
       execute cmd
     endfor
   finally
-    redraw
-    echomsg matchstr(reltimestr(reltime(time)), '.*\..\{,3\}') .. ' seconds to run :' .. cmd
+    let result = reltimestr(reltime(time))
+    echomsg matchstr(reltimestr(reltime(time)), '.*\..\{,4\}') .. ' seconds to run :' .. cmd
   endtry
   return ''
 endfunction
@@ -81,8 +81,8 @@ command! -nargs=1 -complete=command TTime execute s:Timer(<q-args>)
 "}}}
 " OpenPath() {{{
 function! s:OpenPath(path) abort
-  silent! execute '!xdg-open "' .. a:path .. '" &> /dev/null &'
-  redraw!
+  call jobstart(['xdg-open', a:path])
+  redraw
   echohl String
   echo "Open "
   echohl Identifier

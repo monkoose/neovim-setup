@@ -54,7 +54,7 @@ let g:loaded_node_provider = 0
 " highlight yanked text {{{
 augroup HighlightYank
   autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="YankedText", timeout=250}
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="YankedText", timeout=250}
 augroup END
 "}}}
 " Diff current state of the buffer with the file it is loaded from
@@ -62,7 +62,7 @@ command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd
 " restore cursor position {{{
 function! s:RestoreBufView() abort
   if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-    exe "normal! g`\""
+    exe 'normal! g`"'
   endif
 endfunction
 
@@ -86,7 +86,7 @@ augroup END
 " FileType config {{{
 augroup FileTypeOptions
   autocmd!
-  autocmd FileType * syntax sync minlines=200
+  autocmd FileType * syntax sync maxlines=100
   autocmd FileType qf        setlocal wrap
   autocmd FileType vim       setlocal iskeyword-=#
   autocmd FileType css,scss  setlocal iskeyword+=-
