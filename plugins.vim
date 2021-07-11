@@ -20,7 +20,6 @@ Plug 'Olical/conjure', {'tag': 'v4.21.0'}
 Plug 'monkoose/stargate'
 
 " PLUGINS WITH CUSTOM CONFIG
-" Plug 'Raimondi/delimitMate'
 Plug 'Lenovsky/nuake', {'on': 'Nuake'}
 Plug 'kevinhwang91/rnvimr', {'on': 'RnvimrToggle'}
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
@@ -78,15 +77,6 @@ function! s:define_lsp_mappings() abort
   nnoremap <buffer><silent> K         <Cmd>lua vim.lsp.buf.hover()<CR>
   nmap     <buffer><silent> <space>d  <Cmd>lua vim.lsp.buf.definition()<CR>
 endfunction
-"}}}
-" delimitMate {{{
-" let g:delimitMate_expand_cr    = 1
-" let g:delimitMate_expand_space = 1
-"
-" augroup DelimitMatePython
-"   autocmd!
-"   autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
-" augroup END
 "}}}
 " nvim-fzf + nvim-fzf-providers {{{
 let s:fzf_defaults = [

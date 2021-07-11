@@ -72,12 +72,21 @@ function! s:Timer(arg) abort
       execute cmd
     endfor
   finally
-    let result = reltimestr(reltime(time))
-    echomsg matchstr(reltimestr(reltime(time)), '.*\..\{,4\}') .. ' seconds to run :' .. cmd
+    let result = reltimefloat(reltime(time))
+    redraw
+    let times_str = times == 1 ? 'time' : 'times'
+    echohl Type
+    echomsg ' ' string(result * 1000)
+    echohl None
+    echon ' ms spent to run '
+    echohl String
+    echon cmd
+    echohl None
+    echon ' ' times ' ' times_str
   endtry
   return ''
 endfunction
-command! -nargs=1 -complete=command TTime execute s:Timer(<q-args>)
+command! -nargs=1 -complete=command Time execute s:Timer(<q-args>)
 "}}}
 " OpenPath() {{{
 function! s:OpenPath(path) abort
